@@ -1,18 +1,20 @@
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-android-extensions'
+
+androidExtensions {
+    experimental = true
+}
 
 android {
-    compileSdkVersion 27
-
-
-
+    compileSdkVersion AndroidConfig.compile_sdk
     defaultConfig {
-        minSdkVersion 21
-        targetSdkVersion 27
-        versionCode 1
-        versionName "1.0"
-
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
+        minSdkVersion AndroidConfig.min_sdk
+        targetSdkVersion AndroidConfig.target_sdk
+        versionCode AndroidConfig.version_code
+        versionName AndroidConfig.version_name
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
@@ -25,10 +27,34 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation 'com.android.support:appcompat-v7:27.1.1'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    //** ANDROID **//
+    implementation Libs.appcompat
+
+    implementation Libs.kotlin_functional_extensions_core
+    implementation Libs.kotlin_functional_extensions_arrow
+
+    //** GOOGLE AUTH **//
+    implementation Libs.play_services_auth
+
+    //** FIREBASE **//
+    implementation Libs.firebase_auth
+
+    //** KOTLIN **//
+    implementation Libs.kotlin_stdlib_jdk7
+    implementation Libs.core_ktx
+
+    //** ARROW **//
+    implementation Libs.arrow_core
+    implementation Libs.arrow_syntax
+    implementation Libs.arrow_typeclasses
+    implementation Libs.arrow_data
+    implementation Libs.arrow_instances_core
+    implementation Libs.arrow_instances_data
+    kapt Libs.arrow_annotations_processor
+
+    //** TEST **//
+    testImplementation Libs.junit
+    androidTestImplementation Libs.androidx_test_runner
+    androidTestImplementation Libs.espresso_core
 }
