@@ -42,6 +42,11 @@ object Libs {
      * [lint-gradle website](https://developer.android.com/studio) */
     const val lint_gradle: String = "com.android.tools.lint:lint-gradle:" + Versions.lint_gradle
 
+    /**
+     * [inline-activity-result-kotlin website](https://github.com/florent37/InlineActivityResult) */
+    const val inline_activity_result_kotlin: String =
+            "com.github.florent37:inline-activity-result-kotlin:" + Versions.inline_activity_result_kotlin
+
     const val kotlin_functional_extensions_arrow: String =
             "com.github.giacomoParisi.kotlin-functional-extensions:kotlin-functional-extensions-arrow:" + Versions.com_github_giacomoparisi_kotlin_functional_extensions
 
@@ -53,12 +58,21 @@ object Libs {
 
     const val firebase_auth: String = "com.google.firebase:firebase-auth:" + Versions.firebase_auth
 
+    /**
+     * [google-services website](http://tools.android.com/) */
+    const val google_services: String = "com.google.gms:google-services:" + Versions.google_services
+
     const val arrow_annotations_processor: String =
             "io.arrow-kt:arrow-annotations-processor:" + Versions.io_arrow_kt
 
     const val arrow_core: String = "io.arrow-kt:arrow-core:" + Versions.io_arrow_kt
 
     const val arrow_data: String = "io.arrow-kt:arrow-data:" + Versions.io_arrow_kt
+
+    const val arrow_effects_kotlinx_coroutines: String =
+            "io.arrow-kt:arrow-effects-kotlinx-coroutines:" + Versions.io_arrow_kt
+
+    const val arrow_effects: String = "io.arrow-kt:arrow-effects:" + Versions.io_arrow_kt
 
     const val arrow_instances_core: String =
             "io.arrow-kt:arrow-instances-core:" + Versions.io_arrow_kt
@@ -103,4 +117,14 @@ object Libs {
      * [kotlin-stdlib-jdk7 website](https://kotlinlang.org/) */
     const val kotlin_stdlib_jdk7: String =
             "org.jetbrains.kotlin:kotlin-stdlib-jdk7:" + Versions.org_jetbrains_kotlin
+
+    /**
+     * [kotlinx-coroutines-android website](https://github.com/Kotlin/kotlinx.coroutines) */
+    const val kotlinx_coroutines_android: String =
+            "org.jetbrains.kotlinx:kotlinx-coroutines-android:" + Versions.org_jetbrains_kotlinx
+
+    /**
+     * [kotlinx-coroutines-core website](https://github.com/Kotlin/kotlinx.coroutines) */
+    const val kotlinx_coroutines_core: String =
+            "org.jetbrains.kotlinx:kotlinx-coroutines-core:" + Versions.org_jetbrains_kotlinx
 }

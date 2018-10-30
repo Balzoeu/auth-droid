@@ -51,7 +51,12 @@ dependencies {
     implementation Libs.arrow_data
     implementation Libs.arrow_instances_core
     implementation Libs.arrow_instances_data
+    implementation Libs.arrow_effects
     kapt Libs.arrow_annotations_processor
+
+    //** COROUTINES **//
+    implementation Libs.kotlinx_coroutines_android
+    implementation 'com.github.florent37:inline-activity-result-kotlin:1.0.0'
 
     //** TEST **//
     testImplementation Libs.junit

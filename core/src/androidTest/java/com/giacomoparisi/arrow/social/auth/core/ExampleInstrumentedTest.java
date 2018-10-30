@@ -1,4 +1,4 @@
-package com.giacomoparisi.arrowsocialauth.core;
+package com.giacomoparisi.arrow.social.auth.core;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

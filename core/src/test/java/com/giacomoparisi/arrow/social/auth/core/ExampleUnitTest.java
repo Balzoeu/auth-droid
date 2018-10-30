@@ -1,4 +1,4 @@
-package com.giacomoparisi.arrowsocialauth.core;
+package com.giacomoparisi.arrow.social.auth.core;
 
 import org.junit.Test;
 
