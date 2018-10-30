@@ -23,7 +23,7 @@ android {
 dependencies {
 
     //** MODULES **//
-    implementation project(':core')
+    implementation project(':arrow-social-auth-core')
 
     //** EXTENSIONS **//
     implementation Libs.kotlin_functional_extensions_core
