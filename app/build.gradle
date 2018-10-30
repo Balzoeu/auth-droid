@@ -25,6 +25,11 @@ dependencies {
     //** MODULES **//
     implementation project(':core')
 
+    //** EXTENSIONS **//
+    implementation Libs.kotlin_functional_extensions_core
+    implementation Libs.kotlin_functional_extensions_arrow
+    implementation "com.github.giacomoParisi.kotlin-functional-extensions:kotlin-functional-extensions-android:611535c1ea"
+
     //** KOTLIN **//
     implementation Libs.kotlin_stdlib_jdk7
     implementation Libs.kotlinx_coroutines_android

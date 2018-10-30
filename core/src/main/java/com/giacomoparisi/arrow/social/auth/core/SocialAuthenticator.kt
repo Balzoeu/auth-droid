@@ -4,5 +4,5 @@ import arrow.Kind
 
 abstract class SocialAuthenticator<F> {
 
-    abstract fun signIn(): Kind<F, SignInResult>
+    abstract fun signIn(): Kind<F, AuthResult>
 }

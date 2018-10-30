@@ -5,14 +5,11 @@ import androidx.fragment.app.FragmentActivity
 import arrow.Kind
 import arrow.core.*
 import arrow.effects.typeclasses.Async
-import com.giacomoparisi.arrow.social.auth.core.Cancelled
-import com.giacomoparisi.arrow.social.auth.core.Completed
-import com.giacomoparisi.arrow.social.auth.core.SignInResult
-import com.giacomoparisi.arrow.social.auth.core.toSocialAuthUser
-import com.giacomoparisi.kotlin.functional.extensions.arrow.ifFailure
-import com.giacomoparisi.kotlin.functional.extensions.arrow.ifNone
-import com.giacomoparisi.kotlin.functional.extensions.arrow.ifSome
-import com.giacomoparisi.kotlin.functional.extensions.arrow.ifSuccess
+import com.giacomoparisi.arrow.social.auth.core.*
+import com.giacomoparisi.kotlin.functional.extensions.arrow.`try`.ifFailure
+import com.giacomoparisi.kotlin.functional.extensions.arrow.`try`.ifSuccess
+import com.giacomoparisi.kotlin.functional.extensions.arrow.option.ifNone
+import com.giacomoparisi.kotlin.functional.extensions.arrow.option.ifSome
 import com.giacomoparisi.kotlin.functional.extensions.core.ifFalse
 import com.giacomoparisi.kotlin.functional.extensions.core.ifTrue
 import com.github.florent37.inlineactivityresult.kotlin.startForResult
@@ -40,11 +37,11 @@ class FirebaseGoogleSocialAuthenticator<F>(
                     this._activity,
                     this._googleSignInOptions)
 
-    override fun signIn(): Kind<F, SignInResult> =
+    override fun signIn(): Kind<F, AuthResult> =
             this._async.async { function ->
                 this._activity.startForResult(this._googleSignInClient.signInIntent) { result ->
                     this.authWithGoogle(result.data)
-                            .ifFailure { function(it.left()) }
+                            .ifFailure { function(Failed(it).right()) }
                             .ifSuccess { this.authWithFirebase(it, function) }
                 }
             }
@@ -58,7 +55,7 @@ class FirebaseGoogleSocialAuthenticator<F>(
 
     private fun authWithFirebase(
             account: GoogleSignInAccount,
-            function: (Either<Throwable, SignInResult>) -> Unit) {
+            function: (Either<Throwable, AuthResult>) -> Unit) {
 
         GoogleAuthProvider.getCredential(account.idToken, null)
                 .also { authCredential ->
@@ -70,18 +67,18 @@ class FirebaseGoogleSocialAuthenticator<F>(
                                             // firebase auth task completed
                                             auth.currentUser.toOption()
                                                     .ifSome { function(Completed(it.toSocialAuthUser()).right()) }
-                                                    .ifNone { function(Throwable("Unknown error during auth").left()) }
+                                                    .ifNone { function(Failed(Throwable("Unknown error during auth")).right()) }
                                         }
                                         .ifFalse {
                                             // firebase auth task completed with an error
-                                            function(task.exception
+                                            function(Failed(task.exception
                                                     .toOption()
                                                     .getOrElse { Throwable("Unknown error during auth") }
-                                                    .left())
+                                            ).right())
                                         }
                             }
                             .addOnCanceledListener { function(Cancelled.right()) }
-                            .addOnFailureListener { function(it.left()) }
+                            .addOnFailureListener { function(Failed(it).right()) }
                 }
     }
 }

@@ -31,6 +31,7 @@ dependencies {
     //** ANDROID **//
     implementation Libs.appcompat
 
+    //** EXTENSIONS **//
     implementation Libs.kotlin_functional_extensions_core
     implementation Libs.kotlin_functional_extensions_arrow
 
@@ -56,7 +57,7 @@ dependencies {
 
     //** COROUTINES **//
     implementation Libs.kotlinx_coroutines_android
-    implementation 'com.github.florent37:inline-activity-result-kotlin:1.0.0'
+    implementation Libs.inline_activity_result_kotlin
 
     //** TEST **//
     testImplementation Libs.junit

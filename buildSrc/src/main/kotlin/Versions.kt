@@ -45,7 +45,7 @@ object Versions {
     const val inline_activity_result_kotlin: String = "1.0.0" // up-to-date
 
     const val com_github_giacomoparisi_kotlin_functional_extensions: String =
-            "7ac8b8179e" // No update information. Is this dependency available on jcenter or mavenCentral?
+            "611535c1ea" // No update information. Is this dependency available on jcenter or mavenCentral?
 
     const val play_services_auth: String = "16.0.1" // up-to-date
 
