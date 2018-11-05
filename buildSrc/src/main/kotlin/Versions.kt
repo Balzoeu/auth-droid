@@ -41,6 +41,10 @@ object Versions {
     const val lint_gradle: String = "26.2.1" // available milestone: "26.4.0-alpha02" 
 
     /**
+     * [facebook-core website](https://github.com/facebook/facebook-android-sdk) */
+    const val com_facebook_android: String = "4.38.0" // up-to-date
+
+    /**
      * [inline-activity-result-kotlin website](https://github.com/florent37/InlineActivityResult) */
     const val inline_activity_result_kotlin: String = "1.0.0" // up-to-date
 
@@ -53,13 +57,13 @@ object Versions {
 
     /**
      * [google-services website](http://tools.android.com/) */
-    const val google_services: String = "4.1.0" // available milestone: "4.2.0" 
+    const val google_services: String = "4.2.0" // up-to-date
 
     const val io_arrow_kt: String =
             "0.7.3" // No update information. Is this dependency available on jcenter or mavenCentral?
 
     const val jmfayard_github_io_gradle_kotlin_dsl_libs_gradle_plugin: String =
-            "0.2.5" // up-to-date
+            "0.2.5" // available milestone: "0.2.6" 
 
     /**
      * [junit website](http://junit.org) */
@@ -67,11 +71,11 @@ object Versions {
 
     /**
      * [kotlin-android-extensions-runtime website](https://kotlinlang.org/) */
-    const val org_jetbrains_kotlin: String = "1.2.71" // up-to-date
+    const val org_jetbrains_kotlin: String = "1.2.71" // available milestone: "1.3.0" 
 
     /**
      * [kotlinx-coroutines-android website](https://github.com/Kotlin/kotlinx.coroutines) */
-    const val org_jetbrains_kotlinx: String = "0.30.2" // up-to-date
+    const val kotlinx_coroutines_android: String = "0.30.2" // available milestone: "1.0.0" 
 
     /**
      *
@@ -85,6 +89,6 @@ object Versions {
 
         const val nightlyVersion: String = "5.1-20181030000041+0000"
 
-        const val releaseCandidate: String = ""
+        const val releaseCandidate: String = "5.0-rc-1"
     }
 }

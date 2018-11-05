@@ -43,9 +43,22 @@ object Libs {
     const val lint_gradle: String = "com.android.tools.lint:lint-gradle:" + Versions.lint_gradle
 
     /**
+     * [facebook-core website](https://github.com/facebook/facebook-android-sdk) */
+    const val facebook_core: String =
+            "com.facebook.android:facebook-core:" + Versions.com_facebook_android
+
+    /**
+     * [facebook-login website](https://github.com/facebook/facebook-android-sdk) */
+    const val facebook_login: String =
+            "com.facebook.android:facebook-login:" + Versions.com_facebook_android
+
+    /**
      * [inline-activity-result-kotlin website](https://github.com/florent37/InlineActivityResult) */
     const val inline_activity_result_kotlin: String =
             "com.github.florent37:inline-activity-result-kotlin:" + Versions.inline_activity_result_kotlin
+
+    const val kotlin_functional_extensions_android: String =
+            "com.github.giacomoParisi.kotlin-functional-extensions:kotlin-functional-extensions-android:" + Versions.com_github_giacomoparisi_kotlin_functional_extensions
 
     const val kotlin_functional_extensions_arrow: String =
             "com.github.giacomoParisi.kotlin-functional-extensions:kotlin-functional-extensions-arrow:" + Versions.com_github_giacomoparisi_kotlin_functional_extensions
@@ -121,10 +134,5 @@ object Libs {
     /**
      * [kotlinx-coroutines-android website](https://github.com/Kotlin/kotlinx.coroutines) */
     const val kotlinx_coroutines_android: String =
-            "org.jetbrains.kotlinx:kotlinx-coroutines-android:" + Versions.org_jetbrains_kotlinx
-
-    /**
-     * [kotlinx-coroutines-core website](https://github.com/Kotlin/kotlinx.coroutines) */
-    const val kotlinx_coroutines_core: String =
-            "org.jetbrains.kotlinx:kotlinx-coroutines-core:" + Versions.org_jetbrains_kotlinx
+            "org.jetbrains.kotlinx:kotlinx-coroutines-android:" + Versions.kotlinx_coroutines_android
 }

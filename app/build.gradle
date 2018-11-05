@@ -28,7 +28,7 @@ dependencies {
     //** EXTENSIONS **//
     implementation Libs.kotlin_functional_extensions_core
     implementation Libs.kotlin_functional_extensions_arrow
-    implementation "com.github.giacomoParisi.kotlin-functional-extensions:kotlin-functional-extensions-android:611535c1ea"
+    implementation Libs.kotlin_functional_extensions_android
 
     //** KOTLIN **//
     implementation Libs.kotlin_stdlib_jdk7
@@ -38,6 +38,10 @@ dependencies {
     implementation Libs.appcompat
     implementation Libs.constraintlayout
 
+    //** FACEBOOK **//
+    implementation Libs.facebook_login
+    implementation Libs.facebook_core
+
     //** ARROW **//
     implementation Libs.arrow_core
     implementation Libs.arrow_syntax
@@ -46,7 +50,7 @@ dependencies {
     implementation Libs.arrow_instances_core
     implementation Libs.arrow_instances_data
     implementation Libs.arrow_effects
-    implementation "io.arrow-kt:arrow-effects-kotlinx-coroutines:0.7.3"
+    implementation Libs.arrow_effects_kotlinx_coroutines
     kapt Libs.arrow_annotations_processor
 
     //** TEST **//

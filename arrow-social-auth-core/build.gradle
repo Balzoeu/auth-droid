@@ -38,6 +38,9 @@ dependencies {
     //** GOOGLE AUTH **//
     implementation Libs.play_services_auth
 
+    //** FACEBOOK AUTH **//
+    implementation Libs.facebook_login
+
     //** FIREBASE **//
     implementation Libs.firebase_auth
 

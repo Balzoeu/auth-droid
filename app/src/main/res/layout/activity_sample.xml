@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
+    android:orientation="vertical"
     tools:context="com.giacomoparisi.arrow.social.auth.SampleActivity">
 
     <Button
@@ -11,6 +12,13 @@
         android:layout_width="300dp"
         android:layout_height="50dp"
         android:text="GOOGLE FIREBASE LOGIN"
-        tools:ignore="HardcodedText" />
+        tools:ignore="ButtonStyle,HardcodedText" />
+
+    <Button
+        android:id="@+id/firebase_facebook_login"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:text="FACEBOOK FIREBASE LOGIN"
+        tools:ignore="ButtonStyle,HardcodedText" />
 
 </LinearLayout>
