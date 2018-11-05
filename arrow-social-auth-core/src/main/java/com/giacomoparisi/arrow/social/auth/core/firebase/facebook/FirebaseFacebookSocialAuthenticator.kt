@@ -55,7 +55,7 @@ class FirebaseFacebookSocialAuthenticator<F>(
             function: (Either<Throwable, AuthResult>) -> Unit) {
         this@handleFacebookLogin.ifSome { loginResult ->
             val credential = FacebookAuthProvider.getCredential(loginResult.accessToken.token)
-            this@FirebaseFacebookSocialAuthenticator.firebaseSignIn(credential, function)
+            this@FirebaseFacebookSocialAuthenticator.firebaseCredentialSignIn(credential, function)
         }.ifNone { function(Failed(Exception("Unknown error during auth")).right()) }
     }
 }

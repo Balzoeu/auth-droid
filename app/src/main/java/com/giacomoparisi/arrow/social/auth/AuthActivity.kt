@@ -5,34 +5,36 @@ import androidx.appcompat.app.AppCompatActivity
 import arrow.effects.DeferredK
 import arrow.effects.async
 import arrow.effects.await
-import com.giacomoparisi.arrow.social.auth.core.AuthResult
-import com.giacomoparisi.arrow.social.auth.core.Cancelled
-import com.giacomoparisi.arrow.social.auth.core.Completed
-import com.giacomoparisi.arrow.social.auth.core.Failed
-import com.giacomoparisi.arrow.social.auth.core.firebase.google.FirebaseGoogleSocialAuthenticator
 import com.giacomoparisi.arrow.social.auth.core.firebase.facebook.FirebaseFacebookSocialAuthenticator
-import com.giacomoparisi.kotlin.functional.extensions.android.toast.showLongToast
-import kotlinx.android.synthetic.main.activity_sample.*
+import com.giacomoparisi.arrow.social.auth.core.firebase.google.FirebaseGoogleSocialAuthenticator
+import kotlinx.android.synthetic.main.auth.*
 import kotlinx.coroutines.experimental.CoroutineScope
 import kotlinx.coroutines.experimental.Dispatchers
 import kotlinx.coroutines.experimental.launch
 
-class SampleActivity : AppCompatActivity() {
+class AuthActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_sample)
+        setContentView(R.layout.auth)
 
         this.firebase_google_login.setOnClickListener {
             CoroutineScope(Dispatchers.Default).launch {
-                this@SampleActivity.googleSignIn()
+                this@AuthActivity.googleSignIn()
             }
         }
 
         this.firebase_facebook_login.setOnClickListener {
             CoroutineScope(Dispatchers.Default).launch {
-                this@SampleActivity.facebookSignIn()
+                this@AuthActivity.facebookSignIn()
             }
+        }
+
+        this.firebase_email_password_login.setOnClickListener {
+            this.supportFragmentManager.beginTransaction()
+                    .replace(R.id.root, EmailPasswordAuthFragment())
+                    .addToBackStack(null)
+                    .commit()
         }
     }
 
@@ -41,23 +43,13 @@ class SampleActivity : AppCompatActivity() {
                 this.getString(R.string.google_client_id_web), DeferredK.async(), this)
                 .signIn()
                 .await()
-                .showMessage()
+                .showMessage(this)
     }
 
     private suspend fun facebookSignIn() {
         FirebaseFacebookSocialAuthenticator(DeferredK.async(), this)
                 .signIn()
                 .await()
-                .showMessage()
-    }
-
-    private fun AuthResult.showMessage() {
-        CoroutineScope(Dispatchers.Main).launch {
-            when (this@showMessage) {
-                is Cancelled -> this@SampleActivity.showLongToast("Cancelled")
-                is Completed -> this@SampleActivity.showLongToast(this@showMessage.user.toString())
-                is Failed -> this@SampleActivity.showLongToast(this@showMessage.throwable.message.orEmpty())
-            }
-        }
+                .showMessage(this)
     }
 }

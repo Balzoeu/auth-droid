@@ -44,7 +44,7 @@ class FirebaseGoogleSocialAuthenticator<F>(
                     this.authWithGoogle(result.data)
                             .ifFailure { function(Failed(it).right()) }
                             .ifSuccess { it ->
-                                this.firebaseSignIn(GoogleAuthProvider.getCredential(
+                                this.firebaseCredentialSignIn(GoogleAuthProvider.getCredential(
                                         it.idToken,
                                         null
                                 ), function)
