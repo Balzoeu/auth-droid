@@ -1,4 +1,4 @@
-package com.giacomoparisi.arrow.social.auth.core.firebase
+package com.giacomoparisi.arrow.social.auth.core.firebase.google
 
 import android.content.Intent
 import androidx.fragment.app.FragmentActivity
@@ -10,6 +10,7 @@ import arrow.core.toOption
 import arrow.effects.typeclasses.Async
 import com.giacomoparisi.arrow.social.auth.core.AuthResult
 import com.giacomoparisi.arrow.social.auth.core.Failed
+import com.giacomoparisi.arrow.social.auth.core.firebase.FirebaseSocialAuthenticator
 import com.giacomoparisi.kotlin.functional.extensions.arrow.`try`.ifFailure
 import com.giacomoparisi.kotlin.functional.extensions.arrow.`try`.ifSuccess
 import com.github.florent37.inlineactivityresult.kotlin.startForResult
