@@ -4,7 +4,7 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.github.dcendents.android-maven'
 
-group='com.github.giacomoParisi.arrow-social-auth'
+group = 'com.github.giacomoParisi.arrow-social-auth'
 
 androidExtensions {
     experimental = true
@@ -64,6 +64,8 @@ dependencies {
 
     //** COROUTINES **//
     implementation Libs.kotlinx_coroutines_android
+
+    //** ACTIVITY RESULT INLINE **//
     implementation Libs.inline_activity_result_kotlin
 
     //** TEST **//

@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.fragment.app.Fragment
 import com.facebook.CallbackManager
 import com.facebook.login.LoginManager
+import java.util.*
 
 class FacebookFragment : Fragment() {
 
@@ -12,10 +13,10 @@ class FacebookFragment : Fragment() {
     override fun onStart() {
         super.onStart()
 
-        LoginManager.getInstance().logInWithReadPermissions(
+        /*LoginManager.getInstance().logInWithReadPermissions(
                 this,
-                mutableListOf("email", "public_profile")
-        )
+                Arrays.asList("email", "public_profile")
+        )*/
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

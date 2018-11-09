@@ -13,6 +13,7 @@ import com.giacomoparisi.arrow.social.auth.core.Failed
 import com.giacomoparisi.arrow.social.auth.core.firebase.FirebaseSocialAuthenticator
 import com.giacomoparisi.kotlin.functional.extensions.arrow.`try`.ifFailure
 import com.giacomoparisi.kotlin.functional.extensions.arrow.`try`.ifSuccess
+import com.github.florent37.inlineactivityresult.Result
 import com.github.florent37.inlineactivityresult.kotlin.startForResult
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -40,7 +41,7 @@ class FirebaseGoogleSocialAuthenticator<F>(
 
     override fun signIn(): Kind<F, AuthResult> =
             this.async.async { function ->
-                this.activity.startForResult(this._googleSignInClient.signInIntent) { result ->
+                this.activity.startForResult(this._googleSignInClient.signInIntent) { result: Result ->
                     this.authWithGoogle(result.data)
                             .ifFailure { function(Failed(it).right()) }
                             .ifSuccess { it ->
