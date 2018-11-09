@@ -6,9 +6,9 @@ import com.giacomoparisi.arrow.social.auth.core.Cancelled
 import com.giacomoparisi.arrow.social.auth.core.Completed
 import com.giacomoparisi.arrow.social.auth.core.Failed
 import com.giacomoparisi.kotlin.functional.extensions.android.toast.showLongToast
-import kotlinx.coroutines.experimental.CoroutineScope
-import kotlinx.coroutines.experimental.Dispatchers
-import kotlinx.coroutines.experimental.launch
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 fun AuthResult.showMessage(activity: FragmentActivity) {
     CoroutineScope(Dispatchers.Main).launch {

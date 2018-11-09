@@ -2,8 +2,8 @@ package com.giacomoparisi.arrow.social.auth.core
 
 import arrow.core.Option
 import arrow.core.fix
-import arrow.core.monad
 import arrow.core.toOption
+import arrow.instances.option.monad.monad
 import arrow.typeclasses.binding
 import com.giacomoparisi.kotlin.functional.extensions.arrow.option.getOrEmpty
 import com.google.firebase.auth.FirebaseUser

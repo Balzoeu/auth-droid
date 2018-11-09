@@ -11,14 +11,14 @@ import arrow.core.None
 import arrow.core.Option
 import arrow.core.some
 import arrow.effects.DeferredK
-import arrow.effects.async
 import arrow.effects.await
+import arrow.effects.deferredk.async.async
 import com.giacomoparisi.arrow.social.auth.core.firebase.email.FirebaseEmailAuthenticator
 import com.giacomoparisi.kotlin.functional.extensions.arrow.option.getOrEmpty
 import kotlinx.android.synthetic.main.email_password_auth.*
-import kotlinx.coroutines.experimental.CoroutineScope
-import kotlinx.coroutines.experimental.Dispatchers
-import kotlinx.coroutines.experimental.launch
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class EmailPasswordAuthFragment : Fragment() {
 

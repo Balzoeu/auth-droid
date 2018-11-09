@@ -3,14 +3,14 @@ package com.giacomoparisi.arrow.social.auth
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import arrow.effects.DeferredK
-import arrow.effects.async
 import arrow.effects.await
+import arrow.effects.deferredk.async.async
 import com.giacomoparisi.arrow.social.auth.core.firebase.facebook.FirebaseFacebookSocialAuthenticator
 import com.giacomoparisi.arrow.social.auth.core.firebase.google.FirebaseGoogleSocialAuthenticator
 import kotlinx.android.synthetic.main.auth.*
-import kotlinx.coroutines.experimental.CoroutineScope
-import kotlinx.coroutines.experimental.Dispatchers
-import kotlinx.coroutines.experimental.launch
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class AuthActivity : AppCompatActivity() {
 

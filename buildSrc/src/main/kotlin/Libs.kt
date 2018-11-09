@@ -82,6 +82,9 @@ object Libs {
 
     const val arrow_data: String = "io.arrow-kt:arrow-data:" + Versions.io_arrow_kt
 
+    const val arrow_effects_kotlinx_coroutines_instances: String =
+            "io.arrow-kt:arrow-effects-kotlinx-coroutines-instances:" + Versions.io_arrow_kt
+
     const val arrow_effects_kotlinx_coroutines: String =
             "io.arrow-kt:arrow-effects-kotlinx-coroutines:" + Versions.io_arrow_kt
 

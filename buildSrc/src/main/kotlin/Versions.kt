@@ -9,7 +9,7 @@ import kotlin.String
 object Versions {
     /**
      * [appcompat website](http://developer.android.com/tools/extras/support-library.html) */
-    const val appcompat: String = "1.0.0" // up-to-date
+    const val appcompat: String = "1.0.0" // available milestone: "1.0.2" 
 
     /**
      * [constraintlayout website](http://tools.android.com) */
@@ -17,7 +17,7 @@ object Versions {
 
     /**
      * [core-ktx website](http://developer.android.com/tools/extras/support-library.html) */
-    const val core_ktx: String = "1.0.0" // up-to-date
+    const val core_ktx: String = "1.0.0" // available milestone: "1.0.1" 
 
     /**
      * [espresso-core website](https://developer.android.com/testing) */
@@ -29,27 +29,27 @@ object Versions {
 
     /**
      * [aapt2 website](https://developer.android.com/studio) */
-    const val aapt2: String = "3.2.1-4818971" // available milestone: "3.4.0-alpha02-5013011" 
+    const val aapt2: String = "3.2.1-4818971" // available milestone: "3.4.0-alpha03-5013011" 
 
     /**
      * [gradle website](https://developer.android.com/studio) */
     const val com_android_tools_build_gradle: String =
-            "3.2.1" // available milestone: "3.4.0-alpha02" 
+            "3.2.1" // available milestone: "3.4.0-alpha03" 
 
     /**
      * [lint-gradle website](https://developer.android.com/studio) */
-    const val lint_gradle: String = "26.2.1" // available milestone: "26.4.0-alpha02" 
+    const val lint_gradle: String = "26.2.1" // available milestone: "26.4.0-alpha03" 
 
     /**
      * [facebook-core website](https://github.com/facebook/facebook-android-sdk) */
-    const val com_facebook_android: String = "4.38.0" // up-to-date
+    const val com_facebook_android: String = "4.38.0" // available milestone: "4.38.1" 
 
     /**
      * [inline-activity-result-kotlin website](https://github.com/florent37/InlineActivityResult) */
     const val inline_activity_result_kotlin: String = "1.0.0" // up-to-date
 
     const val com_github_giacomoparisi_kotlin_functional_extensions: String =
-            "611535c1ea" // No update information. Is this dependency available on jcenter or mavenCentral?
+            "ef9c966d23" // No update information. Is this dependency available on jcenter or mavenCentral?
 
     const val play_services_auth: String = "16.0.1" // up-to-date
 
@@ -60,7 +60,7 @@ object Versions {
     const val google_services: String = "4.2.0" // up-to-date
 
     const val io_arrow_kt: String =
-            "0.7.3" // No update information. Is this dependency available on jcenter or mavenCentral?
+            "0.8.0" // No update information. Is this dependency available on jcenter or mavenCentral?
 
     const val jmfayard_github_io_gradle_kotlin_dsl_libs_gradle_plugin: String =
             "0.2.5" // available milestone: "0.2.6" 
@@ -71,11 +71,11 @@ object Versions {
 
     /**
      * [kotlin-android-extensions-runtime website](https://kotlinlang.org/) */
-    const val org_jetbrains_kotlin: String = "1.2.71" // available milestone: "1.3.0" 
+    const val org_jetbrains_kotlin: String = "1.3.0" // up-to-date
 
     /**
      * [kotlinx-coroutines-android website](https://github.com/Kotlin/kotlinx.coroutines) */
-    const val kotlinx_coroutines_android: String = "0.30.2" // available milestone: "1.0.0" 
+    const val kotlinx_coroutines_android: String = "1.0.0" // available milestone: "1.0.1" 
 
     /**
      *
@@ -87,7 +87,7 @@ object Versions {
 
         const val currentVersion: String = "4.10.2"
 
-        const val nightlyVersion: String = "5.1-20181030000041+0000"
+        const val nightlyVersion: String = "5.1-20181109000105+0000"
 
         const val releaseCandidate: String = "5.0-rc-1"
     }
