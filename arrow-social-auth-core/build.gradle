@@ -90,7 +90,7 @@ install {
         pom.project {
             packaging 'aar'
             groupId publishedGroupId
-            artifactId 'core'
+            artifactId 'arrow-social-auth-core'
 
             name libraryName
             description libraryDescription

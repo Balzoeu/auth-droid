@@ -5,8 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import arrow.effects.DeferredK
 import arrow.effects.await
 import arrow.effects.deferredk.async.async
-import com.giacomoparisi.arrow.social.auth.core.firebase.facebook.FirebaseFacebookSocialAuthenticator
-import com.giacomoparisi.arrow.social.auth.core.firebase.google.FirebaseGoogleSocialAuthenticator
+import com.giacomoparisi.arrow.social.auth.core.firebase.authWithFirebaseFacebook
+import com.giacomoparisi.arrow.social.auth.core.firebase.authWithFirebaseGoogle
 import kotlinx.android.synthetic.main.auth.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -39,16 +39,16 @@ class AuthActivity : AppCompatActivity() {
     }
 
     private suspend fun googleSignIn() {
-        FirebaseGoogleSocialAuthenticator(
-                this.getString(R.string.google_client_id_web), DeferredK.async(), this)
-                .signIn()
+        authWithFirebaseGoogle(
+                DeferredK.async(),
+                this,
+                this.getString(R.string.google_client_id_web))
                 .await()
                 .showMessage(this)
     }
 
     private suspend fun facebookSignIn() {
-        FirebaseFacebookSocialAuthenticator(DeferredK.async(), this)
-                .signIn()
+        authWithFirebaseFacebook(DeferredK.async(), this)
                 .await()
                 .showMessage(this)
     }

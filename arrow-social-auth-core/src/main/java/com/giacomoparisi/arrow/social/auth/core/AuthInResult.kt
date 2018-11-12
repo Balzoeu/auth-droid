@@ -2,8 +2,8 @@ package com.giacomoparisi.arrow.social.auth.core
 
 sealed class AuthResult
 
-data class Completed(val user: SocialAuthUser) : AuthResult()
+data class AuthCompleted(val user: SocialAuthUser) : AuthResult()
 
-object Cancelled : AuthResult()
+object AuthCancelled : AuthResult()
 
-data class Failed(val throwable: Throwable) : AuthResult()
+data class AuthFailed(val throwable: Throwable) : AuthResult()

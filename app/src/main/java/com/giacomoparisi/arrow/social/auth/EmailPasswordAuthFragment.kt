@@ -13,7 +13,8 @@ import arrow.core.some
 import arrow.effects.DeferredK
 import arrow.effects.await
 import arrow.effects.deferredk.async.async
-import com.giacomoparisi.arrow.social.auth.core.firebase.email.FirebaseEmailAuthenticator
+import com.giacomoparisi.arrow.social.auth.core.firebase.signInWithFirebaseEmailPassword
+import com.giacomoparisi.arrow.social.auth.core.firebase.signUpWithFirebaseEmailPassword
 import com.giacomoparisi.kotlin.functional.extensions.arrow.option.getOrEmpty
 import kotlinx.android.synthetic.main.email_password_auth.*
 import kotlinx.coroutines.CoroutineScope
@@ -57,12 +58,10 @@ class EmailPasswordAuthFragment : Fragment() {
 
         this.sign_up.setOnClickListener {
             CoroutineScope(Dispatchers.Default).launch {
-                FirebaseEmailAuthenticator(
-                        email.getOrEmpty(),
-                        password.getOrEmpty(),
+                signUpWithFirebaseEmailPassword(
                         DeferredK.async(),
-                        requireActivity())
-                        .signUp()
+                        email.getOrEmpty(),
+                        password.getOrEmpty())
                         .await()
                         .showMessage(this@EmailPasswordAuthFragment.requireActivity())
             }
@@ -70,12 +69,10 @@ class EmailPasswordAuthFragment : Fragment() {
 
         this.sign_in.setOnClickListener {
             CoroutineScope(Dispatchers.Default).launch {
-                FirebaseEmailAuthenticator(
-                        email.getOrEmpty(),
-                        password.getOrEmpty(),
+                signInWithFirebaseEmailPassword(
                         DeferredK.async(),
-                        requireActivity())
-                        .signIn()
+                        email.getOrEmpty(),
+                        password.getOrEmpty())
                         .await()
                         .showMessage(this@EmailPasswordAuthFragment.requireActivity())
             }
