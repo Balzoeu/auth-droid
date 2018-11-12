@@ -10,7 +10,7 @@ ext {
     siteUrl = 'https://github.com/giacomoParisi/arrow-social-auth'
     gitUrl = 'https://github.com/giacomoParisi/arrow-social-auth.git'
 
-    libraryVersion = '0.0.1-alpha01'
+    libraryVersion = '0.0.1-alpha03'
 
     developerId = 'giacomoP'
     developerName = 'Giacomo Parisi'
