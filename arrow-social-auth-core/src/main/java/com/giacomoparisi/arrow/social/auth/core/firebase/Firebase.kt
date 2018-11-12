@@ -1,10 +1,7 @@
 package com.giacomoparisi.arrow.social.auth.core.firebase
 
 import arrow.Kind
-import arrow.core.Either
-import arrow.core.getOrElse
-import arrow.core.right
-import arrow.core.toOption
+import arrow.core.*
 import arrow.effects.typeclasses.Async
 import com.giacomoparisi.arrow.social.auth.core.*
 import com.giacomoparisi.kotlin.functional.extensions.arrow.option.ifNone
@@ -25,6 +22,9 @@ fun <F> getFirebaseToken(async: Async<F>): Kind<F, FirebaseTokenResult> =
                         it.getIdToken(true).bindToTokenListener(function)
                     }
         }
+
+fun getFirebaseId(): Option<String> =
+        firebaseAuth().currentUser.toOption().map { it.uid }
 
 internal fun firebaseCredentialSignIn(
         credential: AuthCredential,
