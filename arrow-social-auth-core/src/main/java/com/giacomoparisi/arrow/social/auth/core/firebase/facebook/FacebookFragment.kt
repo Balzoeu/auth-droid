@@ -13,10 +13,10 @@ class FacebookFragment : Fragment() {
     override fun onStart() {
         super.onStart()
 
-        /*LoginManager.getInstance().logInWithReadPermissions(
+        LoginManager.getInstance().logInWithReadPermissions(
                 this,
                 Arrays.asList("email", "public_profile")
-        )*/
+        )
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
