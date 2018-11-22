@@ -1,0 +1,33 @@
+/**
+ * Bintray release configuration
+ * */
+ext {
+  bintrayRepo = 'maven'
+  bintrayName = POM_BINTRAY_NAME
+
+  publishedGroupId = 'com.giacomoparisi.arrow.social.auth'
+  libraryName = 'Arrow Social Auth'
+  artifact = POM_ARTIFACT_ID
+  packagingType = POM_PACKAGING
+
+  libraryDescription = POM_DESCRIPTION
+
+  siteUrl = 'https://github.com/giacomoParisi/arrow-social-auth'
+  gitUrl = 'https://github.com/giacomoParisi/arrow-social-auth.git'
+
+  libraryVersion = POM_VERSION
+
+  developerId = 'giacomoP'
+  developerName = 'Giacomo Parisi'
+  developerEmail = 'giacomoparisi95@gmail.com'
+
+  licenseName = 'The Apache Software License, Version 2.0'
+  licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+  allLicenses = ["Apache-2.0"]
+}
+
+// Set up the Android Maven publication.
+apply from: rootProject.file('jcenter/maven-install.gradle')
+
+// Publish on Bintray.
+apply from: rootProject.file('jcenter/bintray.gradle')

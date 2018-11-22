@@ -53,6 +53,11 @@ object Libs {
             "com.facebook.android:facebook-login:" + Versions.com_facebook_android
 
     /**
+     * [android-maven-gradle-plugin website](https://github.com/dcendents/android-maven-gradle-plugin) */
+    const val android_maven_gradle_plugin: String =
+            "com.github.dcendents:android-maven-gradle-plugin:" + Versions.android_maven_gradle_plugin
+
+    /**
      * [inline-activity-result-kotlin website](https://github.com/florent37/InlineActivityResult) */
     const val inline_activity_result_kotlin: String =
             "com.github.florent37:inline-activity-result-kotlin:" + Versions.inline_activity_result_kotlin
@@ -74,6 +79,9 @@ object Libs {
     /**
      * [google-services website](http://tools.android.com/) */
     const val google_services: String = "com.google.gms:google-services:" + Versions.google_services
+
+    const val gradle_bintray_plugin: String =
+            "com.jfrog.bintray.gradle:gradle-bintray-plugin:" + Versions.gradle_bintray_plugin
 
     const val arrow_annotations_processor: String =
             "io.arrow-kt:arrow-annotations-processor:" + Versions.io_arrow_kt
@@ -108,6 +116,12 @@ object Libs {
     /**
      * [junit website](http://junit.org) */
     const val junit: String = "junit:junit:" + Versions.junit
+
+    const val dokka_android_gradle_plugin: String =
+            "org.jetbrains.dokka:dokka-android-gradle-plugin:" + Versions.org_jetbrains_dokka
+
+    const val dokka_gradle_plugin: String =
+            "org.jetbrains.dokka:dokka-gradle-plugin:" + Versions.org_jetbrains_dokka
 
     /**
      * [kotlin-android-extensions-runtime website](https://kotlinlang.org/) */
