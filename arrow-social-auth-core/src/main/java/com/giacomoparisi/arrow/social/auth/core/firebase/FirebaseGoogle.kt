@@ -9,6 +9,7 @@ import arrow.core.right
 import arrow.core.toOption
 import arrow.effects.typeclasses.Async
 import com.giacomoparisi.arrow.social.auth.core.AuthResult
+import com.giacomoparisi.arrow.social.auth.core.SocialAuthUser
 import com.giacomoparisi.kotlin.functional.extensions.arrow.`try`.ifFailure
 import com.giacomoparisi.kotlin.functional.extensions.arrow.`try`.ifSuccess
 import com.github.florent37.inlineactivityresult.Result
@@ -20,11 +21,11 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.GoogleAuthProvider
 
-fun <F> authWithFirebaseGoogle(async: Async<F>, activity: FragmentActivity, clientId: String): Kind<F, AuthResult> =
+fun <F> authWithFirebaseGoogle(async: Async<F>, activity: FragmentActivity, clientId: String): Kind<F, AuthResult<SocialAuthUser>> =
         async.async { function ->
             activity.startForResult(getGoogleSignInIntent(activity, clientId)) { result: Result ->
                 authWithGoogle(result.data)
-                        .ifFailure { function(AuthResult.Failed(it).right()) }
+                        .ifFailure { function(AuthResult.Failed<SocialAuthUser>(it).right()) }
                         .ifSuccess { it ->
                             firebaseCredentialSignIn(
                                     GoogleAuthProvider.getCredential(

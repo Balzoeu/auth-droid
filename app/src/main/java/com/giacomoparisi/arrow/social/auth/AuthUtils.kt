@@ -7,11 +7,11 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-fun AuthResult.showMessage(activity: FragmentActivity) {
+fun <T> AuthResult<T>.showMessage(activity: FragmentActivity) {
     CoroutineScope(Dispatchers.Main).launch {
         when (this@showMessage) {
             is AuthResult.Cancelled -> activity.showLongToast("AuthCancelled")
-            is AuthResult.Completed<*> -> activity.showLongToast(this@showMessage.value.toString())
+            is AuthResult.Completed -> activity.showLongToast(this@showMessage.value.toString())
             is AuthResult.Failed -> activity.showLongToast(this@showMessage.throwable.message.orEmpty())
         }
     }
