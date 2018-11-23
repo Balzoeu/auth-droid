@@ -85,6 +85,26 @@ fun <F> updateFirebasePassword(async: Async<F>, password: String): Kind<F, AuthR
                     }
         }
 
+fun <F> resetFirebasePassword(async: Async<F>, email: String): Kind<F, AuthResult> =
+        async.async { function ->
+            FirebaseAuth.getInstance()
+                    .also { it.useAppLanguage() }
+                    .sendPasswordResetEmail(email)
+                    .addOnCanceledListener { function(AuthResult.Cancelled.right()) }
+                    .addOnFailureListener { exception -> function(AuthResult.Failed(exception).right()) }
+                    .addOnCompleteListener { task ->
+                        task.isSuccessful
+                                .ifTrue { function(AuthResult.Completed(Unit).right()) }
+                                .ifFalse {
+                                    function(AuthResult.Failed(
+                                            task.exception
+                                                    .toOption()
+                                                    .getOrElse { Exception("Unknown error during password reset") }
+                                    ).right())
+                                }
+                    }
+        }
+
 
 internal fun firebaseCredentialSignIn(
         credential: AuthCredential,
