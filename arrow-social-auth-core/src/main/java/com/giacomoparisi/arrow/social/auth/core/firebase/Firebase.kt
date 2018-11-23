@@ -61,6 +61,30 @@ fun <F> updateFirebaseProfile(async: Async<F>, displayName: String? = null, phot
                     }
         }
 
+fun <F> updateFirebasePassword(async: Async<F>, password: String): Kind<F, AuthResult> =
+        async.async { function ->
+            FirebaseAuth.getInstance()
+                    .currentUser
+                    .toOption()
+                    .ifNone { AuthResult.Failed(Throwable("User non logged with firebase")).right() }
+                    .ifSome { firebaseUser ->
+                        firebaseUser.updatePassword(password)
+                                .addOnCanceledListener { function(AuthResult.Cancelled.right()) }
+                                .addOnFailureListener { exception -> function(AuthResult.Failed(exception).right()) }
+                                .addOnCompleteListener { task ->
+                                    task.isSuccessful
+                                            .ifTrue { function(AuthResult.Completed(Unit).right()) }
+                                            .ifFalse {
+                                                function(AuthResult.Failed(
+                                                        task.exception
+                                                                .toOption()
+                                                                .getOrElse { Exception("Unknown error during password update") }
+                                                ).right())
+                                            }
+                                }
+                    }
+        }
+
 
 internal fun firebaseCredentialSignIn(
         credential: AuthCredential,
