@@ -8,8 +8,6 @@ import com.facebook.FacebookCallback
 import com.facebook.FacebookException
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
-import com.giacomoparisi.arrow.social.auth.core.AuthCancelled
-import com.giacomoparisi.arrow.social.auth.core.AuthFailed
 import com.giacomoparisi.arrow.social.auth.core.AuthResult
 import com.giacomoparisi.kotlin.functional.extensions.arrow.option.ifNone
 import com.giacomoparisi.kotlin.functional.extensions.arrow.option.ifSome
@@ -31,12 +29,12 @@ fun <F> authWithFirebaseFacebook(async: Async<F>, activity: FragmentActivity): K
                         }
 
                         override fun onCancel() {
-                            function(AuthCancelled.right())
+                            function(AuthResult.Cancelled.right())
                             activity.supportFragmentManager.popBackStack()
                         }
 
                         override fun onError(error: FacebookException?) {
-                            function(AuthFailed(error.toOption()
+                            function(AuthResult.Failed(error.toOption()
                                     .getOrElse { Exception("Unknown error during auth") })
                                     .right())
                             activity.supportFragmentManager.popBackStack()
@@ -50,5 +48,5 @@ private fun Option<LoginResult>.handleFacebookLogin(
     this@handleFacebookLogin.ifSome { loginResult ->
         val credential = FacebookAuthProvider.getCredential(loginResult.accessToken.token)
         firebaseCredentialSignIn(credential, function)
-    }.ifNone { function(AuthFailed(Exception("Unknown error during auth")).right()) }
+    }.ifNone { function(AuthResult.Failed(Exception("Unknown error during auth")).right()) }
 }

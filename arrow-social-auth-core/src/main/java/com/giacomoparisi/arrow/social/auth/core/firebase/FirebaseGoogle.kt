@@ -8,7 +8,6 @@ import arrow.core.getOrElse
 import arrow.core.right
 import arrow.core.toOption
 import arrow.effects.typeclasses.Async
-import com.giacomoparisi.arrow.social.auth.core.AuthFailed
 import com.giacomoparisi.arrow.social.auth.core.AuthResult
 import com.giacomoparisi.kotlin.functional.extensions.arrow.`try`.ifFailure
 import com.giacomoparisi.kotlin.functional.extensions.arrow.`try`.ifSuccess
@@ -25,7 +24,7 @@ fun <F> authWithFirebaseGoogle(async: Async<F>, activity: FragmentActivity, clie
         async.async { function ->
             activity.startForResult(getGoogleSignInIntent(activity, clientId)) { result: Result ->
                 authWithGoogle(result.data)
-                        .ifFailure { function(AuthFailed(it).right()) }
+                        .ifFailure { function(AuthResult.Failed(it).right()) }
                         .ifSuccess { it ->
                             firebaseCredentialSignIn(
                                     GoogleAuthProvider.getCredential(
