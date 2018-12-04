@@ -44,6 +44,10 @@ fun <F> authWithFirebaseFacebook(async: Async<F>, activity: FragmentActivity): K
             )
         }
 
+fun facebookSignOut() {
+    LoginManager.getInstance().logOut()
+}
+
 private fun Option<LoginResult>.handleFacebookLogin(
         function: (Either<Throwable, AuthResult<SocialAuthUser>>) -> Unit) {
     this@handleFacebookLogin.ifSome { loginResult ->

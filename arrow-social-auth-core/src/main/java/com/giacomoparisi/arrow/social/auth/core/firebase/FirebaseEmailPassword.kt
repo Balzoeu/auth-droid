@@ -1,9 +1,11 @@
 package com.giacomoparisi.arrow.social.auth.core.firebase
 
 import arrow.Kind
+import arrow.core.toOption
 import arrow.effects.typeclasses.Async
 import com.giacomoparisi.arrow.social.auth.core.AuthResult
 import com.giacomoparisi.arrow.social.auth.core.SocialAuthUser
+import com.giacomoparisi.arrow.social.auth.core.toSocialAuthUser
 
 
 fun <F> signInWithFirebaseEmailPassword(
@@ -12,7 +14,13 @@ fun <F> signInWithFirebaseEmailPassword(
         password: String
 ): Kind<F, AuthResult<SocialAuthUser>> =
         async.async {
-            firebaseAuth().signInWithEmailAndPassword(email, password).bindToAuthListener(it)
+            firebaseAuth().signInWithEmailAndPassword(email, password).bindTask(it) {
+                firebaseAuth()
+                        .currentUser
+                        .toOption()
+                        .fold({ AuthResult.Failed(Throwable("Unknown error during auth")) })
+                        { firebaseUser -> AuthResult.Completed(firebaseUser.toSocialAuthUser()) }
+            }
         }
 
 fun <F> signUpWithFirebaseEmailPassword(
@@ -22,5 +30,11 @@ fun <F> signUpWithFirebaseEmailPassword(
 ): Kind<F, AuthResult<SocialAuthUser>> =
         async.async {
             firebaseAuth().createUserWithEmailAndPassword(email, password)
-                    .bindToAuthListener(it)
+                    .bindTask(it) {
+                        firebaseAuth()
+                                .currentUser
+                                .toOption()
+                                .fold({ AuthResult.Failed(Throwable("Unknown error during auth")) })
+                                { firebaseUser -> AuthResult.Completed(firebaseUser.toSocialAuthUser()) }
+                    }
         }

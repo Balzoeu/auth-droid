@@ -33,5 +33,12 @@
             android:text="EMAIL PASSWORD FIREBASE LOGIN"
             tools:ignore="ButtonStyle,HardcodedText" />
 
+        <Button
+            android:id="@+id/logout"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:text="LOGOUT"
+            tools:ignore="ButtonStyle,HardcodedText" />
+
     </LinearLayout>
 </FrameLayout>

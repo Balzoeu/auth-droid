@@ -5,11 +5,11 @@ import androidx.appcompat.app.AppCompatActivity
 import arrow.effects.DeferredK
 import arrow.effects.await
 import arrow.effects.deferredk.async.async
-import com.giacomoparisi.arrow.social.auth.core.firebase.authWithFirebaseFacebook
-import com.giacomoparisi.arrow.social.auth.core.firebase.authWithFirebaseGoogle
+import com.giacomoparisi.arrow.social.auth.core.firebase.*
 import kotlinx.android.synthetic.main.auth.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class AuthActivity : AppCompatActivity() {
@@ -35,6 +35,18 @@ class AuthActivity : AppCompatActivity() {
                     .replace(R.id.root, EmailPasswordAuthFragment())
                     .addToBackStack(null)
                     .commit()
+        }
+
+        this.logout.setOnClickListener {
+            GlobalScope.launch {
+                firebaseSignOut()
+                facebookSignOut()
+                googleSignOut(
+                        DeferredK.async(),
+                        this@AuthActivity,
+                        this@AuthActivity.getString(R.string.google_client_id_web)
+                ).await().showMessage(this@AuthActivity)
+            }
         }
     }
 

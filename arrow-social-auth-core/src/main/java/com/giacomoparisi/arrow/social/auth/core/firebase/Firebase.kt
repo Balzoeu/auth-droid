@@ -15,17 +15,21 @@ import com.giacomoparisi.kotlin.functional.extensions.core.ifTrue
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.GetTokenResult
 import com.google.firebase.auth.UserProfileChangeRequest
 
 
 fun <F> getFirebaseToken(async: Async<F>): Kind<F, AuthResult<String>> =
         async.async { function ->
-            val firebaseUser = FirebaseAuth.getInstance().currentUser
-            firebaseUser.toOption()
+            FirebaseAuth.getInstance()
+                    .currentUser
+                    .toOption()
                     .ifNone { function(AuthResult.Failed<String>(Throwable("User non logged with firebase")).right()) }
-                    .ifSome {
-                        it.getIdToken(true).bindToTokenListener(function)
+                    .ifSome { user ->
+                        user.getIdToken(true).bindTask(function) { task ->
+                            task.result?.token.toOption()
+                                    .fold({ AuthResult.Failed(Throwable("Unknown error")) })
+                                    { AuthResult.Completed(it) }
+                        }
                     }
         }
 
@@ -45,19 +49,7 @@ fun <F> updateFirebaseProfile(async: Async<F>, displayName: String? = null, phot
                                 .build()
                                 .pipe {
                                     firebaseUser.updateProfile(it)
-                                            .addOnCanceledListener { function(AuthResult.Cancelled<Unit>().right()) }
-                                            .addOnFailureListener { exception -> function(AuthResult.Failed<Unit>(exception).right()) }
-                                            .addOnCompleteListener { task ->
-                                                task.isSuccessful
-                                                        .ifTrue { function(AuthResult.Completed(Unit).right()) }
-                                                        .ifFalse {
-                                                            function(AuthResult.Failed<Unit>(
-                                                                    task.exception
-                                                                            .toOption()
-                                                                            .getOrElse { Exception("Unknown error during profile update") }
-                                                            ).right())
-                                                        }
-                                            }
+                                            .bindTask(function) { AuthResult.Completed(Unit) }
                                 }
                     }
         }
@@ -70,19 +62,7 @@ fun <F> updateFirebasePassword(async: Async<F>, password: String): Kind<F, AuthR
                     .ifNone { AuthResult.Failed<Unit>(Throwable("User non logged with firebase")).right() }
                     .ifSome { firebaseUser ->
                         firebaseUser.updatePassword(password)
-                                .addOnCanceledListener { function(AuthResult.Cancelled<Unit>().right()) }
-                                .addOnFailureListener { exception -> function(AuthResult.Failed<Unit>(exception).right()) }
-                                .addOnCompleteListener { task ->
-                                    task.isSuccessful
-                                            .ifTrue { function(AuthResult.Completed(Unit).right()) }
-                                            .ifFalse {
-                                                function(AuthResult.Failed<Unit>(
-                                                        task.exception
-                                                                .toOption()
-                                                                .getOrElse { Exception("Unknown error during password update") }
-                                                ).right())
-                                            }
-                                }
+                                .bindTask(function) { AuthResult.Completed(Unit) }
                     }
         }
 
@@ -91,68 +71,44 @@ fun <F> resetFirebasePassword(async: Async<F>, email: String): Kind<F, AuthResul
             FirebaseAuth.getInstance()
                     .also { it.useAppLanguage() }
                     .sendPasswordResetEmail(email)
-                    .addOnCanceledListener { function(AuthResult.Cancelled<Unit>().right()) }
-                    .addOnFailureListener { exception -> function(AuthResult.Failed<Unit>(exception).right()) }
-                    .addOnCompleteListener { task ->
-                        task.isSuccessful
-                                .ifTrue { function(AuthResult.Completed(Unit).right()) }
-                                .ifFalse {
-                                    function(AuthResult.Failed<Unit>(
-                                            task.exception
-                                                    .toOption()
-                                                    .getOrElse { Exception("Unknown error during password reset") }
-                                    ).right())
-                                }
-                    }
+                    .bindTask(function) { AuthResult.Completed(Unit) }
         }
 
+fun firebaseSignOut() {
+    FirebaseAuth.getInstance().signOut()
+}
 
 internal fun firebaseCredentialSignIn(
         credential: AuthCredential,
         function: (Either<Throwable, AuthResult<SocialAuthUser>>) -> Unit) {
-    firebaseAuth().signInWithCredential(credential).bindToAuthListener(function)
+    firebaseAuth().signInWithCredential(credential).bindTask(function) {
+        firebaseAuth()
+                .currentUser
+                .toOption()
+                .fold({ AuthResult.Failed(Throwable("Unknown error during auth")) })
+                { firebaseUser -> AuthResult.Completed(firebaseUser.toSocialAuthUser()) }
+    }
 }
 
-internal fun Task<com.google.firebase.auth.AuthResult>.bindToAuthListener(
-        function: (Either<Throwable, AuthResult<SocialAuthUser>>) -> Unit) {
+internal fun <F, T> Task<F>.bindTask(
+        function: (Either<Throwable, AuthResult<T>>) -> Unit,
+        map: (Task<F>) -> AuthResult<T>
+) {
     this.addOnCompleteListener { task ->
         task.isSuccessful
-                .ifTrue {
-                    // firebase auth task completed
-                    firebaseAuth().currentUser.toOption()
-                            .ifSome { function(AuthResult.Completed(it.toSocialAuthUser()).right()) }
-                            .ifNone { function(AuthResult.Failed<SocialAuthUser>(Throwable("Unknown error during auth")).right()) }
-                }
+                .ifTrue { function(map(task).right()) }
                 .ifFalse {
-                    // firebase auth task completed with an error
-                    function(AuthResult.Failed<SocialAuthUser>(task.exception
-                            .toOption()
-                            .getOrElse { Throwable("Unknown error during auth") }
-                    ).right())
+                    // firebase task completed with an error
+                    function(
+                            AuthResult.Failed<T>(
+                                    task.exception
+                                            .toOption()
+                                            .getOrElse { Throwable("Unknown error") }
+                            ).right()
+                    )
                 }
-    }.addOnCanceledListener { function(AuthResult.Cancelled<SocialAuthUser>().right()) }
-            .addOnFailureListener { function(AuthResult.Failed<SocialAuthUser>(it).right()) }
-}
-
-internal fun Task<GetTokenResult>.bindToTokenListener(
-        function: (Either<Throwable, AuthResult<String>>) -> Unit) {
-    this.addOnCompleteListener { task ->
-        task.isSuccessful
-                .ifTrue {
-                    // firebase auth task completed
-                    task.result?.token.toOption()
-                            .ifSome { function(AuthResult.Completed(it).right()) }
-                            .ifNone { function(AuthResult.Failed<String>(Throwable("Unknown error")).right()) }
-                }
-                .ifFalse {
-                    // firebase auth task completed with an error
-                    function(AuthResult.Failed<String>(task.exception
-                            .toOption()
-                            .getOrElse { Throwable("Unknown error") }
-                    ).right())
-                }
-    }.addOnCanceledListener { function(AuthResult.Cancelled<String>().right()) }
-            .addOnFailureListener { function(AuthResult.Failed<String>(it).right()) }
+    }.addOnCanceledListener { function(AuthResult.Cancelled<T>().right()) }
+            .addOnFailureListener { function(AuthResult.Failed<T>(it).right()) }
 }
 
 internal fun firebaseAuth(): FirebaseAuth = FirebaseAuth.getInstance()

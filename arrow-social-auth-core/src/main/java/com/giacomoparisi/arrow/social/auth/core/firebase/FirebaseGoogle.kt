@@ -36,6 +36,13 @@ fun <F> authWithFirebaseGoogle(async: Async<F>, activity: FragmentActivity, clie
             }
         }
 
+fun <F> googleSignOut(async: Async<F>, activity: FragmentActivity, clientId: String): Kind<F, AuthResult<Unit>> =
+        async.async { function ->
+            getGoogleSignInClient(activity, getGoogleSignInOptions(clientId))
+                    .signOut()
+                    .bindTask(function) { AuthResult.Completed(Unit) }
+        }
+
 private fun authWithGoogle(data: Intent?): Try<GoogleSignInAccount> = Try {
     GoogleSignIn.getSignedInAccountFromIntent(data)
             .getResult(ApiException::class.java)
