@@ -6,6 +6,7 @@ import com.giacomoparisi.kotlin.functional.extensions.arrow.option.getOrEmpty
 import com.google.firebase.auth.FirebaseUser
 
 data class SocialAuthUser(
+        val uId: String,
         val displayName: Option<String>,
         val firstName: Option<String>,
         val lastName: Option<String>,
@@ -22,6 +23,7 @@ data class SocialAuthUser(
 
 fun FirebaseUser.toSocialAuthUser(): SocialAuthUser =
         SocialAuthUser(
+                this.uid,
                 this.displayName.toOption(),
                 this.displayName
                         ?.split(" ")
