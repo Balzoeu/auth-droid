@@ -2,7 +2,9 @@ package com.giacomoparisi.arrow.social.auth.core
 
 import arrow.core.Option
 import arrow.core.toOption
+import arrow.syntax.collections.firstOption
 import com.giacomoparisi.kotlin.functional.extensions.arrow.option.getOrEmpty
+import com.giacomoparisi.kotlin.functional.extensions.core.fold
 import com.google.firebase.auth.FirebaseUser
 
 data class SocialAuthUser(
@@ -33,5 +35,11 @@ fun FirebaseUser.toSocialAuthUser(): SocialAuthUser =
                         ?.split(" ")
                         ?.getOrNull(1)
                         .toOption(),
-                this.email.toOption(),
+                this.getProviderEmail(),
                 this.photoUrl.toOption().map { it.toString() })
+
+private fun FirebaseUser.getProviderEmail() =
+        this.email.isNullOrEmpty()
+                .fold({ this.email.toOption() }) {
+                    this.providerData.firstOption { it.email.isNullOrEmpty().not() }.flatMap { it.email.toOption() }
+                }

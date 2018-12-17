@@ -42,6 +42,9 @@ dependencies {
     implementation Libs.facebook_login
     implementation Libs.facebook_core
 
+    //** FIREBASE **//
+    implementation Libs.firebase_auth
+
     //** ARROW **//
     implementation Libs.arrow_core
     implementation Libs.arrow_syntax
