@@ -36,6 +36,9 @@ fun <F> getFirebaseToken(async: Async<F>): Kind<F, AuthResult<String>> =
 fun getFirebaseId(): Option<String> =
         firebaseAuth().currentUser.toOption().map { it.uid }
 
+fun getCurrentFirebaseUser() =
+        firebaseAuth().currentUser.toOption().map { it.toSocialAuthUser() }
+
 fun <F> updateFirebaseProfile(async: Async<F>, displayName: String? = null, photoUrl: String? = null): Kind<F, AuthResult<Unit>> =
         async.async { function ->
             FirebaseAuth.getInstance()
