@@ -30,10 +30,6 @@ object Libs {
     const val androidx_test_runner: String = "androidx.test:runner:" + Versions.androidx_test_runner
 
     /**
-     * [aapt2 website](https://developer.android.com/studio) */
-    const val aapt2: String = "com.android.tools.build:aapt2:" + Versions.aapt2
-
-    /**
      * [gradle website](https://developer.android.com/studio) */
     const val com_android_tools_build_gradle: String =
             "com.android.tools.build:gradle:" + Versions.com_android_tools_build_gradle

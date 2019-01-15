@@ -13,17 +13,15 @@ object Versions {
 
     const val core_ktx: String = "1.0.1" 
 
-    const val espresso_core: String = "3.1.0" 
+    const val espresso_core: String = "3.1.1" 
 
-    const val androidx_test_runner: String = "1.1.0" 
+    const val androidx_test_runner: String = "1.1.1" 
 
-    const val aapt2: String = "3.2.1-4818971" 
+    const val com_android_tools_build_gradle: String = "3.3.0" 
 
-    const val com_android_tools_build_gradle: String = "3.2.1" 
+    const val lint_gradle: String = "26.3.0" 
 
-    const val lint_gradle: String = "26.2.1" 
-
-    const val com_facebook_android: String = "4.38.1" 
+    const val com_facebook_android: String = "4.39.0" 
 
     const val android_maven_gradle_plugin: String = "2.1" 
 
@@ -34,7 +32,7 @@ object Versions {
 
     const val play_services_auth: String = "16.0.1" 
 
-    const val firebase_auth: String = "16.0.5" 
+    const val firebase_auth: String = "16.1.0" 
 
     const val google_services: String = "4.2.0" 
 
@@ -49,9 +47,9 @@ object Versions {
 
     const val org_jetbrains_dokka: String = "0.9.17" 
 
-    const val org_jetbrains_kotlin: String = "1.3.10" 
+    const val org_jetbrains_kotlin: String = "1.3.11" 
 
-    const val kotlinx_coroutines_android: String = "1.0.1" 
+    const val kotlinx_coroutines_android: String = "1.1.0" 
 
     /**
      *
@@ -61,10 +59,10 @@ object Versions {
     object Gradle {
         const val runningVersion: String = "4.10.2"
 
-        const val currentVersion: String = "4.10.2"
+        const val currentVersion: String = "5.1.1"
 
-        const val nightlyVersion: String = "5.1-20181122000031+0000"
+        const val nightlyVersion: String = "5.2-20190115022437+0000"
 
-        const val releaseCandidate: String = "5.0-rc-4"
+        const val releaseCandidate: String = ""
     }
 }
