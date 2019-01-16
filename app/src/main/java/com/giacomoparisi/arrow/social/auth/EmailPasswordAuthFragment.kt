@@ -10,16 +10,10 @@ import androidx.fragment.app.Fragment
 import arrow.core.None
 import arrow.core.Option
 import arrow.core.some
-import arrow.effects.DeferredK
-import arrow.effects.await
-import arrow.effects.deferredk.async.async
 import com.giacomoparisi.arrow.social.auth.core.firebase.signInWithFirebaseEmailPassword
 import com.giacomoparisi.arrow.social.auth.core.firebase.signUpWithFirebaseEmailPassword
 import com.giacomoparisi.kotlin.functional.extensions.arrow.option.getOrEmpty
 import kotlinx.android.synthetic.main.email_password_auth.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 class EmailPasswordAuthFragment : Fragment() {
 
@@ -57,25 +51,17 @@ class EmailPasswordAuthFragment : Fragment() {
         })
 
         this.sign_up.setOnClickListener {
-            CoroutineScope(Dispatchers.Default).launch {
-                signUpWithFirebaseEmailPassword(
-                        DeferredK.async(),
-                        email.getOrEmpty(),
-                        password.getOrEmpty())
-                        .await()
-                        .showMessage(this@EmailPasswordAuthFragment.requireActivity())
-            }
+            signUpWithFirebaseEmailPassword(
+                    email.getOrEmpty(),
+                    password.getOrEmpty())
+                    .await(this.requireActivity())
         }
 
         this.sign_in.setOnClickListener {
-            CoroutineScope(Dispatchers.Default).launch {
-                signInWithFirebaseEmailPassword(
-                        DeferredK.async(),
-                        email.getOrEmpty(),
-                        password.getOrEmpty())
-                        .await()
-                        .showMessage(this@EmailPasswordAuthFragment.requireActivity())
-            }
+            signInWithFirebaseEmailPassword(
+                    email.getOrEmpty(),
+                    password.getOrEmpty())
+                    .await(this.requireActivity())
         }
     }
 }

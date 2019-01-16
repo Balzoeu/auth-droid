@@ -2,14 +2,9 @@ package com.giacomoparisi.arrow.social.auth.core.firebase
 
 import android.content.Intent
 import androidx.fragment.app.FragmentActivity
-import arrow.Kind
-import arrow.core.Try
-import arrow.core.getOrElse
-import arrow.core.right
-import arrow.core.toOption
-import arrow.effects.typeclasses.Async
-import com.giacomoparisi.arrow.social.auth.core.AuthResult
+import arrow.core.*
 import com.giacomoparisi.arrow.social.auth.core.SocialAuthUser
+import com.giacomoparisi.arrow.social.auth.core.UnknownFirebaseError
 import com.giacomoparisi.kotlin.functional.extensions.arrow.`try`.ifFailure
 import com.giacomoparisi.kotlin.functional.extensions.arrow.`try`.ifSuccess
 import com.github.florent37.inlineactivityresult.Result
@@ -20,34 +15,35 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.GoogleAuthProvider
+import io.reactivex.Single
 
-fun <F> authWithFirebaseGoogle(async: Async<F>, activity: FragmentActivity, clientId: String): Kind<F, AuthResult<SocialAuthUser>> =
-        async.async { function ->
+fun authWithFirebaseGoogle(activity: FragmentActivity, clientId: String): Single<Option<SocialAuthUser>> =
+        Single.create {
             activity.startForResult(getGoogleSignInIntent(activity, clientId)) { result: Result ->
                 authWithGoogle(result.data)
-                        .ifFailure { function(AuthResult.Failed<SocialAuthUser>(it).right()) }
-                        .ifSuccess { it ->
+                        .ifFailure { throwable -> it.onError(throwable) }
+                        .ifSuccess { account ->
                             firebaseCredentialSignIn(
                                     GoogleAuthProvider.getCredential(
-                                            it.idToken,
+                                            account.idToken,
                                             null),
-                                    function)
+                                    it)
                         }
             }
         }
 
-fun <F> googleSignOut(async: Async<F>, activity: FragmentActivity, clientId: String): Kind<F, AuthResult<Unit>> =
-        async.async { function ->
+fun googleSignOut(activity: FragmentActivity, clientId: String): Single<Option<Unit>> =
+        Single.create {
             getGoogleSignInClient(activity, getGoogleSignInOptions(clientId))
                     .signOut()
-                    .bindTask(function) { AuthResult.Completed(Unit) }
+                    .bindTask(it) { Unit.some() }
         }
 
 private fun authWithGoogle(data: Intent?): Try<GoogleSignInAccount> = Try {
     GoogleSignIn.getSignedInAccountFromIntent(data)
             .getResult(ApiException::class.java)
             .toOption()
-            .getOrElse { throw Exception("Unknown error during auth") }
+            .getOrElse { throw UnknownFirebaseError }
 }
 
 private fun getGoogleSignInIntent(activity: FragmentActivity, clientId: String): Intent =

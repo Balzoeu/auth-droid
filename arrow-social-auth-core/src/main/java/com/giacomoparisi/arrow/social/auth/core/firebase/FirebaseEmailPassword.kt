@@ -1,40 +1,35 @@
 package com.giacomoparisi.arrow.social.auth.core.firebase
 
-import arrow.Kind
+import arrow.core.Option
 import arrow.core.toOption
-import arrow.effects.typeclasses.Async
-import com.giacomoparisi.arrow.social.auth.core.AuthResult
 import com.giacomoparisi.arrow.social.auth.core.SocialAuthUser
 import com.giacomoparisi.arrow.social.auth.core.toSocialAuthUser
+import io.reactivex.Single
 
 
-fun <F> signInWithFirebaseEmailPassword(
-        async: Async<F>,
+fun signInWithFirebaseEmailPassword(
         email: String,
         password: String
-): Kind<F, AuthResult<SocialAuthUser>> =
-        async.async {
+): Single<Option<SocialAuthUser>> =
+        Single.create {
             firebaseAuth().signInWithEmailAndPassword(email, password).bindTask(it) {
                 firebaseAuth()
                         .currentUser
                         .toOption()
-                        .fold({ AuthResult.Failed(Throwable("Unknown error during auth")) })
-                        { firebaseUser -> AuthResult.Completed(firebaseUser.toSocialAuthUser()) }
+                        .map { firebaseUser -> firebaseUser.toSocialAuthUser() }
             }
         }
 
-fun <F> signUpWithFirebaseEmailPassword(
-        async: Async<F>,
+fun signUpWithFirebaseEmailPassword(
         email: String,
         password: String
-): Kind<F, AuthResult<SocialAuthUser>> =
-        async.async {
+): Single<Option<SocialAuthUser>> =
+        Single.create {
             firebaseAuth().createUserWithEmailAndPassword(email, password)
                     .bindTask(it) {
                         firebaseAuth()
                                 .currentUser
                                 .toOption()
-                                .fold({ AuthResult.Failed(Throwable("Unknown error during auth")) })
-                                { firebaseUser -> AuthResult.Completed(firebaseUser.toSocialAuthUser()) }
+                                .map { firebaseUser -> firebaseUser.toSocialAuthUser() }
                     }
         }

@@ -2,15 +2,14 @@ package com.giacomoparisi.arrow.social.auth
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import arrow.effects.DeferredK
-import arrow.effects.await
-import arrow.effects.deferredk.async.async
+import androidx.fragment.app.FragmentActivity
+import arrow.core.Option
 import com.giacomoparisi.arrow.social.auth.core.firebase.*
+import com.giacomoparisi.kotlin.functional.extensions.android.toast.showLongToast
+import io.reactivex.Single
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.auth.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 class AuthActivity : AppCompatActivity() {
 
@@ -19,15 +18,11 @@ class AuthActivity : AppCompatActivity() {
         setContentView(R.layout.auth)
 
         this.firebase_google_login.setOnClickListener {
-            CoroutineScope(Dispatchers.Default).launch {
-                this@AuthActivity.googleSignIn()
-            }
+            this@AuthActivity.googleSignIn()
         }
 
         this.firebase_facebook_login.setOnClickListener {
-            CoroutineScope(Dispatchers.Default).launch {
-                this@AuthActivity.facebookSignIn()
-            }
+            this@AuthActivity.facebookSignIn()
         }
 
         this.firebase_email_password_login.setOnClickListener {
@@ -38,30 +33,29 @@ class AuthActivity : AppCompatActivity() {
         }
 
         this.logout.setOnClickListener {
-            GlobalScope.launch {
-                firebaseSignOut()
-                facebookSignOut()
-                googleSignOut(
-                        DeferredK.async(),
-                        this@AuthActivity,
-                        this@AuthActivity.getString(R.string.google_client_id_web)
-                ).await().showMessage(this@AuthActivity)
-            }
+            firebaseSignOut()
+            facebookSignOut()
+            googleSignOut(
+                    this@AuthActivity,
+                    this@AuthActivity.getString(R.string.google_client_id_web)
+            ).subscribe({ option -> this.showLongToast(option.fold({ "Cancelled" }) { "Ok" }) }) { throwable -> this.showLongToast(throwable.message.orEmpty()) }
         }
     }
 
-    private suspend fun googleSignIn() {
+    private fun googleSignIn() {
         authWithFirebaseGoogle(
-                DeferredK.async(),
                 this,
                 this.getString(R.string.google_client_id_web))
-                .await()
-                .showMessage(this)
+                .await(this)
     }
 
-    private suspend fun facebookSignIn() {
-        authWithFirebaseFacebook(DeferredK.async(), this)
-                .await()
-                .showMessage(this)
+    private fun facebookSignIn() {
+        authWithFirebaseFacebook(this).await(this)
     }
 }
+
+fun <T> Single<Option<T>>.await(activity: FragmentActivity) =
+        this.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ option -> activity.showLongToast(option.fold({ "Cancelled" }) { it.toString() }) }) { throwable -> activity.showLongToast(throwable.message.orEmpty()) }
+

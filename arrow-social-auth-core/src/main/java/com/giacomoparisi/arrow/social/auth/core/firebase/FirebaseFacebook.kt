@@ -1,22 +1,26 @@
 package com.giacomoparisi.arrow.social.auth.core.firebase
 
 import androidx.fragment.app.FragmentActivity
-import arrow.Kind
-import arrow.core.*
-import arrow.effects.typeclasses.Async
+import arrow.core.None
+import arrow.core.Option
+import arrow.core.getOrElse
+import arrow.core.toOption
+import arrow.syntax.function.pipe
 import com.facebook.FacebookCallback
 import com.facebook.FacebookException
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
-import com.giacomoparisi.arrow.social.auth.core.AuthResult
 import com.giacomoparisi.arrow.social.auth.core.SocialAuthUser
+import com.giacomoparisi.arrow.social.auth.core.UnknownFirebaseError
 import com.giacomoparisi.kotlin.functional.extensions.arrow.option.ifNone
 import com.giacomoparisi.kotlin.functional.extensions.arrow.option.ifSome
 import com.google.firebase.auth.FacebookAuthProvider
+import io.reactivex.Single
+import io.reactivex.SingleEmitter
 
 
-fun <F> authWithFirebaseFacebook(async: Async<F>, activity: FragmentActivity): Kind<F, AuthResult<SocialAuthUser>> =
-        async.async { function ->
+fun authWithFirebaseFacebook(activity: FragmentActivity): Single<Option<SocialAuthUser>> =
+        Single.create {
             val fragment = FacebookFragment()
             val transaction = activity.supportFragmentManager.beginTransaction()
             transaction.add(fragment, FacebookFragment.TAG).addToBackStack(null).commit()
@@ -25,19 +29,18 @@ fun <F> authWithFirebaseFacebook(async: Async<F>, activity: FragmentActivity): K
                     fragment.callbackManager,
                     object : FacebookCallback<LoginResult> {
                         override fun onSuccess(result: LoginResult?) {
-                            result.toOption().handleFacebookLogin(function)
+                            result.toOption().handleFacebookLogin(it)
                             activity.supportFragmentManager.popBackStack()
                         }
 
                         override fun onCancel() {
-                            function(AuthResult.Cancelled<SocialAuthUser>().right())
+                            it.onSuccess(None)
                             activity.supportFragmentManager.popBackStack()
                         }
 
                         override fun onError(error: FacebookException?) {
-                            function(AuthResult.Failed<SocialAuthUser>(error.toOption()
-                                    .getOrElse { Exception("Unknown error during auth") })
-                                    .right())
+                            error.toOption().getOrElse { UnknownFirebaseError }
+                                    .pipe { throwable -> it.onError(throwable) }
                             activity.supportFragmentManager.popBackStack()
                         }
                     }
@@ -49,9 +52,9 @@ fun facebookSignOut() {
 }
 
 private fun Option<LoginResult>.handleFacebookLogin(
-        function: (Either<Throwable, AuthResult<SocialAuthUser>>) -> Unit) {
+        emitter: SingleEmitter<Option<SocialAuthUser>>) {
     this@handleFacebookLogin.ifSome { loginResult ->
         val credential = FacebookAuthProvider.getCredential(loginResult.accessToken.token)
-        firebaseCredentialSignIn(credential, function)
-    }.ifNone { function(AuthResult.Failed<SocialAuthUser>(Exception("Unknown error during auth")).right()) }
+        firebaseCredentialSignIn(credential, emitter)
+    }.ifNone { emitter.onError(UnknownFirebaseError) }
 }

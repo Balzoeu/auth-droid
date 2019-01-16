@@ -58,11 +58,12 @@ dependencies {
     implementation Libs.arrow_instances_core
     implementation Libs.arrow_instances_data
     implementation Libs.arrow_effects
-    implementation Libs.arrow_effects_kotlinx_coroutines_instances
     kapt Libs.arrow_annotations_processor
 
-    //** COROUTINES **//
-    implementation Libs.kotlinx_coroutines_android
+    //* === RX === *//
+    implementation 'io.reactivex.rxjava2:rxkotlin:2.3.0'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.5'
 
     //** ACTIVITY RESULT INLINE **//
     implementation Libs.inline_activity_result_kotlin
