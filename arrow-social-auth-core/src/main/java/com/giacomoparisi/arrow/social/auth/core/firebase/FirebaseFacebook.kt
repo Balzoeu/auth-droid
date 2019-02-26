@@ -10,7 +10,7 @@ import com.facebook.FacebookCallback
 import com.facebook.FacebookException
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
-import com.giacomoparisi.arrow.social.auth.core.SocialAuthUser
+import com.giacomoparisi.arrow.social.auth.core.Auth
 import com.giacomoparisi.arrow.social.auth.core.UnknownFirebaseError
 import com.giacomoparisi.kotlin.functional.extensions.arrow.option.ifNone
 import com.giacomoparisi.kotlin.functional.extensions.arrow.option.ifSome
@@ -19,7 +19,7 @@ import io.reactivex.Single
 import io.reactivex.SingleEmitter
 
 
-fun authWithFirebaseFacebook(activity: FragmentActivity): Single<Option<SocialAuthUser>> =
+fun authWithFirebaseFacebook(activity: FragmentActivity): Single<Option<Auth>> =
         Single.create {
             val fragment = FacebookFragment()
             val transaction = activity.supportFragmentManager.beginTransaction()
@@ -52,7 +52,7 @@ fun facebookSignOut() {
 }
 
 private fun Option<LoginResult>.handleFacebookLogin(
-        emitter: SingleEmitter<Option<SocialAuthUser>>) {
+        emitter: SingleEmitter<Option<Auth>>) {
     this@handleFacebookLogin.ifSome { loginResult ->
         val credential = FacebookAuthProvider.getCredential(loginResult.accessToken.token)
         firebaseCredentialSignIn(credential, emitter)

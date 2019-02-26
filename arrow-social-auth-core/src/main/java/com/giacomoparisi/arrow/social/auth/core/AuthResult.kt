@@ -7,3 +7,5 @@ object UnknownFirebaseError : AuthError("Unknown firebase error")
 
 class FirebaseTaskError(message: String) : AuthError(message)
 
+data class Auth(val isFirstAuth: Boolean, val socialAuthUser: SocialAuthUser)
+

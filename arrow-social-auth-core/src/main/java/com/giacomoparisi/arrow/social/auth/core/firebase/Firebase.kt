@@ -6,7 +6,7 @@ import arrow.core.Option
 import arrow.core.some
 import arrow.core.toOption
 import arrow.syntax.function.pipe
-import com.giacomoparisi.arrow.social.auth.core.SocialAuthUser
+import com.giacomoparisi.arrow.social.auth.core.Auth
 import com.giacomoparisi.arrow.social.auth.core.UnknownFirebaseError
 import com.giacomoparisi.arrow.social.auth.core.toSocialAuthUser
 import com.giacomoparisi.kotlin.functional.extensions.arrow.option.ifNone
@@ -80,12 +80,16 @@ fun firebaseSignOut() {
 
 internal fun firebaseCredentialSignIn(
         credential: AuthCredential,
-        emitter: SingleEmitter<Option<SocialAuthUser>>) {
+        emitter: SingleEmitter<Option<Auth>>) {
     firebaseAuth().signInWithCredential(credential).bindTask(emitter) {
         firebaseAuth()
                 .currentUser
                 .toOption()
-                .map { firebaseUser -> firebaseUser.toSocialAuthUser() }
+                .map { firebaseUser ->
+                    Auth(
+                            it.additionalUserInfo.toOption().fold({ false }) { userInfo -> userInfo.isNewUser },
+                            firebaseUser.toSocialAuthUser())
+                }
     }
 }
 

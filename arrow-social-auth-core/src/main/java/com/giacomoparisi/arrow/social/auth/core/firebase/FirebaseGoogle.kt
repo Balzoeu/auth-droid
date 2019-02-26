@@ -3,7 +3,7 @@ package com.giacomoparisi.arrow.social.auth.core.firebase
 import android.content.Intent
 import androidx.fragment.app.FragmentActivity
 import arrow.core.*
-import com.giacomoparisi.arrow.social.auth.core.SocialAuthUser
+import com.giacomoparisi.arrow.social.auth.core.Auth
 import com.giacomoparisi.arrow.social.auth.core.UnknownFirebaseError
 import com.giacomoparisi.kotlin.functional.extensions.arrow.`try`.ifFailure
 import com.giacomoparisi.kotlin.functional.extensions.arrow.`try`.ifSuccess
@@ -17,7 +17,7 @@ import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.GoogleAuthProvider
 import io.reactivex.Single
 
-fun authWithFirebaseGoogle(activity: FragmentActivity, clientId: String): Single<Option<SocialAuthUser>> =
+fun authWithFirebaseGoogle(activity: FragmentActivity, clientId: String): Single<Option<Auth>> =
         Single.create {
             activity.startForResult(getGoogleSignInIntent(activity, clientId)) { result: Result ->
                 authWithGoogle(result.data)

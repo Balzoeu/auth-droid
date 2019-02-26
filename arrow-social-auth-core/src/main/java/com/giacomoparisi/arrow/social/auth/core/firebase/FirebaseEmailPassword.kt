@@ -2,7 +2,7 @@ package com.giacomoparisi.arrow.social.auth.core.firebase
 
 import arrow.core.Option
 import arrow.core.toOption
-import com.giacomoparisi.arrow.social.auth.core.SocialAuthUser
+import com.giacomoparisi.arrow.social.auth.core.Auth
 import com.giacomoparisi.arrow.social.auth.core.toSocialAuthUser
 import io.reactivex.Single
 
@@ -10,26 +10,34 @@ import io.reactivex.Single
 fun signInWithFirebaseEmailPassword(
         email: String,
         password: String
-): Single<Option<SocialAuthUser>> =
+): Single<Option<Auth>> =
         Single.create {
             firebaseAuth().signInWithEmailAndPassword(email, password).bindTask(it) {
                 firebaseAuth()
                         .currentUser
                         .toOption()
-                        .map { firebaseUser -> firebaseUser.toSocialAuthUser() }
+                        .map { firebaseUser ->
+                            Auth(
+                                    it.additionalUserInfo.toOption().fold({ false }) { userInfo -> userInfo.isNewUser },
+                                    firebaseUser.toSocialAuthUser())
+                        }
             }
         }
 
 fun signUpWithFirebaseEmailPassword(
         email: String,
         password: String
-): Single<Option<SocialAuthUser>> =
+): Single<Option<Auth>> =
         Single.create {
             firebaseAuth().createUserWithEmailAndPassword(email, password)
                     .bindTask(it) {
                         firebaseAuth()
                                 .currentUser
                                 .toOption()
-                                .map { firebaseUser -> firebaseUser.toSocialAuthUser() }
+                                .map { firebaseUser ->
+                                    Auth(
+                                            it.additionalUserInfo.toOption().fold({ false }) { userInfo -> userInfo.isNewUser },
+                                            firebaseUser.toSocialAuthUser())
+                                }
                     }
         }
