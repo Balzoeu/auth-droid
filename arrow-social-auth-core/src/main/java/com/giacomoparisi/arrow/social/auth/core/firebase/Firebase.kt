@@ -11,6 +11,7 @@ import com.giacomoparisi.arrow.social.auth.core.UnknownFirebaseError
 import com.giacomoparisi.arrow.social.auth.core.toSocialAuthUser
 import com.giacomoparisi.kotlin.functional.extensions.arrow.option.ifNone
 import com.giacomoparisi.kotlin.functional.extensions.arrow.option.ifSome
+import com.giacomoparisi.kotlin.functional.extensions.core.ifFalse
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseAuth
@@ -99,7 +100,7 @@ internal fun <F, T> Task<F>.bindTask(
 ) {
     this.addOnSuccessListener { emitter.onSuccess(map(it)) }
             .addOnCanceledListener { emitter.onSuccess(None) }
-            .addOnFailureListener { emitter.onError(it) }
+            .addOnFailureListener { emitter.isDisposed.ifFalse { emitter.onError(it) } }
 }
 
 internal fun firebaseAuth(): FirebaseAuth = FirebaseAuth.getInstance()
