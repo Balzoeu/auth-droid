@@ -34,8 +34,8 @@ dependencies {
     implementation Libs.appcompat
 
     //** EXTENSIONS **//
-    implementation Libs.kotlin_functional_extensions_core
     implementation Libs.kotlin_functional_extensions_arrow
+    implementation Libs.kotlin_functional_extensions_core
 
     //** GOOGLE AUTH **//
     implementation Libs.play_services_auth
@@ -61,9 +61,9 @@ dependencies {
     kapt Libs.arrow_annotations_processor
 
     //* === RX === *//
-    implementation 'io.reactivex.rxjava2:rxkotlin:2.3.0'
-    implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
-    implementation 'io.reactivex.rxjava2:rxjava:2.2.5'
+    implementation Libs.rxkotlin
+    implementation Libs.rxandroid
+    implementation Libs.rxjava
 
     //** ACTIVITY RESULT INLINE **//
     implementation Libs.inline_activity_result_kotlin

@@ -27,9 +27,9 @@ dependencies {
     implementation project(':arrow-social-auth-core')
 
     //** EXTENSIONS **//
-    implementation Libs.kotlin_functional_extensions_core
-    implementation Libs.kotlin_functional_extensions_arrow
     implementation Libs.kotlin_functional_extensions_android
+    implementation Libs.kotlin_functional_extensions_arrow
+    implementation Libs.kotlin_functional_extensions_core
 
     //** KOTLIN **//
     implementation Libs.kotlin_stdlib_jdk7

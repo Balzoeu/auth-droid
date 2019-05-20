@@ -47,6 +47,21 @@ object Libs {
             "com.facebook.android:facebook-login:" + Versions.com_facebook_android
 
     /**
+     * [kotlin-functional-extensions-android website](https://github.com/giacomoParisi/kotlin-functional-extensions) */
+    const val kotlin_functional_extensions_android: String =
+            "com.giacomoparisi.kotlin.functional.extensions:kotlin-functional-extensions-android:" + Versions.com_giacomoparisi_kotlin_functional_extensions
+
+    /**
+     * [kotlin-functional-extensions-arrow website](https://github.com/giacomoParisi/kotlin-functional-extensions) */
+    const val kotlin_functional_extensions_arrow: String =
+            "com.giacomoparisi.kotlin.functional.extensions:kotlin-functional-extensions-arrow:" + Versions.com_giacomoparisi_kotlin_functional_extensions
+
+    /**
+     * [kotlin-functional-extensions-core website](https://github.com/giacomoParisi/kotlin-functional-extensions) */
+    const val kotlin_functional_extensions_core: String =
+            "com.giacomoparisi.kotlin.functional.extensions:kotlin-functional-extensions-core:" + Versions.com_giacomoparisi_kotlin_functional_extensions
+
+    /**
      * [android-maven-gradle-plugin website](https://github.com/dcendents/android-maven-gradle-plugin) */
     const val android_maven_gradle_plugin: String =
             "com.github.dcendents:android-maven-gradle-plugin:" + Versions.android_maven_gradle_plugin
@@ -55,15 +70,6 @@ object Libs {
      * [inline-activity-result-kotlin website](https://github.com/florent37/InlineActivityResult) */
     const val inline_activity_result_kotlin: String =
             "com.github.florent37:inline-activity-result-kotlin:" + Versions.inline_activity_result_kotlin
-
-    const val kotlin_functional_extensions_android: String =
-            "com.github.giacomoParisi.kotlin-functional-extensions:kotlin-functional-extensions-android:" + Versions.com_github_giacomoparisi_kotlin_functional_extensions
-
-    const val kotlin_functional_extensions_arrow: String =
-            "com.github.giacomoParisi.kotlin-functional-extensions:kotlin-functional-extensions-arrow:" + Versions.com_github_giacomoparisi_kotlin_functional_extensions
-
-    const val kotlin_functional_extensions_core: String =
-            "com.github.giacomoParisi.kotlin-functional-extensions:kotlin-functional-extensions-core:" + Versions.com_github_giacomoparisi_kotlin_functional_extensions
 
     const val play_services_auth: String =
             "com.google.android.gms:play-services-auth:" + Versions.play_services_auth
