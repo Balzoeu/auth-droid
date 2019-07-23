@@ -4,7 +4,12 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentActivity
 import arrow.core.Option
-import com.giacomoparisi.arrow.social.auth.core.firebase.*
+import com.giacomoparisi.arrow.social.auth.core.facebook.authWithFacebook
+import com.giacomoparisi.arrow.social.auth.core.facebook.facebookSignOut
+import com.giacomoparisi.arrow.social.auth.core.firebase.authWithFirebaseFacebook
+import com.giacomoparisi.arrow.social.auth.core.firebase.authWithFirebaseGoogle
+import com.giacomoparisi.arrow.social.auth.core.firebase.firebaseSignOut
+import com.giacomoparisi.arrow.social.auth.core.firebase.googleSignOut
 import com.giacomoparisi.kotlin.functional.extensions.android.toast.showLongToast
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -18,11 +23,11 @@ class AuthActivity : AppCompatActivity() {
         setContentView(R.layout.auth)
 
         this.firebase_google_login.setOnClickListener {
-            this@AuthActivity.googleSignIn()
+            this@AuthActivity.firebaseGoogleSignIn()
         }
 
         this.firebase_facebook_login.setOnClickListener {
-            this@AuthActivity.facebookSignIn()
+            this@AuthActivity.firebaseFacebookSignIn()
         }
 
         this.firebase_email_password_login.setOnClickListener {
@@ -30,6 +35,10 @@ class AuthActivity : AppCompatActivity() {
                     .replace(R.id.root, EmailPasswordAuthFragment())
                     .addToBackStack(null)
                     .commit()
+        }
+
+        this.facebook_login.setOnClickListener {
+            this.facebookSingIn()
         }
 
         this.logout.setOnClickListener {
@@ -42,15 +51,19 @@ class AuthActivity : AppCompatActivity() {
         }
     }
 
-    private fun googleSignIn() {
+    private fun firebaseGoogleSignIn() {
         authWithFirebaseGoogle(
                 this,
                 this.getString(R.string.google_client_id_web))
                 .await(this)
     }
 
-    private fun facebookSignIn() {
+    private fun firebaseFacebookSignIn() {
         authWithFirebaseFacebook(this).await(this)
+    }
+
+    private fun facebookSingIn() {
+        authWithFacebook(this, 500).await(this)
     }
 }
 

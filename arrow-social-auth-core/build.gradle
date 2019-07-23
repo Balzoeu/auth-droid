@@ -30,45 +30,42 @@ android {
 
 dependencies {
 
-    //** ANDROID **//
+    /* ANDROID */
     implementation Libs.appcompat
 
-    //** EXTENSIONS **//
+    /* EXTENSIONS */
     implementation Libs.kotlin_functional_extensions_arrow
     implementation Libs.kotlin_functional_extensions_core
 
-    //** GOOGLE AUTH **//
+    /* GOOGLE AUTH */
     implementation Libs.play_services_auth
 
-    //** FACEBOOK AUTH **//
+    /* FACEBOOK AUTH */
     implementation Libs.facebook_login
 
-    //** FIREBASE **//
+    /* FIREBASE */
     implementation Libs.firebase_auth
 
-    //** KOTLIN **//
+    /* KOTLIN */
     implementation Libs.kotlin_stdlib_jdk7
     implementation Libs.core_ktx
 
-    //** ARROW **//
-    implementation Libs.arrow_core
+    /* ARROW */
+    implementation Libs.arrow_core_data
     implementation Libs.arrow_syntax
-    implementation Libs.arrow_typeclasses
-    implementation Libs.arrow_data
-    implementation Libs.arrow_instances_core
-    implementation Libs.arrow_instances_data
-    implementation Libs.arrow_effects
-    kapt Libs.arrow_annotations_processor
+    implementation Libs.arrow_core_extensions
+    implementation Libs.arrow_extras_data
+    kapt Libs.arrow_meta
 
-    //* === RX === *//
+    /* RX */
     implementation Libs.rxkotlin
     implementation Libs.rxandroid
     implementation Libs.rxjava
 
-    //** ACTIVITY RESULT INLINE **//
+    /* ACTIVITY RESULT INLINE */
     implementation Libs.inline_activity_result_kotlin
 
-    //** TEST **//
+    /* TEST */
     testImplementation Libs.junit
     androidTestImplementation Libs.androidx_test_runner
     androidTestImplementation Libs.espresso_core

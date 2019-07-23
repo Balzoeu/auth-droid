@@ -12,6 +12,7 @@ import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 import com.giacomoparisi.arrow.social.auth.core.Auth
 import com.giacomoparisi.arrow.social.auth.core.UnknownFirebaseError
+import com.giacomoparisi.arrow.social.auth.core.facebook.FacebookFragment
 import com.giacomoparisi.kotlin.functional.extensions.arrow.option.ifNone
 import com.giacomoparisi.kotlin.functional.extensions.arrow.option.ifSome
 import com.google.firebase.auth.FacebookAuthProvider
@@ -29,7 +30,7 @@ fun authWithFirebaseFacebook(activity: FragmentActivity): Single<Option<Auth>> =
                     fragment.callbackManager,
                     object : FacebookCallback<LoginResult> {
                         override fun onSuccess(result: LoginResult?) {
-                            result.toOption().handleFacebookLogin(it)
+                            result.toOption().handleFirebaseFacebookLogin(it)
                             activity.supportFragmentManager.popBackStack()
                         }
 
@@ -47,13 +48,9 @@ fun authWithFirebaseFacebook(activity: FragmentActivity): Single<Option<Auth>> =
             )
         }
 
-fun facebookSignOut() {
-    LoginManager.getInstance().logOut()
-}
-
-private fun Option<LoginResult>.handleFacebookLogin(
+private fun Option<LoginResult>.handleFirebaseFacebookLogin(
         emitter: SingleEmitter<Option<Auth>>) {
-    this@handleFacebookLogin.ifSome { loginResult ->
+    this@handleFirebaseFacebookLogin.ifSome { loginResult ->
         val credential = FacebookAuthProvider.getCredential(loginResult.accessToken.token)
         firebaseCredentialSignIn(credential, emitter)
     }.ifNone { emitter.onError(UnknownFirebaseError) }

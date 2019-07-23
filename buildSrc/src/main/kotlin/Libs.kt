@@ -28,6 +28,10 @@ object Libs {
     const val androidx_test_runner: String = "androidx.test:runner:" + Versions.androidx_test_runner
 
     /**
+     * [aapt2 website](https://developer.android.com/studio) */
+    const val aapt2: String = "com.android.tools.build:aapt2:" + Versions.aapt2
+
+    /**
      * [gradle website](https://developer.android.com/studio) */
     const val com_android_tools_build_gradle: String =
             "com.android.tools.build:gradle:" + Versions.com_android_tools_build_gradle
@@ -76,33 +80,31 @@ object Libs {
 
     const val firebase_auth: String = "com.google.firebase:firebase-auth:" + Versions.firebase_auth
 
-    /**
-     * [google-services website](http://tools.android.com/) */
     const val google_services: String = "com.google.gms:google-services:" + Versions.google_services
 
     const val gradle_bintray_plugin: String =
             "com.jfrog.bintray.gradle:gradle-bintray-plugin:" + Versions.gradle_bintray_plugin
 
-    const val arrow_annotations_processor: String =
-            "io.arrow-kt:arrow-annotations-processor:" + Versions.io_arrow_kt
-
-    const val arrow_core: String = "io.arrow-kt:arrow-core:" + Versions.io_arrow_kt
-
-    const val arrow_data: String = "io.arrow-kt:arrow-data:" + Versions.io_arrow_kt
-
-    const val arrow_effects: String = "io.arrow-kt:arrow-effects:" + Versions.io_arrow_kt
-
-    const val arrow_instances_core: String =
-            "io.arrow-kt:arrow-instances-core:" + Versions.io_arrow_kt
-
-    const val arrow_instances_data: String =
-            "io.arrow-kt:arrow-instances-data:" + Versions.io_arrow_kt
-
-    const val arrow_syntax: String = "io.arrow-kt:arrow-syntax:" + Versions.io_arrow_kt
+    /**
+     * [arrow-core-data website](https://github.com/arrow-kt/arrow/) */
+    const val arrow_core_data: String = "io.arrow-kt:arrow-core-data:" + Versions.io_arrow_kt
 
     /**
-     * [arrow-typeclasses website](https://github.com/arrow-kt/arrow/) */
-    const val arrow_typeclasses: String = "io.arrow-kt:arrow-typeclasses:" + Versions.io_arrow_kt
+     * [arrow-core-extensions website](https://github.com/arrow-kt/arrow/) */
+    const val arrow_core_extensions: String =
+            "io.arrow-kt:arrow-core-extensions:" + Versions.io_arrow_kt
+
+    /**
+     * [arrow-extras-data website](https://github.com/arrow-kt/arrow/) */
+    const val arrow_extras_data: String = "io.arrow-kt:arrow-extras-data:" + Versions.io_arrow_kt
+
+    /**
+     * [arrow-meta website](https://github.com/arrow-kt/arrow/) */
+    const val arrow_meta: String = "io.arrow-kt:arrow-meta:" + Versions.io_arrow_kt
+
+    /**
+     * [arrow-syntax website](https://github.com/arrow-kt/arrow/) */
+    const val arrow_syntax: String = "io.arrow-kt:arrow-syntax:" + Versions.io_arrow_kt
 
     /**
      * [rxandroid website](https://github.com/ReactiveX/RxAndroid) */

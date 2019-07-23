@@ -1,4 +1,4 @@
-package com.giacomoparisi.arrow.social.auth.core.firebase
+package com.giacomoparisi.arrow.social.auth.core.facebook
 
 import android.content.Intent
 import androidx.fragment.app.Fragment

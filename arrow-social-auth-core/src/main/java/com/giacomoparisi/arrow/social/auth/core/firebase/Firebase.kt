@@ -88,7 +88,7 @@ internal fun firebaseCredentialSignIn(
                 .toOption()
                 .map { firebaseUser ->
                     Auth(
-                            it.additionalUserInfo.toOption().fold({ false }) { userInfo -> userInfo.isNewUser },
+                            it.additionalUserInfo.toOption().fold({ false }) { userInfo -> userInfo.isNewUser }.toOption(),
                             firebaseUser.toSocialAuthUser())
                 }
     }

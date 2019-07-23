@@ -34,6 +34,13 @@
             tools:ignore="ButtonStyle,HardcodedText" />
 
         <Button
+            android:id="@+id/facebook_login"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:text="FACEBOOK LOGIN"
+            tools:ignore="ButtonStyle,HardcodedText" />
+
+        <Button
             android:id="@+id/logout"
             android:layout_width="300dp"
             android:layout_height="50dp"
