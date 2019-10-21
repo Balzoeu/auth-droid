@@ -48,8 +48,6 @@ dependencies {
     /* ARROW */
     implementation Libs.arrow_core_data
     implementation Libs.arrow_syntax
-    implementation Libs.arrow_core_extensions
-    implementation Libs.arrow_extras_data
     kapt Libs.arrow_meta
 
     //* === RX === *//

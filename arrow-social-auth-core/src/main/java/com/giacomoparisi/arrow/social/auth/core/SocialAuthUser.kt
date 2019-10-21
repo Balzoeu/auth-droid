@@ -1,8 +1,8 @@
 package com.giacomoparisi.arrow.social.auth.core
 
 import arrow.core.Option
+import arrow.core.extensions.list.foldable.firstOption
 import arrow.core.toOption
-import arrow.syntax.collections.firstOption
 import com.giacomoparisi.kotlin.functional.extensions.arrow.option.getOrEmpty
 import com.giacomoparisi.kotlin.functional.extensions.core.fold
 import com.google.firebase.auth.FirebaseUser
