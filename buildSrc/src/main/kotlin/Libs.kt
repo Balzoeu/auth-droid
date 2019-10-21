@@ -79,17 +79,6 @@ object Libs {
     /**
      * https://github.com/arrow-kt/arrow/
      */
-    const val arrow_core_extensions: String = "io.arrow-kt:arrow-core-extensions:" +
-            Versions.io_arrow_kt
-
-    /**
-     * https://github.com/arrow-kt/arrow/
-     */
-    const val arrow_extras_data: String = "io.arrow-kt:arrow-extras-data:" + Versions.io_arrow_kt
-
-    /**
-     * https://github.com/arrow-kt/arrow/
-     */
     const val arrow_core_data: String = "io.arrow-kt:arrow-core-data:" + Versions.io_arrow_kt
 
     /**

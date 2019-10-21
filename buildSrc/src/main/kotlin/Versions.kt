@@ -13,15 +13,15 @@ import org.gradle.plugin.use.PluginDependencySpec
 object Versions {
     const val com_giacomoparisi_kotlin_functional_extensions: String = "1.0.2"
 
-    const val com_facebook_android: String = "5.8.0" // available: "5.8.0"
+    const val com_facebook_android: String = "5.8.0"
 
-    const val org_jetbrains_kotlin: String = "1.3.50" // available: "1.3.50"
+    const val org_jetbrains_kotlin: String = "1.3.50"
 
     const val org_jetbrains_dokka: String = "0.9.18"
 
     const val io_arrow_kt: String = "0.10.1"
 
-    const val com_android_tools_build_gradle: String = "3.5.1" // available: "3.5.1"
+    const val com_android_tools_build_gradle: String = "3.5.1"
 
     const val androidx_test_runner: String = "1.2.0"
 
@@ -37,30 +37,30 @@ object Versions {
 
     const val constraintlayout: String = "1.1.3"
 
-    const val google_services: String = "4.3.2" // available: "4.3.2"
+    const val google_services: String = "4.3.2"
 
     const val espresso_core: String = "3.2.0"
 
-    const val firebase_auth: String = "19.1.0" // available: "19.1.0"
+    const val firebase_auth: String = "19.1.0"
 
-    const val lint_gradle: String = "26.5.1" // available: "26.5.1"
+    const val lint_gradle: String = "26.5.1"
 
-    const val appcompat: String = "1.1.0" // available: "1.1.0"
+    const val appcompat: String = "1.1.0"
 
     const val rxandroid: String = "2.1.1"
 
-    const val core_ktx: String = "1.1.0" // available: "1.1.0"
+    const val core_ktx: String = "1.1.0"
 
-    const val rxkotlin: String = "2.4.0" // available: "2.4.0"
+    const val rxkotlin: String = "2.4.0"
 
-    const val rxjava: String = "2.2.13" // available: "2.2.13"
+    const val rxjava: String = "2.2.13"
 
-    const val aapt2: String = "3.5.1-5435860" // available: "3.5.1-5435860"
+    const val aapt2: String = "3.5.1-5435860"
 
     const val junit: String = "4.12"
 
     /**
-     * Current version: "5.4.1"
+     * Current version: "5.6.3"
      * See issue 19: How to update Gradle itself?
      * https://github.com/jmfayard/buildSrcVersions/issues/19
      */
