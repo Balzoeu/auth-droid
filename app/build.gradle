@@ -6,7 +6,7 @@ apply plugin: "kotlin-kapt"
 android {
     compileSdkVersion AndroidConfig.compile_sdk
     defaultConfig {
-        applicationId "com.giacomoparisi.arrow.social.auth"
+        applicationId "com.giacomoparisi.authdroid"
         minSdkVersion AndroidConfig.min_sdk
         targetSdkVersion AndroidConfig.target_sdk
         versionCode AndroidConfig.version_code
@@ -25,11 +25,8 @@ dependencies {
 
     /* MODULES */
     implementation project(':auth-droid-core')
-
-    /* EXTENSIONS */
-    implementation Libs.kotlin_functional_extensions_android
-    implementation Libs.kotlin_functional_extensions_arrow
-    implementation Libs.kotlin_functional_extensions_core
+    implementation project(':auth-droid-rx-facebook')
+    implementation project(':auth-droid-rx-firebase')
 
     /* KOTLIN */
     implementation Libs.kotlin_stdlib_jdk7
@@ -45,12 +42,7 @@ dependencies {
     /* FIREBASE */
     implementation Libs.firebase_auth
 
-    /* ARROW */
-    implementation Libs.arrow_core_data
-    implementation Libs.arrow_syntax
-    kapt Libs.arrow_meta
-
-    //* === RX === *//
+    /* RX */
     implementation Libs.rxkotlin
     implementation Libs.rxandroid
     implementation Libs.rxjava

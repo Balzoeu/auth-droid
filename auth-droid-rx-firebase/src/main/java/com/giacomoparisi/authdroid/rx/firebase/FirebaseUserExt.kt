@@ -1,7 +1,6 @@
 package com.giacomoparisi.authdroid.rx.firebase
 
 import com.giacomoparisi.authdroid.core.SocialAuthUser
-import com.giacomoparisi.kotlin.functional.extensions.core.fold
 import com.google.firebase.auth.FirebaseUser
 
 fun FirebaseUser.toSocialAuthUser(): SocialAuthUser =
@@ -18,11 +17,9 @@ fun FirebaseUser.toSocialAuthUser(): SocialAuthUser =
                 this.photoUrl?.toString())
 
 private fun FirebaseUser.getProviderEmail() =
-        this.email.isNullOrEmpty()
-                .fold(
-                        { this.email },
-                        {
-                            this.providerData
-                                    .map { it.email }
-                                    .firstOrNull { it.isNullOrEmpty().not() }
-                        })
+        when {
+            this.email.isNullOrEmpty() -> this.email
+            else -> this.providerData
+                    .map { it.email }
+                    .firstOrNull { it.isNullOrEmpty().not() }
+        }

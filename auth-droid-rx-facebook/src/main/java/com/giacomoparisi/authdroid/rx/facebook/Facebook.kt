@@ -9,6 +9,7 @@ import com.facebook.Profile
 import com.facebook.internal.ImageRequest
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
+import com.giacomoparisi.auth.droid.facebook.core.FacebookFragment
 import com.giacomoparisi.authdroid.core.Auth
 import com.giacomoparisi.authdroid.core.AuthError
 import com.giacomoparisi.authdroid.core.SocialAuthUser
@@ -20,9 +21,9 @@ fun authWithFacebook(
         activity: FragmentActivity,
         profileImageDimension: Int = 500): Single<Auth> =
         Single.create {
-            val fragment = com.giacomoparisi.auth.droid.facebook.core.FacebookFragment()
+            val fragment = FacebookFragment()
             val transaction = activity.supportFragmentManager.beginTransaction()
-            transaction.add(fragment, com.giacomoparisi.auth.droid.facebook.core.FacebookFragment.TAG).addToBackStack(null).commit()
+            transaction.add(fragment, FacebookFragment.TAG).addToBackStack(null).commit()
 
             LoginManager.getInstance().registerCallback(
                     fragment.callbackManager,

@@ -34,7 +34,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.giacomoparisi.authdroid.droid.auth.AuthActivity"
+            android:name="com.giacomoparisi.authdroid.MainMenuActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -42,6 +42,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.giacomoparisi.authdroid.AuthActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>
