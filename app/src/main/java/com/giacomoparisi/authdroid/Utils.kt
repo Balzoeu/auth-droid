@@ -9,6 +9,10 @@ fun Auth.log(context: Context) {
     Toast.makeText(context, this.socialAuthUser.toString(), Toast.LENGTH_LONG).show()
 }
 
+fun Auth.openProfile(context: Context) {
+    ProfileActivity.start(context, this.socialAuthUser)
+}
+
 fun Throwable.logError(context: Context) {
 
     when (this) {

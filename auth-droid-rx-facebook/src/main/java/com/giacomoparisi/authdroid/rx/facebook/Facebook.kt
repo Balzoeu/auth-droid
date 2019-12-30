@@ -64,8 +64,8 @@ private fun LoginResult?.handleFacebookLogin(
                         val id = Profile.getCurrentProfile()?.id
                         val email = json.getStringOrNull("email")
                         val name = json.getStringOrNull("name")
-                        val firstName = name?.split("")?.firstOrNull()
-                        val lastName = name?.split("")?.getOrNull(1)
+                        val firstName = name?.split(" ")?.firstOrNull()
+                        val lastName = name?.split(" ")?.getOrNull(1)
                         val profilePicture = id?.let {
                             ImageRequest.getProfilePictureUri(
                                     it,

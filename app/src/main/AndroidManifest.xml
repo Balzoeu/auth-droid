@@ -45,6 +45,9 @@
         <activity
             android:name="com.giacomoparisi.authdroid.AuthActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name="com.giacomoparisi.authdroid.ProfileActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

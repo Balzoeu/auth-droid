@@ -47,6 +47,10 @@ dependencies {
     implementation Libs.rxandroid
     implementation Libs.rxjava
 
+    /* GLIDE */
+    implementation 'com.github.bumptech.glide:glide:4.10.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.10.0'
+
     /* TEST */
     testImplementation Libs.junit
     androidTestImplementation Libs.androidx_test_runner
