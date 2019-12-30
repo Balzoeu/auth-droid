@@ -1,59 +1,62 @@
-apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
-apply plugin: "kotlin-kapt"
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.jfrog.bintray'
+
+androidExtensions {
+    experimental = true
+}
 
 android {
     compileSdkVersion AndroidConfig.compile_sdk
     defaultConfig {
-        applicationId "com.giacomoparisi.arrow.social.auth"
         minSdkVersion AndroidConfig.min_sdk
         targetSdkVersion AndroidConfig.target_sdk
         versionCode AndroidConfig.version_code
         versionName AndroidConfig.version_name
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
 }
 
 dependencies {
 
-    /* MODULES */
+    /* AUTHDROID */
     implementation project(':auth-droid-core')
-
-    /* EXTENSIONS */
-    implementation Libs.kotlin_functional_extensions_android
-    implementation Libs.kotlin_functional_extensions_arrow
-    implementation Libs.kotlin_functional_extensions_core
-
-    /* KOTLIN */
-    implementation Libs.kotlin_stdlib_jdk7
+    implementation project(':auth-droid-facebook-core')
 
     /* ANDROID */
     implementation Libs.appcompat
-    implementation Libs.constraintlayout
 
-    /* FACEBOOK */
-    implementation Libs.facebook_core
+    /* GOOGLE AUTH */
+    implementation Libs.play_services_auth
+
+    /* FACEBOOK AUTH */
     implementation Libs.facebook_login
 
     /* FIREBASE */
     implementation Libs.firebase_auth
 
-    /* ARROW */
-    implementation Libs.arrow_core_data
-    implementation Libs.arrow_syntax
-    kapt Libs.arrow_meta
+    /* KOTLIN */
+    implementation Libs.kotlin_stdlib_jdk7
+    implementation Libs.core_ktx
 
-    //* === RX === *//
-    implementation Libs.rxkotlin
-    implementation Libs.rxandroid
+    /* RX */
     implementation Libs.rxjava
+    implementation Libs.rxandroid
+    implementation Libs.rxkotlin
+
+    /* ACTIVITY RESULT */
+    implementation Libs.inline_activity_result_kotlin
 
     /* TEST */
     testImplementation Libs.junit
@@ -61,4 +64,4 @@ dependencies {
     androidTestImplementation Libs.espresso_core
 }
 
-apply plugin: 'com.google.gms.google-services'
+apply from: rootProject.file('release-bintray.gradle')

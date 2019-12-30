@@ -1,1 +1,1 @@
-include ':app', ':arrow-social-auth-core'
+include ':app', ':auth-droid-core', ':auth-droid-rx-firebase', ':auth-droid-rx-facebook', ':auth-droid-facebook-core'

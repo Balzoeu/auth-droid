@@ -10,7 +10,7 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:orientation="vertical"
-        tools:context="com.giacomoparisi.arrow.social.auth.AuthActivity">
+        tools:context="com.giacomoparisi.authdroid.droid.auth.AuthActivity">
 
         <Button
             android:id="@+id/firebase_google_login"
