@@ -134,4 +134,27 @@
         app:layout_constraintStart_toEndOf="@id/id"
         app:layout_constraintTop_toTopOf="@id/id" />
 
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/token"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:text="Token :"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/id"
+        tools:ignore="HardcodedText" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/token_value"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/token"
+        app:layout_constraintTop_toTopOf="@id/token" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

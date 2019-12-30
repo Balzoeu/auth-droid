@@ -3,9 +3,10 @@ package com.giacomoparisi.authdroid.rx.firebase
 import com.giacomoparisi.authdroid.core.SocialAuthUser
 import com.google.firebase.auth.FirebaseUser
 
-fun FirebaseUser.toSocialAuthUser(): SocialAuthUser =
+fun FirebaseUser.toSocialAuthUser(token: String): SocialAuthUser =
         SocialAuthUser(
                 this.uid,
+                token,
                 this.displayName,
                 this.displayName
                         ?.split(" ")

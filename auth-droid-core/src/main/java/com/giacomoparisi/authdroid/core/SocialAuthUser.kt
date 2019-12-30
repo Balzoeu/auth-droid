@@ -2,6 +2,7 @@ package com.giacomoparisi.authdroid.core
 
 data class SocialAuthUser(
         val uId: String,
+        val token: String,
         val displayName: String?,
         val firstName: String?,
         val lastName: String?,
@@ -13,5 +14,6 @@ data class SocialAuthUser(
                     "first name: ${firstName.orEmpty()}, " +
                     "last name: ${lastName.orEmpty()}, " +
                     "email: ${email.orEmpty()}, " +
-                    "profileImage: ${profileImage.orEmpty()}"
+                    "profileImage: ${profileImage.orEmpty()}" +
+                    "token: $token"
 }

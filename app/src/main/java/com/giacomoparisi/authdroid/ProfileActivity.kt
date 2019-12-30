@@ -21,6 +21,7 @@ class ProfileActivity : FragmentActivity() {
         this.last_name_value.text = this.intent.getStringExtra(LAST_NAME) ?: "/"
         this.email_value.text = this.intent.getStringExtra(EMAIL) ?: "/"
         this.id_value.text = this.intent.getStringExtra(ID) ?: "/"
+        this.token_value.text = this.intent.getStringExtra(TOKEN) ?: "/"
 
         Glide.with(this)
                 .load(this.intent.getStringExtra(PROFILE_IMAGE).orEmpty())
@@ -34,6 +35,7 @@ class ProfileActivity : FragmentActivity() {
         private const val FIRST_NAME = "first_name"
         private const val LAST_NAME = "last_name"
         private const val ID = "id"
+        private const val TOKEN = "token"
         private const val PROFILE_IMAGE = "profile_image"
 
         fun start(
@@ -47,6 +49,7 @@ class ProfileActivity : FragmentActivity() {
             intent.putExtra(LAST_NAME, user.lastName)
             intent.putExtra(EMAIL, user.email)
             intent.putExtra(ID, user.uId)
+            intent.putExtra(TOKEN, user.token)
             intent.putExtra(PROFILE_IMAGE, user.profileImage)
 
             context.startActivity(intent)

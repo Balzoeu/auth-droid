@@ -10,12 +10,14 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
+import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.GoogleAuthProvider
 import io.reactivex.Single
 import io.reactivex.SingleEmitter
+import io.reactivex.schedulers.Schedulers
 
 fun authWithFirebaseGoogle(activity: FragmentActivity, clientId: String): Single<Auth> =
-        Single.create {
+        Single.create<AuthResult> {
             activity.startForResult(getGoogleSignInIntent(activity, clientId)) { result ->
 
                 val auth = authWithGoogle(result.data, it)
@@ -26,8 +28,22 @@ fun authWithFirebaseGoogle(activity: FragmentActivity, clientId: String): Single
                                     auth.idToken,
                                     null),
                             it)
+                } else {
+                    it.onError(AuthError.UnknownFirebaseError)
                 }
             }
+        }.flatMap { auth ->
+            getFirebaseToken()
+                    .map { it to auth }
+                    .subscribeOn(Schedulers.io())
+        }.flatMap {
+            when (val user = firebaseAuth().currentUser) {
+                null -> Single.error<Auth>(AuthError.UnknownFirebaseError)
+                else -> Single.just(Auth(
+                        it.second.additionalUserInfo?.isNewUser,
+                        user.toSocialAuthUser(it.first)
+                ))
+            }.subscribeOn(Schedulers.io())
         }
 
 fun googleSignOut(activity: FragmentActivity, clientId: String): Single<Unit> =
@@ -37,7 +53,7 @@ fun googleSignOut(activity: FragmentActivity, clientId: String): Single<Unit> =
                     .bindTask(emitter) { emitter.onSuccess(Unit) }
         }
 
-private fun authWithGoogle(data: Intent?, emitter: SingleEmitter<Auth>): GoogleSignInAccount? =
+private fun authWithGoogle(data: Intent?, emitter: SingleEmitter<AuthResult>): GoogleSignInAccount? =
         try {
             GoogleSignIn.getSignedInAccountFromIntent(data)
                     .getResult(ApiException::class.java)

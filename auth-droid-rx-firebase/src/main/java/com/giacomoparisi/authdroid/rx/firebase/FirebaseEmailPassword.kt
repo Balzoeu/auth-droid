@@ -2,33 +2,50 @@ package com.giacomoparisi.authdroid.rx.firebase
 
 import com.giacomoparisi.authdroid.core.Auth
 import com.giacomoparisi.authdroid.core.AuthError
+import com.google.firebase.auth.AuthResult
 import io.reactivex.Single
+import io.reactivex.schedulers.Schedulers
 
 
 fun signInWithFirebaseEmailPassword(
         email: String,
         password: String
 ): Single<Auth> =
-        Single.create { emitter ->
+        Single.create<AuthResult> { emitter ->
             firebaseAuth().signInWithEmailAndPassword(email, password)
-                    .bindTask(emitter) {
-                        when (val user = firebaseAuth().currentUser) {
-                            null -> emitter.onError(AuthError.UnknownFirebaseError)
-                            else -> Auth(it.additionalUserInfo?.isNewUser, user.toSocialAuthUser())
-                        }
-                    }
+                    .bindTask(emitter) { emitter.onSuccess(it) }
+        }.flatMap { auth ->
+            getFirebaseToken()
+                    .map { it to auth }
+                    .subscribeOn(Schedulers.io())
+        }.flatMap {
+            when (val user = firebaseAuth().currentUser) {
+                null -> Single.error<Auth>(AuthError.UnknownFirebaseError)
+                else -> Single.just(Auth(
+                        it.second.additionalUserInfo?.isNewUser,
+                        user.toSocialAuthUser(it.first)
+                ))
+            }.subscribeOn(Schedulers.io())
         }
+
 
 fun signUpWithFirebaseEmailPassword(
         email: String,
         password: String
 ): Single<Auth> =
-        Single.create { emitter ->
+        Single.create<AuthResult> { emitter ->
             firebaseAuth().createUserWithEmailAndPassword(email, password)
-                    .bindTask(emitter) {
-                        when (val user = firebaseAuth().currentUser) {
-                            null -> emitter.onError(AuthError.UnknownFirebaseError)
-                            else -> Auth(it.additionalUserInfo?.isNewUser, user.toSocialAuthUser())
-                        }
-                    }
+                    .bindTask(emitter) { emitter.onSuccess(it) }
+        }.flatMap { auth ->
+            getFirebaseToken()
+                    .map { it to auth }
+                    .subscribeOn(Schedulers.io())
+        }.flatMap {
+            when (val user = firebaseAuth().currentUser) {
+                null -> Single.error<Auth>(AuthError.UnknownFirebaseError)
+                else -> Single.just(Auth(
+                        it.second.additionalUserInfo?.isNewUser,
+                        user.toSocialAuthUser(it.first)
+                ))
+            }.subscribeOn(Schedulers.io())
         }

@@ -1,10 +1,10 @@
 package com.giacomoparisi.authdroid.rx.firebase
 
 import android.net.Uri
-import com.giacomoparisi.authdroid.core.Auth
 import com.giacomoparisi.authdroid.core.AuthError
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthCredential
+import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
 import io.reactivex.Single
@@ -23,7 +23,8 @@ fun getFirebaseId(): String? =
         firebaseAuth().currentUser?.uid
 
 fun getCurrentFirebaseUser() =
-        firebaseAuth().currentUser?.toSocialAuthUser()
+        getFirebaseToken()
+                .map { firebaseAuth().currentUser?.toSocialAuthUser(it) }
 
 fun updateFirebaseProfile(displayName: String? = null, photoUrl: String? = null): Single<Unit> =
         Single.create {
@@ -67,16 +68,9 @@ fun firebaseSignOut() {
 
 internal fun firebaseCredentialSignIn(
         credential: AuthCredential,
-        emitter: SingleEmitter<Auth>) {
+        emitter: SingleEmitter<AuthResult>) {
     firebaseAuth().signInWithCredential(credential)
-            .bindTask(emitter) {
-                firebaseAuth().currentUser
-                        ?.let { firebaseUser ->
-                            Auth(
-                                    it.additionalUserInfo?.isNewUser,
-                                    firebaseUser.toSocialAuthUser())
-                        }
-            }
+            .bindTask(emitter) { emitter.onSuccess(it) }
 }
 
 internal fun <F, T> Task<F>.bindTask(

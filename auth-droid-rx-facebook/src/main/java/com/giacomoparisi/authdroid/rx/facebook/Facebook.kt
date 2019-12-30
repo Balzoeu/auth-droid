@@ -2,10 +2,7 @@ package com.giacomoparisi.authdroid.rx.facebook
 
 import android.os.Bundle
 import androidx.fragment.app.FragmentActivity
-import com.facebook.FacebookCallback
-import com.facebook.FacebookException
-import com.facebook.GraphRequest
-import com.facebook.Profile
+import com.facebook.*
 import com.facebook.internal.ImageRequest
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
@@ -62,6 +59,7 @@ private fun LoginResult?.handleFacebookLogin(
                     GraphRequest.newMeRequest(this.accessToken)
                     { json, _ ->
                         val id = Profile.getCurrentProfile()?.id
+                        val token = AccessToken.getCurrentAccessToken().token
                         val email = json.getStringOrNull("email")
                         val name = json.getStringOrNull("name")
                         val firstName = name?.split(" ")?.firstOrNull()
@@ -74,7 +72,7 @@ private fun LoginResult?.handleFacebookLogin(
                             ).toString()
                         }
 
-                        SocialAuthUser(id.orEmpty(), name, firstName, lastName, email, profilePicture)
+                        SocialAuthUser(id.orEmpty(), token, name, firstName, lastName, email, profilePicture)
                                 .also { emitter.onSuccess(Auth(null, it)) }
                     }
             val parameters = Bundle()
