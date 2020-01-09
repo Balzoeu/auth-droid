@@ -3,8 +3,10 @@ package com.giacomoparisi.authdroid
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
 import com.giacomoparisi.authdroid.auth.R
+import com.giacomoparisi.authdroid.rx.firebase.firebaseSignOut
 import com.giacomoparisi.authdroid.rx.firebase.signInWithFirebaseEmailPassword
 import com.giacomoparisi.authdroid.rx.firebase.signUpWithFirebaseEmailPassword
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -57,6 +59,11 @@ class FirebaseEmailPasswordActivity : FragmentActivity() {
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({ it.openProfile(this) }) { it.logError(this) }
+        }
+
+        this.sign_out.setOnClickListener {
+            firebaseSignOut()
+            Toast.makeText(this, "Done", Toast.LENGTH_LONG).show()
         }
     }
 }

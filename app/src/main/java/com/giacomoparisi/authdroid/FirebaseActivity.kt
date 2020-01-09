@@ -8,6 +8,7 @@ import com.giacomoparisi.authdroid.auth.R
 import com.giacomoparisi.authdroid.rx.facebook.facebookSignOut
 import com.giacomoparisi.authdroid.rx.firebase.authWithFirebaseFacebook
 import com.giacomoparisi.authdroid.rx.firebase.authWithFirebaseGoogle
+import com.giacomoparisi.authdroid.rx.firebase.firebaseSignOut
 import com.giacomoparisi.authdroid.rx.firebase.googleSignOut
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -45,12 +46,16 @@ class FirebaseActivity : FragmentActivity() {
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(
-                            { Toast.makeText(this, "Done", Toast.LENGTH_LONG).show() })
+                            {
+                                firebaseSignOut()
+                                Toast.makeText(this, "Done", Toast.LENGTH_LONG).show()
+                            })
                     { Toast.makeText(this, "Error", Toast.LENGTH_LONG).show() }
         }
 
         this.firebase_facebook_logout.setOnClickListener {
             facebookSignOut()
+            firebaseSignOut()
             Toast.makeText(this, "Done", Toast.LENGTH_LONG).show()
         }
     }
