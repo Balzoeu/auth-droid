@@ -29,6 +29,38 @@ object Libs {
     const val facebook_login: String = "com.facebook.android:facebook-login:" +
             Versions.com_facebook_android
 
+    /**
+     * https://kotlinlang.org/
+     */
+    const val kotlin_android_extensions: String =
+            "org.jetbrains.kotlin:kotlin-android-extensions:" + Versions.org_jetbrains_kotlin
+
+    /**
+     * https://kotlinlang.org/
+     */
+    const val kotlin_android_extensions_runtime: String =
+            "org.jetbrains.kotlin:kotlin-android-extensions-runtime:" +
+                    Versions.org_jetbrains_kotlin
+
+    /**
+     * https://kotlinlang.org/
+     */
+    const val kotlin_annotation_processing_gradle: String =
+            "org.jetbrains.kotlin:kotlin-annotation-processing-gradle:" +
+                    Versions.org_jetbrains_kotlin
+
+    /**
+     * https://kotlinlang.org/
+     */
+    const val kotlin_gradle_plugin: String = "org.jetbrains.kotlin:kotlin-gradle-plugin:" +
+            Versions.org_jetbrains_kotlin
+
+    /**
+     * https://kotlinlang.org/
+     */
+    const val kotlin_stdlib_jdk7: String = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:" +
+            Versions.org_jetbrains_kotlin
+
     const val dokka_android_gradle_plugin: String =
             "org.jetbrains.dokka:dokka-android-gradle-plugin:" + Versions.org_jetbrains_dokka
 
@@ -51,20 +83,6 @@ object Libs {
                     Versions.de_fayard_buildsrcversions_gradle_plugin
 
     /**
-     * https://kotlinlang.org/
-     */
-    const val kotlin_annotation_processing_gradle: String =
-            "org.jetbrains.kotlin:kotlin-annotation-processing-gradle:" +
-                    Versions.kotlin_annotation_processing_gradle
-
-    /**
-     * https://kotlinlang.org/
-     */
-    const val kotlin_android_extensions_runtime: String =
-            "org.jetbrains.kotlin:kotlin-android-extensions-runtime:" +
-                    Versions.kotlin_android_extensions_runtime
-
-    /**
      * https://github.com/florent37/InlineActivityResult
      */
     const val inline_activity_result_kotlin: String =
@@ -78,26 +96,8 @@ object Libs {
             "com.github.dcendents:android-maven-gradle-plugin:" +
                     Versions.android_maven_gradle_plugin
 
-    /**
-     * https://kotlinlang.org/
-     */
-    const val kotlin_android_extensions: String =
-            "org.jetbrains.kotlin:kotlin-android-extensions:" + Versions.kotlin_android_extensions
-
     const val gradle_bintray_plugin: String = "com.jfrog.bintray.gradle:gradle-bintray-plugin:" +
             Versions.gradle_bintray_plugin
-
-    /**
-     * https://kotlinlang.org/
-     */
-    const val kotlin_gradle_plugin: String = "org.jetbrains.kotlin:kotlin-gradle-plugin:" +
-            Versions.kotlin_gradle_plugin
-
-    /**
-     * https://kotlinlang.org/
-     */
-    const val kotlin_stdlib_jdk7: String = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:" +
-            Versions.kotlin_stdlib_jdk7
 
     const val play_services_auth: String = "com.google.android.gms:play-services-auth:" +
             Versions.play_services_auth
