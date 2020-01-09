@@ -4,12 +4,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
+import com.giacomoparisi.auth.droid.rx.firebase.google.authWithFirebaseGoogle
+import com.giacomoparisi.auth.droid.rx.firebase.google.googleSignOut
 import com.giacomoparisi.authdroid.auth.R
 import com.giacomoparisi.authdroid.rx.facebook.facebookSignOut
-import com.giacomoparisi.authdroid.rx.firebase.authWithFirebaseFacebook
-import com.giacomoparisi.authdroid.rx.firebase.authWithFirebaseGoogle
+import com.giacomoparisi.authdroid.rx.firebase.facebook.authWithFirebaseFacebook
 import com.giacomoparisi.authdroid.rx.firebase.firebaseSignOut
-import com.giacomoparisi.authdroid.rx.firebase.googleSignOut
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.firebase.*

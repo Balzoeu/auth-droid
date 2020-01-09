@@ -71,14 +71,14 @@ fun firebaseSignOut() {
     FirebaseAuth.getInstance().signOut()
 }
 
-internal fun firebaseCredentialSignIn(
+fun firebaseCredentialSignIn(
         credential: AuthCredential,
         emitter: SingleEmitter<AuthResult>) {
     firebaseAuth().signInWithCredential(credential)
             .bindTask(emitter) { emitter.onSuccess(it) }
 }
 
-internal fun <F, T> Task<F>.bindTask(
+fun <F, T> Task<F>.bindTask(
         emitter: SingleEmitter<T>,
         onSuccess: (F) -> Unit
 ) {
@@ -97,4 +97,4 @@ internal fun <F, T> Task<F>.bindTask(
     }
 }
 
-internal fun firebaseAuth(): FirebaseAuth = FirebaseAuth.getInstance()
+fun firebaseAuth(): FirebaseAuth = FirebaseAuth.getInstance()

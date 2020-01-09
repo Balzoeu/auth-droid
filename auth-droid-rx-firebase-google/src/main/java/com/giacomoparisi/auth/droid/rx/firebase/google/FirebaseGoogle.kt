@@ -1,10 +1,11 @@
-package com.giacomoparisi.authdroid.rx.firebase
+package com.giacomoparisi.auth.droid.rx.firebase.google
 
 import android.app.Activity
 import android.content.Intent
 import androidx.fragment.app.FragmentActivity
 import com.giacomoparisi.authdroid.core.Auth
 import com.giacomoparisi.authdroid.core.AuthError
+import com.giacomoparisi.authdroid.rx.firebase.*
 import com.github.florent37.inlineactivityresult.kotlin.startForResult
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount

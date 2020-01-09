@@ -1,4 +1,4 @@
-package com.giacomoparisi.authdroid.rx.firebase
+package com.giacomoparisi.authdroid.rx.firebase.facebook
 
 import androidx.fragment.app.FragmentActivity
 import com.facebook.FacebookCallback
@@ -8,6 +8,10 @@ import com.facebook.login.LoginResult
 import com.giacomoparisi.auth.droid.facebook.core.FacebookFragment
 import com.giacomoparisi.authdroid.core.Auth
 import com.giacomoparisi.authdroid.core.AuthError
+import com.giacomoparisi.authdroid.rx.firebase.firebaseAuth
+import com.giacomoparisi.authdroid.rx.firebase.firebaseCredentialSignIn
+import com.giacomoparisi.authdroid.rx.firebase.getFirebaseToken
+import com.giacomoparisi.authdroid.rx.firebase.toSocialAuthUser
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FacebookAuthProvider
 import io.reactivex.Single
