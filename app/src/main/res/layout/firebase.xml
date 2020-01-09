@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:paddingStart="20dp"
+    android:paddingEnd="20dp">
+
+    <Button
+        android:id="@+id/firebase_google"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="firebase google login"
+        tools:ignore="HardcodedText" />
+
+    <Button
+        android:id="@+id/firebase_facebook"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="firebase facebook login"
+        tools:ignore="HardcodedText" />
+
+    <Button
+        android:id="@+id/firebase_custom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="firebase email password login"
+        tools:ignore="HardcodedText" />
+
+    <Button
+        android:id="@+id/firebase_google_logout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="google logout"
+        tools:ignore="HardcodedText"
+        android:layout_marginTop="40dp" />
+
+    <Button
+        android:id="@+id/firebase_facebook_logout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="facebook logout"
+        tools:ignore="HardcodedText" />
+
+</LinearLayout>

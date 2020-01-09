@@ -11,11 +11,16 @@ import io.reactivex.Single
 import io.reactivex.SingleEmitter
 
 
-fun getFirebaseToken(): Single<String?> =
+fun getFirebaseToken(): Single<String> =
         Single.create {
             when (val user = FirebaseAuth.getInstance().currentUser) {
                 null -> it.onError(AuthError.UnknownFirebaseError)
-                else -> user.getIdToken(true).bindTask(it) { result -> result.token }
+                else -> user.getIdToken(true).bindTask(it) { result ->
+                    when (val token = result.token) {
+                        null -> it.onError(AuthError.UnknownFirebaseError)
+                        else -> it.onSuccess(token)
+                    }
+                }
             }
         }
 

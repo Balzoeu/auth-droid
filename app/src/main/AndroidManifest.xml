@@ -43,10 +43,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.giacomoparisi.authdroid.AuthActivity"
+            android:name="com.giacomoparisi.authdroid.ProfileActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.giacomoparisi.authdroid.ProfileActivity"
+            android:name="com.giacomoparisi.authdroid.FirebaseActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.giacomoparisi.authdroid.FirebaseEmailPasswordActivity"
             android:screenOrientation="portrait" />
     </application>
 

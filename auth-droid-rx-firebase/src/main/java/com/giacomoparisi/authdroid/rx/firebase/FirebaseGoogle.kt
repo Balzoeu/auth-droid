@@ -1,5 +1,6 @@
 package com.giacomoparisi.authdroid.rx.firebase
 
+import android.app.Activity
 import android.content.Intent
 import androidx.fragment.app.FragmentActivity
 import com.giacomoparisi.authdroid.core.Auth
@@ -30,6 +31,11 @@ fun authWithFirebaseGoogle(activity: FragmentActivity, clientId: String): Single
                             it)
                 } else {
                     it.onError(AuthError.UnknownFirebaseError)
+                }
+            }.onFailed { result ->
+                when (result.resultCode) {
+                    Activity.RESULT_CANCELED -> it.onError(AuthError.Cancelled)
+                    else -> it.onError(AuthError.UnknownFirebaseError)
                 }
             }
         }.flatMap { auth ->

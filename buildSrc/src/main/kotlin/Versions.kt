@@ -11,39 +11,45 @@ import org.gradle.plugin.use.PluginDependencySpec
  * YOU are responsible for updating manually the dependency version.
  */
 object Versions {
-    const val com_giacomoparisi_kotlin_functional_extensions: String = "1.0.2"
+    const val com_github_bumptech_glide: String = "4.10.0"
 
-    const val com_facebook_android: String = "5.8.0"
-
-    const val org_jetbrains_kotlin: String = "1.3.50"
+    const val com_facebook_android: String = "5.13.0" // available: "5.13.0"
 
     const val org_jetbrains_dokka: String = "0.9.18"
 
-    const val io_arrow_kt: String = "0.10.1"
-
-    const val com_android_tools_build_gradle: String = "3.5.1"
+    const val com_android_tools_build_gradle: String = "3.5.3" // available: "3.5.3"
 
     const val androidx_test_runner: String = "1.2.0"
 
     const val de_fayard_buildsrcversions_gradle_plugin: String = "0.7.0"
 
-    const val inline_activity_result_kotlin: String = "1.0.2"
+    const val kotlin_annotation_processing_gradle: String = "1.3.61"
+
+    const val kotlin_android_extensions_runtime: String = "1.3.61"
+
+    const val inline_activity_result_kotlin: String = "1.0.3" // available: "1.0.3"
 
     const val android_maven_gradle_plugin: String = "2.1"
 
+    const val kotlin_android_extensions: String = "1.3.61"
+
     const val gradle_bintray_plugin: String = "1.8.4"
+
+    const val kotlin_gradle_plugin: String = "1.3.61"
+
+    const val kotlin_stdlib_jdk7: String = "1.3.61" // available: "1.3.61"
 
     const val play_services_auth: String = "17.0.0"
 
     const val constraintlayout: String = "1.1.3"
 
-    const val google_services: String = "4.3.2"
+    const val google_services: String = "4.3.3" // available: "4.3.3"
 
     const val espresso_core: String = "3.2.0"
 
-    const val firebase_auth: String = "19.1.0"
+    const val firebase_auth: String = "19.2.0" // available: "19.2.0"
 
-    const val lint_gradle: String = "26.5.1"
+    const val lint_gradle: String = "26.5.3" // available: "26.5.3"
 
     const val appcompat: String = "1.1.0"
 
@@ -53,18 +59,18 @@ object Versions {
 
     const val rxkotlin: String = "2.4.0"
 
-    const val rxjava: String = "2.2.13"
+    const val rxjava: String = "2.2.16" // available: "2.2.16"
 
-    const val aapt2: String = "3.5.1-5435860"
+    const val aapt2: String = "3.5.3-5435860" // available: "3.5.3-5435860"
 
-    const val junit: String = "4.12"
+    const val junit: String = "4.13" // available: "4.13"
 
     /**
      * Current version: "5.6.3"
      * See issue 19: How to update Gradle itself?
      * https://github.com/jmfayard/buildSrcVersions/issues/19
      */
-    const val gradleLatestVersion: String = "5.6.3"
+    const val gradleLatestVersion: String = "6.0.1"
 }
 
 /**

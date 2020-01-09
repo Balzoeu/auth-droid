@@ -3,10 +3,7 @@ package com.giacomoparisi.authdroid
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import com.giacomoparisi.authdroid.auth.R
 import com.giacomoparisi.authdroid.rx.firebase.signInWithFirebaseEmailPassword
 import com.giacomoparisi.authdroid.rx.firebase.signUpWithFirebaseEmailPassword
@@ -14,24 +11,19 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.email_password_auth.*
 
-class EmailPasswordAuthFragment : Fragment() {
+class FirebaseEmailPasswordActivity : FragmentActivity() {
 
     private var email: String = ""
     private var password: String = ""
 
-    override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
-    ): View? =
-            inflater.inflate(R.layout.email_password_auth, container, false)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+        this.setContentView(R.layout.email_password_auth)
 
         this.email_field.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
-                this@EmailPasswordAuthFragment.email = s.toString()
+                this@FirebaseEmailPasswordActivity.email = s.toString()
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -41,7 +33,7 @@ class EmailPasswordAuthFragment : Fragment() {
 
         this.password_field.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
-                this@EmailPasswordAuthFragment.password = s.toString()
+                this@FirebaseEmailPasswordActivity.password = s.toString()
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -55,7 +47,7 @@ class EmailPasswordAuthFragment : Fragment() {
                     password)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({ it.log(this.requireContext()) }) { it.logError(this.requireContext()) }
+                    .subscribe({ it.log(this) }) { it.logError(this) }
         }
 
         this.sign_in.setOnClickListener {
@@ -64,7 +56,7 @@ class EmailPasswordAuthFragment : Fragment() {
                     password)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({ it.log(this.requireContext()) }) { it.logError(this.requireContext()) }
+                    .subscribe({ it.log(this) }) { it.logError(this) }
         }
     }
 }

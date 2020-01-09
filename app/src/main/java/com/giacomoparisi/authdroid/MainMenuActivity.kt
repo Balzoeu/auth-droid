@@ -1,5 +1,6 @@
 package com.giacomoparisi.authdroid
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.FragmentActivity
 import com.giacomoparisi.authdroid.auth.R
@@ -14,7 +15,14 @@ class MainMenuActivity : FragmentActivity() {
         super.onCreate(savedInstanceState)
 
         this.setContentView(R.layout.main_menu)
-        this.firebase.setOnClickListener { }
+        this.firebase.setOnClickListener {
+            this.startActivity(
+                    Intent(
+                            this,
+                            FirebaseActivity::class.java
+                    )
+            )
+        }
         this.facebook.setOnClickListener {
             authWithFacebook(this)
                     .subscribeOn(Schedulers.io())

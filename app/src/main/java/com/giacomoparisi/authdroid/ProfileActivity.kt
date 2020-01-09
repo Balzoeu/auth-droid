@@ -25,6 +25,7 @@ class ProfileActivity : FragmentActivity() {
 
         Glide.with(this)
                 .load(this.intent.getStringExtra(PROFILE_IMAGE).orEmpty())
+                .error(R.drawable.profile)
                 .into(this.profile_image)
     }
 
