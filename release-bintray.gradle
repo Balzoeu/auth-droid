@@ -2,18 +2,18 @@
  * Bintray release configuration
  * */
 ext {
-  bintrayRepo = 'maven'
+  bintrayRepo = 'AuthDroid'
   bintrayName = POM_BINTRAY_NAME
 
-  publishedGroupId = 'com.giacomoparisi.arrow.social.auth'
-  libraryName = 'Arrow Social Auth'
+  publishedGroupId = 'com.giacomoparisi.authdroid'
+  libraryName = 'AuthDroid'
   artifact = POM_ARTIFACT_ID
   packagingType = POM_PACKAGING
 
   libraryDescription = POM_DESCRIPTION
 
-  siteUrl = 'https://github.com/giacomoParisi/arrow-social-auth'
-  gitUrl = 'https://github.com/giacomoParisi/arrow-social-auth.git'
+  siteUrl = 'https://github.com/giacomoParisi/auth-droid'
+  gitUrl = 'https://github.com/giacomoParisi/auth-droid.git'
 
   libraryVersion = POM_VERSION
 
