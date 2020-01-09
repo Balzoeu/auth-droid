@@ -5,10 +5,6 @@ import android.widget.Toast
 import com.giacomoparisi.authdroid.core.Auth
 import com.giacomoparisi.authdroid.core.AuthError
 
-fun Auth.log(context: Context) {
-    Toast.makeText(context, this.socialAuthUser.toString(), Toast.LENGTH_LONG).show()
-}
-
 fun Auth.openProfile(context: Context) {
     ProfileActivity.start(context, this.socialAuthUser)
 }

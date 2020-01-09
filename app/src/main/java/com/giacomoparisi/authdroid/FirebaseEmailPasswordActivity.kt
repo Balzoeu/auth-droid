@@ -47,7 +47,7 @@ class FirebaseEmailPasswordActivity : FragmentActivity() {
                     password)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({ it.log(this) }) { it.logError(this) }
+                    .subscribe({ it.openProfile(this) }) { it.logError(this) }
         }
 
         this.sign_in.setOnClickListener {
@@ -56,7 +56,7 @@ class FirebaseEmailPasswordActivity : FragmentActivity() {
                     password)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({ it.log(this) }) { it.logError(this) }
+                    .subscribe({ it.openProfile(this) }) { it.logError(this) }
         }
     }
 }
