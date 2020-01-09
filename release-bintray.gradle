@@ -2,7 +2,7 @@
  * Bintray release configuration
  * */
 ext {
-  bintrayRepo = 'AuthDroid'
+  bintrayRepo = 'auth-droid'
   bintrayName = POM_BINTRAY_NAME
 
   publishedGroupId = 'com.giacomoparisi.authdroid'
