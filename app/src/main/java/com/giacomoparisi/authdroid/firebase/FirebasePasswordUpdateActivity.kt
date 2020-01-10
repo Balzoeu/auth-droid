@@ -11,7 +11,7 @@ import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.firebase_email_password_auth.password_field
 import kotlinx.android.synthetic.main.firebase_password_update.*
 
-class FirebasePasswordUpdate : FragmentActivity() {
+class FirebasePasswordUpdateActivity : FragmentActivity() {
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
         super.onPostCreate(savedInstanceState)

@@ -10,7 +10,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.firebase_password_reset.*
 
-class FirebasePasswordReset : FragmentActivity() {
+class FirebasePasswordResetActivity : FragmentActivity() {
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
         super.onPostCreate(savedInstanceState)

@@ -73,6 +73,14 @@
             tools:ignore="HardcodedText" />
 
         <Button
+            android:id="@+id/firebase_update_profile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="firebase update profile"
+            tools:ignore="HardcodedText"
+            android:layout_marginTop="40dp" />
+
+        <Button
             android:id="@+id/firebase_google_logout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

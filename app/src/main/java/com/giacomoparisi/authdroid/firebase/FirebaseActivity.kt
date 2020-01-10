@@ -53,13 +53,13 @@ class FirebaseActivity : FragmentActivity() {
 
         this.firebase_password_reset.setOnClickListener {
             this.startActivity(
-                    Intent(this, FirebasePasswordReset::class.java)
+                    Intent(this, FirebasePasswordResetActivity::class.java)
             )
         }
 
         this.firebase_password_update.setOnClickListener {
             this.startActivity(
-                    Intent(this, FirebasePasswordUpdate::class.java)
+                    Intent(this, FirebasePasswordUpdateActivity::class.java)
             )
         }
 
@@ -83,6 +83,17 @@ class FirebaseActivity : FragmentActivity() {
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({ it.openProfile(this) }) { it.logError(this) }
         }
+
+
+
+
+
+        this.firebase_update_profile.setOnClickListener {
+            this.startActivity(
+                    Intent(this, FirebaseProfileUpdateActivity::class.java)
+            )
+        }
+
 
 
 
