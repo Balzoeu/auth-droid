@@ -149,13 +149,11 @@ For more info on step 1 or 2 see the [Facebook Android Login Docs](https://devel
 
 For more info see [Google Android Sign In Doc](https://developers.google.com/identity/sign-in/android/start-integrating)
 
-# AUTH
+## Auth
 
-## Email / Password
+### Email / Password
 
-<br />
-
-### Sign Up
+#### Sign Up
 
 Subscribe to ***signUpWithFirebaseEmailPassword*** single to start the signUp flow
 
@@ -180,9 +178,7 @@ The [Social User](#social-user) entity
 
 ***FirebaseException*** see [Firebase Exception Docs](https://firebase.google.com/docs/reference/android/com/google/firebase/auth/FirebaseAuthException)
 
-<br />
-
-### Sign In
+#### Sign In
 
 Subscribe to ***signInWithFirebaseEmailPassword*** single to start the signIn flow
 
@@ -207,11 +203,11 @@ The [Social User](#social-user) entity
 
 ***FirebaseException*** see [Firebase Exception Docs](https://firebase.google.com/docs/reference/android/com/google/firebase/auth/FirebaseAuthException)
 
+<br />
 
+### Firebase Facebook
 
-## Firebase Facebook
-
-### Auth
+#### Auth
 
 Subscribe to ***authWithFirebaseFacebook*** single to start the firebase facebook signIn flow
 
@@ -240,9 +236,7 @@ The [Social User](#social-user) entity
 
 ***FirebaseException*** see [Firebase Exception Docs](https://firebase.google.com/docs/reference/android/com/google/firebase/auth/FirebaseAuthException)
 
-<br />
-
-### Sign Out
+#### Sign Out
 
 Call ***facebookSignOut*** if you need to logout the user from facebook social
 
@@ -254,9 +248,9 @@ facebookSignOut()
 <br />
 <br />
 
-## Firebase Google
+### Firebase Google
 
-### Auth
+#### Auth
 
 Subscribe to ***authWithFirebaseGoogle*** single to start the firebase google signIn flow
 
@@ -288,9 +282,8 @@ The [Social User](#social-user) entity
 
 ***FirebaseException*** see [Firebase Exception Docs](https://firebase.google.com/docs/reference/android/com/google/firebase/auth/FirebaseAuthException)
 
-<br />
 
-### Sign Out
+#### Sign Out
 
 Subscribe to ***googleSignOut*** single if you need to logout the user form google social
 
@@ -341,7 +334,6 @@ The firebase token of the user as a String
 ***FirebaseException*** see [Firebase Exception Docs](https://firebase.google.com/docs/reference/android/com/google/firebase/auth/FirebaseAuthException)
 
 <br />
-<br />
 
 ### Id
 
@@ -362,10 +354,10 @@ if (id != null) {
 The firebase id of the user, it can be null if the user is not logged in
 
 <br />
-<br />
 
 ### User
 
+#### Get
 Subscribe to getCurrentFirebaseUser to get the current logged in firebase user
 
 ```kotlin
@@ -391,7 +383,16 @@ The [Social User](#social-user) entity
 
 ***FirebaseException*** see [Firebase Exception Docs](https://firebase.google.com/docs/reference/android/com/google/firebase/auth/FirebaseAuthException)
 
-<br />
+
+#### Sign Out
+
+Call ***firebaseSignOut*** method to sign out the firebase user
+
+```kotlin
+
+firebaseSignOut()    
+```
+
 <br />
 
 ### Profile
@@ -424,8 +425,6 @@ Unit object
 
 
 <br />
-<br />
-
 
 ### Password
 
@@ -455,8 +454,6 @@ Unit object
 ***UnknownFirebaseError*** for any other error during the flow
 
 ***FirebaseException*** see [Firebase Exception Docs](https://firebase.google.com/docs/reference/android/com/google/firebase/auth/FirebaseAuthException)
-
-<br />
 
 #### Reset
 
