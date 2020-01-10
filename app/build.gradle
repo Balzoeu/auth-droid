@@ -24,7 +24,6 @@ android {
 dependencies {
 
     /* MODULES */
-    implementation project(':auth-droid-core')
     implementation project(':auth-droid-rx-facebook')
     implementation project(':auth-droid-rx-firebase')
     implementation project(':auth-droid-rx-firebase-facebook')

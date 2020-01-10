@@ -46,15 +46,16 @@ class FirebaseActivity : FragmentActivity() {
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(
-                            {
-                                firebaseSignOut()
-                                Toast.makeText(this, "Done", Toast.LENGTH_LONG).show()
-                            })
+                            { Toast.makeText(this, "Done", Toast.LENGTH_LONG).show() })
                     { Toast.makeText(this, "Error", Toast.LENGTH_LONG).show() }
         }
 
         this.firebase_facebook_logout.setOnClickListener {
             facebookSignOut()
+            Toast.makeText(this, "Done", Toast.LENGTH_LONG).show()
+        }
+
+        this.firebase_logout.setOnClickListener {
             firebaseSignOut()
             Toast.makeText(this, "Done", Toast.LENGTH_LONG).show()
         }
