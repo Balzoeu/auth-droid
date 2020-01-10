@@ -5,10 +5,15 @@ import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
 import com.giacomoparisi.authdroid.core.Auth
 import com.giacomoparisi.authdroid.core.AuthError
+import com.giacomoparisi.authdroid.core.SocialAuthUser
 import com.giacomoparisi.authdroid.profile.ProfileActivity
 
 fun Auth.openProfile(context: Context) {
     ProfileActivity.start(context, this.socialAuthUser)
+}
+
+fun SocialAuthUser.openProfile(context: Context) {
+    ProfileActivity.start(context, this)
 }
 
 fun Throwable.logError(context: Context) {

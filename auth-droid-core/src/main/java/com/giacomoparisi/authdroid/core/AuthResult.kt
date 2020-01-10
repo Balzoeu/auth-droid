@@ -6,7 +6,7 @@ sealed class AuthError(message: String) : Throwable(message) {
 
     object UnknownFirebaseError : AuthError("Unknown firebase error")
 
-    object FirebaseUserNotLogged : AuthError("firebase user not logged")
+    object FirebaseUserNotLogged : AuthError("Firebase user not logged")
 
     class FirebaseTaskError(message: String) : AuthError(message)
 

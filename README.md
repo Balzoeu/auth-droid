@@ -57,9 +57,9 @@ Subscribe to ***authWithFacebook*** single to start the login flow
 ```kotlin
 
 authWithFacebook(activity) // pass you current activity
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({ socialUser -> Log.d("User", socialUser.toString())}) { /* error */ }
+    .subscribeOn(Schedulers.io())
+    .observeOn(AndroidSchedulers.mainThread())
+    .subscribe({ socialUser -> Log.d("User", socialUser.toString())}) { /* error */ }
                     
 ```
 ###### Result :
@@ -157,9 +157,9 @@ Subscribe to ***signUpWithFirebaseEmailPassword*** single to start the signUp fl
 ```kotlin
 
 signUpWithFirebaseEmailPassword("email@email.com", "password")
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({ socialUser -> Log.d("User", socialUser.toString())}) { /* error */ }
+    .subscribeOn(Schedulers.io())
+    .observeOn(AndroidSchedulers.mainThread())
+    .subscribe({ socialUser -> Log.d("User", socialUser.toString())}) { /* error */ }
                     
 ```
 ###### Result :
@@ -182,9 +182,9 @@ Subscribe to ***signInWithFirebaseEmailPassword*** single to start the signIn fl
 ```kotlin
 
 signInWithFirebaseEmailPassword("email@email.com", "password")
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({ socialUser -> Log.d("User", socialUser.toString())}) { /* error */ }
+    .subscribeOn(Schedulers.io())
+    .observeOn(AndroidSchedulers.mainThread())
+    .subscribe({ socialUser -> Log.d("User", socialUser.toString())}) { /* error */ }
                     
 ```
 ###### Result :
@@ -211,9 +211,9 @@ Subscribe to ***authWithFirebaseFacebook*** single to start the firebase faceboo
 ```kotlin
 
 authWithFirebaseFacebook(activity) // pass your current activity 
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({ socialUser -> Log.d("User", socialUser.toString())}) { /* error */ }
+    .subscribeOn(Schedulers.io())
+    .observeOn(AndroidSchedulers.mainThread())
+    .subscribe({ socialUser -> Log.d("User", socialUser.toString())}) { /* error */ }
                     
 ```
 ###### Result :
@@ -255,10 +255,10 @@ You need your web google client id ( more info in [Setup](#firebase) )
 
 ```kotlin
 
-authWithFirebaseGoogle(activity, googleClientIdWeb)) // pass your current activity and your web google client id 
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({ socialUser -> Log.d("User", socialUser.toString())}) { /* error */ }
+authWithFirebaseGoogle(activity, googleClientIdWeb) // pass your current activity and your web google client id 
+    .subscribeOn(Schedulers.io())
+    .observeOn(AndroidSchedulers.mainThread())
+    .subscribe({ socialUser -> Log.d("User", socialUser.toString())}) { /* error */ }
                     
 ```
 
@@ -286,10 +286,10 @@ Subscribe to ***googleSignOut*** single if you need to logout the user form goog
 
 ```kotlin
 
-googleSignOut(this, this.getString(R.string.google_client_id_web))
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({ /* success */ }) { /* error */ }
+googleSignOut(activity, googleClientIdWeb)
+    .subscribeOn(Schedulers.io())
+    .observeOn(AndroidSchedulers.mainThread())
+    .subscribe({ /* success */ }) { /* error */ }
                     
 ```
 
@@ -309,9 +309,9 @@ Subscribe to ***getFirebaseToken*** to get the firebase token of the logged in u
 ```kotlin
 
 getFirebaseToken()
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({ id -> Log.d("ID", id)}) { /* error */ }
+    .subscribeOn(Schedulers.io())
+    .observeOn(AndroidSchedulers.mainThread())
+    .subscribe({ id -> Log.d("ID", id)}) { /* error */ }
                     
 ```
 
@@ -360,9 +360,9 @@ Subscribe to getCurrentFirebaseUser to get the current logged in firebase user
 ```kotlin
 
 getCurrentFirebaseUser()
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({ socialUser -> Log.d("User", socialUser.toString())}) { /* error */ }
+     .subscribeOn(Schedulers.io())
+     .observeOn(AndroidSchedulers.mainThread())
+     .subscribe({ socialUser -> Log.d("User", socialUser.toString())}) { /* error */ }
                     
 ```
 ###### Result :
@@ -399,9 +399,9 @@ Subscribe to updateFirebaseProfile to update some info of the firebase user's pr
 ```kotlin
 
 updateFirebaseProfile("NewFirstName NewLastName", "www.new-photo-url.png")
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({ /* success */ }) { /* error */ }
+    .subscribeOn(Schedulers.io())
+    .observeOn(AndroidSchedulers.mainThread())
+    .subscribe({ /* success */ }) { /* error */ }
                     
 ```
 
@@ -432,9 +432,9 @@ Subscribe to updateFirebasePassword to update the password of the current logged
 ```kotlin
 
 updateFirebasePassword("NewPassword)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({ /* success */ }) { /* error */ }
+    .subscribeOn(Schedulers.io())
+    .observeOn(AndroidSchedulers.mainThread())
+    .subscribe({ /* success */ }) { /* error */ }
                     
 ```
 ###### Result :
@@ -459,9 +459,9 @@ Subscribe to resetFirebasePassword to start the password reset flow through emai
 ```kotlin
 
 resetFirebasePassword("email@email.com")
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({ /* success */ }) { /* error */ }
+    .subscribeOn(Schedulers.io())
+    .observeOn(AndroidSchedulers.mainThread())
+    .subscribe({ /* success */ }) { /* error */ }
                     
 ```
 ###### Result :

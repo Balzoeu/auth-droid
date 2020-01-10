@@ -12,6 +12,10 @@ import com.giacomoparisi.authdroid.openProfile
 import com.giacomoparisi.authdroid.rx.facebook.facebookSignOut
 import com.giacomoparisi.authdroid.rx.firebase.facebook.authWithFirebaseFacebook
 import com.giacomoparisi.authdroid.rx.firebase.firebaseSignOut
+import com.giacomoparisi.authdroid.rx.firebase.getCurrentFirebaseUser
+import com.giacomoparisi.authdroid.rx.firebase.getFirebaseId
+import com.giacomoparisi.authdroid.rx.firebase.getFirebaseToken
+import com.giacomoparisi.authdroid.showToast
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.firebase.*
@@ -57,6 +61,27 @@ class FirebaseActivity : FragmentActivity() {
             this.startActivity(
                     Intent(this, FirebasePasswordUpdate::class.java)
             )
+        }
+
+
+
+
+        this.firebase_get_id.setOnClickListener {
+            this.showToast(getFirebaseId() ?: "Firebase user not logged")
+        }
+
+        this.firebase_get_token.setOnClickListener {
+            getFirebaseToken()
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({ this.showToast(it) }) { it.logError(this) }
+        }
+
+        this.firebase_get_user.setOnClickListener {
+            getCurrentFirebaseUser()
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({ it.openProfile(this) }) { it.logError(this) }
         }
 
 
