@@ -31,17 +31,10 @@ android {
 dependencies {
 
     /* AUTHDROID */
-    implementation project(':auth-droid-core')
-    implementation project(':auth-droid-facebook-core')
+    api project(':auth-droid-core')
 
     /* ANDROID */
     implementation Libs.appcompat
-
-    /* GOOGLE AUTH */
-    implementation Libs.play_services_auth
-
-    /* FACEBOOK AUTH */
-    implementation Libs.facebook_login
 
     /* FIREBASE */
     implementation Libs.firebase_auth
@@ -54,9 +47,6 @@ dependencies {
     implementation Libs.rxjava
     implementation Libs.rxandroid
     implementation Libs.rxkotlin
-
-    /* ACTIVITY RESULT */
-    implementation Libs.inline_activity_result_kotlin
 
     /* TEST */
     testImplementation Libs.junit

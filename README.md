@@ -27,8 +27,6 @@ Add the dependencies into the project's `build.gradle`:
 
 dependencies {
 
-    implementation "com.giacomoparisi.authdroid:core:$authdroid_version"
-    implementation "com.giacomoparisi.authdroid:facebook-core:$authdroid_version"
     implementation "com.giacomoparisi.authdroid:rx-facebook:$authdroid_version"
     
 }
@@ -102,15 +100,14 @@ Add the dependencies into the project's `build.gradle`:
 
 dependencies {
 
-    implementation "com.giacomoparisi.authdroid:core:$authdroid_version"
-    implementation "com.giacomoparisi.authdroid:firebase:$authdroid_version"
+    implementation "com.giacomoparisi.authdroid:rx-firebase:$authdroid_version"
     
     // if you need firebase facebook login
-    implementation "com.giacomoparisi.authdroid:facebook-core:$authdroid_version"
     implementation "com.giacomoparisi.authdroid:rx-firebase-facebook:$authdroid_version"
     
     // if you need firebase google login
     implementation "com.giacomoparisi.authdroid:rx-firebase-google:$authdroid_version"
+
 }
 ```
 
