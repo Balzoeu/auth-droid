@@ -4,6 +4,7 @@ import android.content.Context
 import android.widget.Toast
 import com.giacomoparisi.authdroid.core.Auth
 import com.giacomoparisi.authdroid.core.AuthError
+import com.giacomoparisi.authdroid.profile.ProfileActivity
 
 fun Auth.openProfile(context: Context) {
     ProfileActivity.start(context, this.socialAuthUser)

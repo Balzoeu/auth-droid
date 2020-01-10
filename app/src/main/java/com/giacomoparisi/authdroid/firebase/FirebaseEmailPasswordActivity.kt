@@ -1,10 +1,12 @@
-package com.giacomoparisi.authdroid
+package com.giacomoparisi.authdroid.firebase
 
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import androidx.fragment.app.FragmentActivity
 import com.giacomoparisi.authdroid.auth.R
+import com.giacomoparisi.authdroid.logError
+import com.giacomoparisi.authdroid.openProfile
 import com.giacomoparisi.authdroid.rx.firebase.signInWithFirebaseEmailPassword
 import com.giacomoparisi.authdroid.rx.firebase.signUpWithFirebaseEmailPassword
 import io.reactivex.android.schedulers.AndroidSchedulers

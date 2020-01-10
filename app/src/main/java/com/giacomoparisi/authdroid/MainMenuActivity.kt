@@ -4,6 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.FragmentActivity
 import com.giacomoparisi.authdroid.auth.R
+import com.giacomoparisi.authdroid.facebook.FacebookActivity
+import com.giacomoparisi.authdroid.firebase.FirebaseActivity
 import kotlinx.android.synthetic.main.main_menu.*
 
 class MainMenuActivity : FragmentActivity() {

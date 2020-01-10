@@ -1,9 +1,11 @@
-package com.giacomoparisi.authdroid
+package com.giacomoparisi.authdroid.facebook
 
 import android.os.Bundle
 import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
 import com.giacomoparisi.authdroid.auth.R
+import com.giacomoparisi.authdroid.logError
+import com.giacomoparisi.authdroid.openProfile
 import com.giacomoparisi.authdroid.rx.facebook.authWithFacebook
 import com.giacomoparisi.authdroid.rx.facebook.facebookSignOut
 import io.reactivex.android.schedulers.AndroidSchedulers
