@@ -53,6 +53,11 @@ class FirebaseActivity : FragmentActivity() {
             )
         }
 
+        this.firebase_password_update.setOnClickListener {
+            this.startActivity(
+                    Intent(this, FirebasePasswordUpdate::class.java)
+            )
+        }
 
 
 

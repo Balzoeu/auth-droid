@@ -38,6 +38,13 @@
         android:layout_marginTop="40dp" />
 
     <Button
+        android:id="@+id/firebase_password_update"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="firebase password update"
+        tools:ignore="HardcodedText" />
+
+    <Button
         android:id="@+id/firebase_google_logout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
