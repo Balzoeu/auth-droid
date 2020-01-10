@@ -9,7 +9,7 @@ allprojects {
     repositories {
         mavenCentral()
         jcenter()
-        maven { url "https://dl.bintray.com/giacomoparisi/auth-droid" 
+        maven { url "https://dl.bintray.com/giacomoparisi/auth-droid" } 
     }
 }
 ```
