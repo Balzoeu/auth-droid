@@ -1,7 +1,7 @@
 package com.giacomoparisi.authdroid.core
 
 data class SocialAuthUser(
-        val uId: String,
+        val id: String,
         val token: String,
         val displayName: String?,
         val firstName: String?,

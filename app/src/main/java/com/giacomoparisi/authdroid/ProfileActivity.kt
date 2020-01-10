@@ -49,7 +49,7 @@ class ProfileActivity : FragmentActivity() {
             intent.putExtra(FIRST_NAME, user.firstName)
             intent.putExtra(LAST_NAME, user.lastName)
             intent.putExtra(EMAIL, user.email)
-            intent.putExtra(ID, user.uId)
+            intent.putExtra(ID, user.id)
             intent.putExtra(TOKEN, user.token)
             intent.putExtra(PROFILE_IMAGE, user.profileImage)
 

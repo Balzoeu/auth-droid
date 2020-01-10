@@ -14,7 +14,7 @@ import io.reactivex.SingleEmitter
 fun getFirebaseToken(): Single<String> =
         Single.create {
             when (val user = FirebaseAuth.getInstance().currentUser) {
-                null -> it.onError(AuthError.UnknownFirebaseError)
+                null -> it.onError(AuthError.FirebaseUserNotLogged)
                 else -> user.getIdToken(true).bindTask(it) { result ->
                     when (val token = result.token) {
                         null -> it.onError(AuthError.UnknownFirebaseError)
@@ -29,12 +29,17 @@ fun getFirebaseId(): String? =
 
 fun getCurrentFirebaseUser() =
         getFirebaseToken()
-                .map { firebaseAuth().currentUser?.toSocialAuthUser(it) }
+                .flatMap {
+                    when (val user = firebaseAuth().currentUser?.toSocialAuthUser(it)) {
+                        null -> Single.error(AuthError.FirebaseUserNotLogged)
+                        else -> Single.just(user)
+                    }
+                }
 
 fun updateFirebaseProfile(displayName: String? = null, photoUrl: String? = null): Single<Unit> =
-        Single.create {
+        Single.create { emitter ->
             when (val user = FirebaseAuth.getInstance().currentUser) {
-                null -> it.onError(AuthError.UnknownFirebaseError)
+                null -> emitter.onError(AuthError.FirebaseUserNotLogged)
                 else -> {
                     val request = UserProfileChangeRequest.Builder()
                             .also { builder ->
@@ -45,26 +50,26 @@ fun updateFirebaseProfile(displayName: String? = null, photoUrl: String? = null)
                             }
                             .build()
 
-                    user.updateProfile(request).bindTask(it) { Unit }
+                    user.updateProfile(request).bindTask(emitter) { emitter.onSuccess(Unit) }
                 }
             }
         }
 
 fun updateFirebasePassword(password: String): Single<Unit> =
-        Single.create {
+        Single.create { emitter ->
             when (val user = FirebaseAuth.getInstance().currentUser) {
-                null -> it.onError(AuthError.UnknownFirebaseError)
-                else -> user.updatePassword(password).bindTask(it) { Unit }
+                null -> emitter.onError(AuthError.FirebaseUserNotLogged)
+                else -> user.updatePassword(password).bindTask(emitter) { emitter.onSuccess(Unit) }
 
             }
         }
 
 fun resetFirebasePassword(email: String): Single<Unit> =
-        Single.create {
+        Single.create { emitter ->
             FirebaseAuth.getInstance()
                     .also { firebaseAuth -> firebaseAuth.useAppLanguage() }
                     .sendPasswordResetEmail(email)
-                    .bindTask(it) { Unit }
+                    .bindTask(emitter) { emitter.onSuccess(Unit) }
         }
 
 fun firebaseSignOut() {
