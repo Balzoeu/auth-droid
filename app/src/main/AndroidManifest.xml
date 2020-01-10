@@ -54,6 +54,9 @@
         <activity
             android:name="com.giacomoparisi.authdroid.facebook.FacebookActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name="com.giacomoparisi.authdroid.firebase.FirebasePasswordReset"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

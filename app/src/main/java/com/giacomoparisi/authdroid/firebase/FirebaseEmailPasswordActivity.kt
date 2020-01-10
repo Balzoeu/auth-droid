@@ -11,7 +11,7 @@ import com.giacomoparisi.authdroid.rx.firebase.signInWithFirebaseEmailPassword
 import com.giacomoparisi.authdroid.rx.firebase.signUpWithFirebaseEmailPassword
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.email_password_auth.*
+import kotlinx.android.synthetic.main.firebase_email_password_auth.*
 
 class FirebaseEmailPasswordActivity : FragmentActivity() {
 
@@ -21,7 +21,7 @@ class FirebaseEmailPasswordActivity : FragmentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        this.setContentView(R.layout.email_password_auth)
+        this.setContentView(R.layout.firebase_email_password_auth)
 
         this.email_field.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {

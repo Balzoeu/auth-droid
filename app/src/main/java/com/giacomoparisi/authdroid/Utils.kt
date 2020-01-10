@@ -2,6 +2,7 @@ package com.giacomoparisi.authdroid
 
 import android.content.Context
 import android.widget.Toast
+import androidx.fragment.app.FragmentActivity
 import com.giacomoparisi.authdroid.core.Auth
 import com.giacomoparisi.authdroid.core.AuthError
 import com.giacomoparisi.authdroid.profile.ProfileActivity
@@ -18,4 +19,8 @@ fun Throwable.logError(context: Context) {
     }.let {
         Toast.makeText(context, it, Toast.LENGTH_LONG).show()
     }
+}
+
+fun FragmentActivity.showToast(message: String) {
+    Toast.makeText(this, message, Toast.LENGTH_LONG).show()
 }

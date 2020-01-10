@@ -43,6 +43,19 @@ class FirebaseActivity : FragmentActivity() {
             )
         }
 
+
+
+
+
+        this.firebase_password_reset.setOnClickListener {
+            this.startActivity(
+                    Intent(this, FirebasePasswordReset::class.java)
+            )
+        }
+
+
+
+
         this.firebase_google_logout.setOnClickListener {
             googleSignOut(this, this.getString(R.string.google_client_id_web))
                     .subscribeOn(Schedulers.io())
