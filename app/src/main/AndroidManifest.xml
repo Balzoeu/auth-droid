@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.giacomoparisi.authdroid.auth">
+    package="com.balzo.authdroid.auth">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -34,7 +34,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.giacomoparisi.authdroid.MainMenuActivity"
+            android:name="eu.balzo.authdroid.MainMenuActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -43,25 +43,25 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.giacomoparisi.authdroid.profile.ProfileActivity"
+            android:name="eu.balzo.authdroid.profile.ProfileActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.giacomoparisi.authdroid.firebase.FirebaseActivity"
+            android:name="eu.balzo.authdroid.firebase.FirebaseActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.giacomoparisi.authdroid.firebase.FirebaseEmailPasswordActivity"
+            android:name="eu.balzo.authdroid.firebase.FirebaseEmailPasswordActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.giacomoparisi.authdroid.facebook.FacebookActivity"
+            android:name="eu.balzo.authdroid.facebook.FacebookActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.giacomoparisi.authdroid.firebase.FirebasePasswordResetActivity"
+            android:name="eu.balzo.authdroid.firebase.FirebasePasswordResetActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.giacomoparisi.authdroid.firebase.FirebasePasswordUpdateActivity"
+            android:name="eu.balzo.authdroid.firebase.FirebasePasswordUpdateActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.giacomoparisi.authdroid.firebase.FirebaseProfileUpdateActivity"
+            android:name="eu.balzo.authdroid.firebase.FirebaseProfileUpdateActivity"
             android:screenOrientation="portrait" />
     </application>
 
