@@ -4,8 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
-import eu.balzo.authdroid.droid.rx.firebase.google.authWithFirebaseGoogle
-import eu.balzo.authdroid.droid.rx.firebase.google.googleSignOut
 import com.balzo.authdroid.auth.R
 import eu.balzo.authdroid.logError
 import eu.balzo.authdroid.openProfile
@@ -15,6 +13,8 @@ import eu.balzo.authdroid.rx.firebase.firebaseSignOut
 import eu.balzo.authdroid.rx.firebase.getCurrentFirebaseUser
 import eu.balzo.authdroid.rx.firebase.getFirebaseId
 import eu.balzo.authdroid.rx.firebase.getFirebaseToken
+import eu.balzo.authdroid.rx.firebase.google.authWithFirebaseGoogle
+import eu.balzo.authdroid.rx.firebase.google.googleSignOut
 import eu.balzo.authdroid.showToast
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
