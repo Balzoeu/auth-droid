@@ -11,15 +11,15 @@ import org.gradle.plugin.use.PluginDependencySpec
  * YOU are responsible for updating manually the dependency version.
  */
 object Versions {
-    const val com_github_bumptech_glide: String = "4.10.0"
+    const val com_github_bumptech_glide: String = "4.11.0"
 
-    const val com_facebook_android: String = "5.13.0"
+    const val com_facebook_android: String = "6.1.0"
 
     const val org_jetbrains_kotlin: String = "1.3.61"
 
     const val org_jetbrains_dokka: String = "0.9.18"
 
-    const val com_android_tools_build_gradle: String = "3.5.3"
+    const val com_android_tools_build_gradle: String = "3.6.1"
 
     const val androidx_test_runner: String = "1.2.0"
 
@@ -39,30 +39,30 @@ object Versions {
 
     const val espresso_core: String = "3.2.0"
 
-    const val firebase_auth: String = "19.2.0"
+    const val firebase_auth: String = "19.3.0"
 
-    const val lint_gradle: String = "26.5.3"
+    const val lint_gradle: String = "26.6.1"
 
     const val appcompat: String = "1.1.0"
 
     const val rxandroid: String = "2.1.1"
 
-    const val core_ktx: String = "1.1.0"
+    const val core_ktx: String = "1.2.0"
 
     const val rxkotlin: String = "2.4.0"
 
-    const val rxjava: String = "2.2.16"
+    const val rxjava: String = "2.2.19"
 
-    const val aapt2: String = "3.5.3-5435860"
+    const val aapt2: String = "3.6.1-6040484"
 
     const val junit: String = "4.13"
 
     /**
-     * Current version: "5.6.3"
+     * Current version: "6.2.2"
      * See issue 19: How to update Gradle itself?
      * https://github.com/jmfayard/buildSrcVersions/issues/19
      */
-    const val gradleLatestVersion: String = "6.0.1"
+    const val gradleLatestVersion: String = "6.2.2"
 }
 
 /**

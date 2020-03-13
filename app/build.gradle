@@ -6,7 +6,7 @@ apply plugin: "kotlin-kapt"
 android {
     compileSdkVersion AndroidConfig.compile_sdk
     defaultConfig {
-        applicationId "com.giacomoparisi.authdroid"
+        applicationId "eu.balzo.authdroid"
         minSdkVersion AndroidConfig.min_sdk
         targetSdkVersion AndroidConfig.target_sdk
         versionCode AndroidConfig.version_code
@@ -49,8 +49,8 @@ dependencies {
     implementation Libs.rxjava
 
     /* GLIDE */
-    implementation 'com.github.bumptech.glide:glide:4.10.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.10.0'
+    implementation Libs.glide
+    annotationProcessor Libs.com_github_bumptech_glide_compiler
 
     /* TEST */
     testImplementation Libs.junit
