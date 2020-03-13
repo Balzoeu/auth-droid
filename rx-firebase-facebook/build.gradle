@@ -31,8 +31,9 @@ android {
 dependencies {
 
     /* AUTHDROID */
-    api project(":auth-droid-core")
-    implementation project(":auth-droid-facebook-core")
+    api project(':core')
+    implementation project(':facebook-core')
+    implementation project(':rx-firebase')
 
     /* ANDROID */
     implementation Libs.appcompat
@@ -51,9 +52,6 @@ dependencies {
     implementation Libs.rxjava
     implementation Libs.rxandroid
     implementation Libs.rxkotlin
-
-    /* ACTIVITY RESULT INLINE */
-    implementation Libs.inline_activity_result_kotlin
 
     /* TEST */
     testImplementation Libs.junit

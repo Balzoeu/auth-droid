@@ -1,1 +1,1 @@
-include ':app', ':auth-droid-core', ':auth-droid-rx-firebase', ':auth-droid-rx-facebook', ':auth-droid-facebook-core', ':auth-droid-rx-firebase-facebook', ':auth-droid-rx-firebase-google'
+include ':app', ':core', ':rx-firebase', ':rx-facebook', ':facebook-core', ':rx-firebase-facebook', ':rx-firebase-google'

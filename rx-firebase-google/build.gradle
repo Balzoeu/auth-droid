@@ -31,9 +31,9 @@ android {
 dependencies {
 
     /* AUTHDROID */
-    api project(':auth-droid-core')
-    implementation project(':auth-droid-facebook-core')
-    implementation project(':auth-droid-rx-firebase')
+    api project(':core')
+    implementation project(':facebook-core')
+    implementation project(':rx-firebase')
 
     /* ANDROID */
     implementation Libs.appcompat

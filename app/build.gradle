@@ -24,10 +24,10 @@ android {
 dependencies {
 
     /* MODULES */
-    implementation project(':auth-droid-rx-facebook')
-    implementation project(':auth-droid-rx-firebase')
-    implementation project(':auth-droid-rx-firebase-facebook')
-    implementation project(':auth-droid-rx-firebase-google')
+    implementation project(':rx-facebook')
+    implementation project(':rx-firebase')
+    implementation project(':rx-firebase-facebook')
+    implementation project(':rx-firebase-google')
 
     /* KOTLIN */
     implementation Libs.kotlin_stdlib_jdk7
