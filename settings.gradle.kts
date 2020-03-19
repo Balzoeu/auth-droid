@@ -1,0 +1,10 @@
+include(
+        ":app",
+        ":core",
+        ":rx-firebase",
+        ":rx-facebook",
+        ":rx-google",
+        ":facebook-core",
+        ":rx-firebase-facebook",
+        ":rx-firebase-google"
+)

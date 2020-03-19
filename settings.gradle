@@ -1,2 +1,0 @@
-include ':app', ':core', ':rx-firebase', ':rx-facebook', ':facebook-core', ':rx-firebase-facebook', ':rx-firebase-google'
-include ':rx-google'
