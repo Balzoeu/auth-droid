@@ -30,7 +30,9 @@ android {
 dependencies {
 
     /* MODULES */
+    implementation(project(":core"))
     implementation(project(":rx-facebook"))
+    implementation(project(":rx-google"))
     implementation (project(":rx-firebase"))
     implementation (project(":rx-firebase-facebook"))
     implementation (project(":rx-firebase-google"))

@@ -6,10 +6,10 @@ import com.facebook.*
 import com.facebook.internal.ImageRequest
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
-import eu.balzo.authdroid.facebook.core.FacebookFragment
 import eu.balzo.authdroid.core.Auth
 import eu.balzo.authdroid.core.AuthError
 import eu.balzo.authdroid.core.SocialAuthUser
+import eu.balzo.authdroid.facebook.core.FacebookFragment
 import io.reactivex.Single
 import io.reactivex.SingleEmitter
 import org.json.JSONObject
@@ -72,8 +72,15 @@ private fun LoginResult?.handleFacebookLogin(
                             ).toString()
                         }
 
-                        SocialAuthUser(id.orEmpty(), token, name, firstName, lastName, email, profilePicture)
-                                .also { emitter.onSuccess(Auth(null, it)) }
+                        SocialAuthUser(
+                                id.orEmpty(),
+                                token,
+                                name,
+                                firstName,
+                                lastName,
+                                email,
+                                profilePicture
+                        ).also { emitter.onSuccess(Auth(null, it)) }
                     }
             val parameters = Bundle()
             parameters.putString("fields", "id,name,email,gender,birthday")

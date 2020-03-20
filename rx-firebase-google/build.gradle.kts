@@ -39,7 +39,7 @@ dependencies {
 
     /* AUTHDROID */
     implementation(project(":core"))
-    implementation(project(":facebook-core"))
+    implementation(project(":google-core"))
     implementation(project(":rx-firebase"))
 
     /* ANDROID */

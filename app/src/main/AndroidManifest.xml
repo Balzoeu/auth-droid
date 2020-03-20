@@ -55,6 +55,9 @@
             android:name="eu.balzo.authdroid.facebook.FacebookActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name="eu.balzo.authdroid.google.GoogleActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name="eu.balzo.authdroid.firebase.FirebasePasswordResetActivity"
             android:screenOrientation="portrait" />
         <activity

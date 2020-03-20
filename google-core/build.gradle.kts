@@ -39,7 +39,6 @@ dependencies {
 
     /* AUTHDROID */
     implementation(project(":core"))
-    implementation(project(":google-core"))
 
     /* ANDROID */
     implementation(Libs.appcompat)
@@ -50,14 +49,6 @@ dependencies {
     /* KOTLIN */
     implementation(Libs.kotlin_stdlib_jdk7)
     implementation(Libs.core_ktx)
-
-    /* RX */
-    implementation(Libs.rxjava)
-    implementation(Libs.rxandroid)
-    implementation(Libs.rxkotlin)
-
-    /* ACTIVITY RESULT INLINE */
-    implementation(Libs.inline_activity_result_kotlin)
 
     /* TEST */
     testImplementation(Libs.junit)

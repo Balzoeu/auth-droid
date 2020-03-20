@@ -1,4 +1,4 @@
-package eu.balzo.authdroid.rx.firebase.google
+package eu.balzo.authdroid.rx.google
 
 import android.app.Activity
 import android.content.Intent
@@ -7,51 +7,31 @@ import com.github.florent37.inlineactivityresult.kotlin.startForResult
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.common.api.ApiException
-import com.google.firebase.auth.AuthResult
-import com.google.firebase.auth.GoogleAuthProvider
 import eu.balzo.authdroid.core.Auth
 import eu.balzo.authdroid.core.AuthError
 import eu.balzo.authdroid.google.core.getGoogleSignInClient
 import eu.balzo.authdroid.google.core.getGoogleSignInIntent
 import eu.balzo.authdroid.google.core.getGoogleSignInOptions
-import eu.balzo.authdroid.rx.firebase.*
 import io.reactivex.Single
 import io.reactivex.SingleEmitter
-import io.reactivex.schedulers.Schedulers
 
-fun authWithFirebaseGoogle(activity: FragmentActivity, clientId: String): Single<Auth> =
-        Single.create<AuthResult> {
+fun authWithGoogle(activity: FragmentActivity, clientId: String): Single<Auth> =
+        Single.create {
             activity.startForResult(getGoogleSignInIntent(activity, clientId)) { result ->
 
                 val auth = authWithGoogle(result.data, it)
 
-                if (auth != null) {
-                    firebaseCredentialSignIn(
-                            GoogleAuthProvider.getCredential(
-                                    auth.idToken,
-                                    null),
-                            it)
-                } else {
+                if (auth != null)
+                    it.onSuccess(Auth(null, auth.toSocialAuthUser()))
+                else
                     it.onError(AuthError.UnknownFirebaseError)
-                }
+
             }.onFailed { result ->
                 when (result.resultCode) {
                     Activity.RESULT_CANCELED -> it.onError(AuthError.Cancelled)
                     else -> it.onError(AuthError.UnknownFirebaseError)
                 }
             }
-        }.flatMap { auth ->
-            getFirebaseToken()
-                    .map { it to auth }
-                    .subscribeOn(Schedulers.io())
-        }.flatMap {
-            when (val user = firebaseAuth().currentUser) {
-                null -> Single.error<Auth>(AuthError.UnknownFirebaseError)
-                else -> Single.just(Auth(
-                        it.second.additionalUserInfo?.isNewUser,
-                        user.toSocialAuthUser(it.first)
-                ))
-            }.subscribeOn(Schedulers.io())
         }
 
 fun googleSignOut(activity: FragmentActivity, clientId: String): Single<Unit> =
@@ -61,10 +41,7 @@ fun googleSignOut(activity: FragmentActivity, clientId: String): Single<Unit> =
                     .bindTask(emitter) { emitter.onSuccess(Unit) }
         }
 
-private fun authWithGoogle(
-        data: Intent?,
-        emitter: SingleEmitter<AuthResult>
-): GoogleSignInAccount? =
+private fun authWithGoogle(data: Intent?, emitter: SingleEmitter<Auth>): GoogleSignInAccount? =
         try {
             GoogleSignIn.getSignedInAccountFromIntent(data)
                     .getResult(ApiException::class.java)
@@ -75,3 +52,4 @@ private fun authWithGoogle(
             }
             null
         }
+

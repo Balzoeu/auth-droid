@@ -1,10 +1,11 @@
 include(
         ":app",
         ":core",
-        ":rx-firebase",
-        ":rx-facebook",
-        ":rx-google",
+        ":google-core",
         ":facebook-core",
+        ":rx-google",
+        ":rx-facebook",
+        ":rx-firebase",
         ":rx-firebase-facebook",
         ":rx-firebase-google"
 )

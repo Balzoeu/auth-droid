@@ -9,24 +9,18 @@
     android:paddingEnd="20dp">
 
     <Button
-        android:id="@+id/firebase"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="firebase"
-        tools:ignore="HardcodedText" />
-
-    <Button
-        android:id="@+id/facebook"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="facebook"
-        tools:ignore="HardcodedText" />
-
-    <Button
         android:id="@+id/google"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="google"
+        android:text="google login"
         tools:ignore="HardcodedText" />
+
+    <Button
+        android:id="@+id/google_logout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="goolge logout"
+        tools:ignore="HardcodedText"
+        android:layout_marginTop="40dp" />
 
 </LinearLayout>
