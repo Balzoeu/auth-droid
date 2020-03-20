@@ -89,23 +89,30 @@ publishing {
 
             artifact(tasks.getByName("sourcesJar"))
 
-            pom.withXml {
-                asNode().apply {
-                    appendNode("description", Library.pomDescription)
-                    appendNode("name", "auth-droid")
-                    appendNode("url", Library.pomUrl)
-                    appendNode("licenses").appendNode("license").apply {
-                        appendNode("name", Library.pomLicenseName)
-                        appendNode("url", Library.pomLicenseUrl)
-                        appendNode("distribution", Library.pomLicenseDist)
+            pom {
+
+                packaging = "aar"
+                name.set(Library.name)
+                description.set(Library.pomDescription)
+                url.set(Library.pomUrl)
+
+                licenses {
+                    license {
+                        name.set(Library.pomLicenseName)
+                        url.set(Library.pomLicenseUrl)
                     }
-                    appendNode("developers").appendNode("developer").apply {
-                        appendNode("id", Library.pomDeveloperId)
-                        appendNode("name", Library.pomDeveloperName)
+                }
+
+                developers {
+                    developer {
+                        id.set(Library.pomDeveloperId)
+                        name.set(Library.pomDeveloperName)
+                        email.set(Library.pomDeveloperEmail)
                     }
-                    appendNode("scm").apply {
-                        appendNode("url", Library.pomScmUrl)
-                    }
+                }
+
+                scm {
+                    url.set(Library.pomScmUrl)
                 }
             }
         }
