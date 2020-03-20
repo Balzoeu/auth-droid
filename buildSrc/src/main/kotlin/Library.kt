@@ -20,4 +20,6 @@ object Library {
 
     const val repo = "auth-droid"
     const val organization = "balzoeu"
+
+    const val group = "eu.balzo.auth-droid"
 }

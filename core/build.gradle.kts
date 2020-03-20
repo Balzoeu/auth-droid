@@ -61,7 +61,7 @@ tasks {
 }
 
 val artifactName: String = project.name
-val artifactGroup: String = project.group.toString()
+val artifactGroup: String = Library.group
 val artifactVersion: String = AndroidConfig.version_name
 
 publishing {
