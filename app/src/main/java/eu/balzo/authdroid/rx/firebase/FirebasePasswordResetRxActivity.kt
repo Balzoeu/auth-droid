@@ -23,10 +23,11 @@ class FirebasePasswordResetRxActivity : FragmentActivity() {
             if (email.isEmpty() || email.isBlank()) {
                 this.showToast("Email must be valid")
             } else {
-                resetFirebasePassword(email)
+                FirebaseRx.resetPassword(email)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe({ this.showToast("Check your email") }) { it.logError(this) }
+                        .subscribe({ this.showToast("Check your email") })
+                        { it.logError(this) }
             }
         }
     }

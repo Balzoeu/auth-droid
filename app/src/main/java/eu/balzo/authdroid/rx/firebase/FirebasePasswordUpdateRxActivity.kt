@@ -24,7 +24,7 @@ class FirebasePasswordUpdateRxActivity : FragmentActivity() {
             if (password.isEmpty() || password.isBlank()) {
                 this.showToast("Password is empty")
             } else {
-                updateFirebasePassword(password)
+                FirebaseRx.updatePassword(password)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe({ this.showToast("Done") }) { it.logError(this) }

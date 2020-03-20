@@ -22,7 +22,7 @@ class GoogleArrowActivity : FragmentActivity(R.layout.google) {
             fx.concurrent {
 
                 val auth =
-                        !authWithGoogle(
+                        !GoogleArrow.auth(
                                 IO.concurrent().fx,
                                 this@GoogleArrowActivity,
                                 getString(R.string.google_client_id_web)
@@ -40,7 +40,7 @@ class GoogleArrowActivity : FragmentActivity(R.layout.google) {
             fx.concurrent {
 
                 val signOut =
-                        !googleSignOut(
+                        !GoogleArrow.signOut(
                                 IO.concurrent().fx,
                                 this@GoogleArrowActivity,
                                 getString(R.string.google_client_id_web)

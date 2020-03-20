@@ -7,10 +7,8 @@ import androidx.fragment.app.FragmentActivity
 import com.balzo.authdroid.auth.R
 import eu.balzo.authdroid.logError
 import eu.balzo.authdroid.openProfile
-import eu.balzo.authdroid.rx.facebook.facebookSignOut
-import eu.balzo.authdroid.rx.firebase.facebook.authWithFirebaseFacebook
-import eu.balzo.authdroid.rx.firebase.google.authWithFirebaseGoogle
-import eu.balzo.authdroid.rx.firebase.google.googleSignOut
+import eu.balzo.authdroid.rx.firebase.facebook.FirebaseFacebookRx
+import eu.balzo.authdroid.rx.firebase.google.FirebaseGoogleRx
 import eu.balzo.authdroid.showToast
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -24,14 +22,14 @@ class FirebaseRxActivity : FragmentActivity() {
         this.setContentView(R.layout.firebase)
 
         this.firebase_google.setOnClickListener {
-            authWithFirebaseGoogle(this, this.getString(R.string.google_client_id_web))
+            FirebaseGoogleRx.auth(this, this.getString(R.string.google_client_id_web))
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({ it.openProfile(this) }) { it.logError(this) }
         }
 
         this.firebase_facebook.setOnClickListener {
-            authWithFirebaseFacebook(supportFragmentManager)
+            FirebaseFacebookRx.auth(supportFragmentManager)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({ it.openProfile(this) }) { it.logError(this) }
@@ -63,18 +61,18 @@ class FirebaseRxActivity : FragmentActivity() {
 
 
         this.firebase_get_id.setOnClickListener {
-            this.showToast(getFirebaseId() ?: "Firebase user not logged")
+            this.showToast(FirebaseRx.id() ?: "Firebase user not logged")
         }
 
         this.firebase_get_token.setOnClickListener {
-            getFirebaseToken()
+            FirebaseRx.token()
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({ this.showToast(it) }) { it.logError(this) }
         }
 
         this.firebase_get_user.setOnClickListener {
-            getCurrentFirebaseUser()
+            FirebaseRx.currentUser()
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({ it.openProfile(this) }) { it.logError(this) }
@@ -94,7 +92,7 @@ class FirebaseRxActivity : FragmentActivity() {
 
 
         this.firebase_google_logout.setOnClickListener {
-            googleSignOut(this, this.getString(R.string.google_client_id_web))
+            FirebaseGoogleRx.signOut(this, this.getString(R.string.google_client_id_web))
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(
@@ -103,12 +101,12 @@ class FirebaseRxActivity : FragmentActivity() {
         }
 
         this.firebase_facebook_logout.setOnClickListener {
-            facebookSignOut()
+            FirebaseFacebookRx.signOut()
             Toast.makeText(this, "Done", Toast.LENGTH_LONG).show()
         }
 
         this.firebase_logout.setOnClickListener {
-            firebaseSignOut()
+            FirebaseRx.signOut()
             Toast.makeText(this, "Done", Toast.LENGTH_LONG).show()
         }
     }

@@ -42,7 +42,7 @@ class FirebaseEmailPasswordRxActivity : FragmentActivity() {
         })
 
         this.sign_up.setOnClickListener {
-            signUpWithFirebaseEmailPassword(
+            FirebaseRx.signInWithFirebaseEmailPassword(
                     email,
                     password)
                     .subscribeOn(Schedulers.io())
@@ -51,7 +51,7 @@ class FirebaseEmailPasswordRxActivity : FragmentActivity() {
         }
 
         this.sign_in.setOnClickListener {
-            signInWithFirebaseEmailPassword(
+            FirebaseRx.signInWithFirebaseEmailPassword(
                     email,
                     password)
                     .subscribeOn(Schedulers.io())
