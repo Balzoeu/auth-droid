@@ -37,6 +37,7 @@ dependencies {
     implementation (project(":rx-firebase-facebook"))
     implementation (project(":rx-firebase-google"))
     implementation (project(":arrow-google"))
+    implementation(project(":arrow-facebook"))
 
     /* KOTLIN */
     implementation (Libs.kotlin_stdlib_jdk7)

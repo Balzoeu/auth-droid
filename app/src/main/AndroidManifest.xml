@@ -52,6 +52,9 @@
             android:name="eu.balzo.authdroid.arrow.google.GoogleArrowActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name="eu.balzo.authdroid.arrow.facebook.FacebookArrowActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name="eu.balzo.authdroid.profile.ProfileActivity"
             android:screenOrientation="portrait" />
         <activity
