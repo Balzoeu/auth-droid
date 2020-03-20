@@ -73,6 +73,15 @@ tasks {
         outputFormat = "html"
         outputDirectory = "$buildDir/dokka"
     }
+
+    val sourcesJar by creating(Jar::class) {
+        archiveClassifier.set("sources")
+        from(android.sourceSets.getByName("main").java.srcDirs)
+    }
+
+    artifacts {
+        archives(sourcesJar)
+    }
 }
 
 val artifactName: String = project.name
@@ -86,6 +95,8 @@ publishing {
             groupId = artifactGroup
             artifactId = artifactName
             version = artifactVersion
+
+            artifact(tasks.getByName("sourcesJar"))
 
             pom.withXml {
                 asNode().apply {
