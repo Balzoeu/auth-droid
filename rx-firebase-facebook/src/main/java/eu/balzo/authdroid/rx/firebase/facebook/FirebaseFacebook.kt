@@ -1,6 +1,7 @@
 package eu.balzo.authdroid.rx.firebase.facebook
 
 import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.FragmentManager
 import com.facebook.FacebookCallback
 import com.facebook.FacebookException
 import com.facebook.login.LoginManager
@@ -19,10 +20,10 @@ import io.reactivex.SingleEmitter
 import io.reactivex.schedulers.Schedulers
 
 
-fun authWithFirebaseFacebook(activity: FragmentActivity): Single<Auth> =
+fun authWithFirebaseFacebook(fragmentManager: FragmentManager): Single<Auth> =
         Single.create<AuthResult> { emitter ->
             val fragment = FacebookFragment()
-            val transaction = activity.supportFragmentManager.beginTransaction()
+            val transaction = fragmentManager.beginTransaction()
             transaction.add(fragment, FacebookFragment.TAG).addToBackStack(null).commit()
 
             LoginManager.getInstance()
@@ -32,18 +33,18 @@ fun authWithFirebaseFacebook(activity: FragmentActivity): Single<Auth> =
 
                                 override fun onSuccess(result: LoginResult?) {
                                     result.handleFirebaseFacebookLogin(emitter)
-                                    activity.supportFragmentManager.popBackStack()
+                                    fragmentManager.popBackStack()
                                 }
 
                                 override fun onCancel() {
                                     emitter.onError(AuthError.Cancelled)
-                                    activity.supportFragmentManager.popBackStack()
+                                    fragmentManager.popBackStack()
                                 }
 
                                 override fun onError(error: FacebookException?) {
                                     error ?: AuthError.UnknownFirebaseError
                                             .let { emitter.onError(it) }
-                                    activity.supportFragmentManager.popBackStack()
+                                    fragmentManager.popBackStack()
                                 }
                             }
                     )

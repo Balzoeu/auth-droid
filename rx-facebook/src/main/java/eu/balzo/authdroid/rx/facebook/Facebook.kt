@@ -1,7 +1,7 @@
 package eu.balzo.authdroid.rx.facebook
 
 import android.os.Bundle
-import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.FragmentManager
 import com.facebook.*
 import com.facebook.internal.ImageRequest
 import com.facebook.login.LoginManager
@@ -15,11 +15,11 @@ import io.reactivex.SingleEmitter
 import org.json.JSONObject
 
 fun authWithFacebook(
-        activity: FragmentActivity,
+        fragmentManager: FragmentManager,
         profileImageDimension: Int = 500): Single<Auth> =
         Single.create {
             val fragment = FacebookFragment()
-            val transaction = activity.supportFragmentManager.beginTransaction()
+            val transaction = fragmentManager.beginTransaction()
             transaction.add(fragment, FacebookFragment.TAG).addToBackStack(null).commit()
 
             LoginManager.getInstance().registerCallback(
@@ -28,17 +28,17 @@ fun authWithFacebook(
 
                         override fun onSuccess(result: LoginResult?) {
                             result.handleFacebookLogin(it, profileImageDimension)
-                            activity.supportFragmentManager.popBackStack()
+                            fragmentManager.popBackStack()
                         }
 
                         override fun onCancel() {
                             it.onError(AuthError.Cancelled)
-                            activity.supportFragmentManager.popBackStack()
+                            fragmentManager.popBackStack()
                         }
 
                         override fun onError(error: FacebookException?) {
                             it.onError(error ?: AuthError.FacebookAuthError)
-                            activity.supportFragmentManager.popBackStack()
+                            fragmentManager.popBackStack()
                         }
                     }
             )

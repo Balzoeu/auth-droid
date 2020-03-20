@@ -35,7 +35,7 @@ class FirebaseActivity : FragmentActivity() {
         }
 
         this.firebase_facebook.setOnClickListener {
-            authWithFirebaseFacebook(this)
+            authWithFirebaseFacebook(supportFragmentManager)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({ it.openProfile(this) }) { it.logError(this) }

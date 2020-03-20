@@ -20,7 +20,7 @@ class FacebookActivity : FragmentActivity() {
         this.setContentView(R.layout.facebook)
 
         this.facebook.setOnClickListener {
-            authWithFacebook(this)
+            authWithFacebook(supportFragmentManager)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({ it.openProfile(this) }) { it.logError(this) }
