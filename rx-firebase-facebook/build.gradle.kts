@@ -101,7 +101,6 @@ publishing {
 
             pom.withXml {
                 asNode().apply {
-                    appendNode("packaging", "jar")
                     appendNode("description", Library.pomDescription)
                     appendNode("name", "auth-droid")
                     appendNode("url", Library.pomUrl)
