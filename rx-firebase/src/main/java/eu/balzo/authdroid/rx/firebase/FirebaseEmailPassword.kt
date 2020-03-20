@@ -20,7 +20,7 @@ fun signInWithFirebaseEmailPassword(
                     .subscribeOn(Schedulers.io())
         }.flatMap {
             when (val user = firebaseAuth().currentUser) {
-                null -> Single.error<Auth>(AuthError.UnknownFirebaseError)
+                null -> Single.error(AuthError.UnknownFirebaseError)
                 else -> Single.just(Auth(
                         it.second.additionalUserInfo?.isNewUser,
                         user.toSocialAuthUser(it.first)
@@ -42,7 +42,7 @@ fun signUpWithFirebaseEmailPassword(
                     .subscribeOn(Schedulers.io())
         }.flatMap {
             when (val user = firebaseAuth().currentUser) {
-                null -> Single.error<Auth>(AuthError.UnknownFirebaseError)
+                null -> Single.error(AuthError.UnknownFirebaseError)
                 else -> Single.just(Auth(
                         it.second.additionalUserInfo?.isNewUser,
                         user.toSocialAuthUser(it.first)

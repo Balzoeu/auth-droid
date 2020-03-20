@@ -1,4 +1,4 @@
-package eu.balzo.authdroid.firebase
+package eu.balzo.authdroid.rx.firebase
 
 import android.os.Bundle
 import androidx.fragment.app.FragmentActivity
@@ -11,7 +11,7 @@ import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.firebase_password_update.update
 import kotlinx.android.synthetic.main.firebase_profile_update.*
 
-class FirebaseProfileUpdateActivity : FragmentActivity() {
+class FirebaseProfileUpdateRxActivity : FragmentActivity() {
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
         super.onPostCreate(savedInstanceState)

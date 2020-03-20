@@ -43,28 +43,37 @@
             </intent-filter>
         </activity>
         <activity
+            android:name="eu.balzo.authdroid.rx.RxMenuActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="eu.balzo.authdroid.arrow.ArrowMenuActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="eu.balzo.authdroid.arrow.google.GoogleArrowActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name="eu.balzo.authdroid.profile.ProfileActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="eu.balzo.authdroid.firebase.FirebaseActivity"
+            android:name="eu.balzo.authdroid.rx.firebase.FirebaseRxActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="eu.balzo.authdroid.firebase.FirebaseEmailPasswordActivity"
+            android:name="eu.balzo.authdroid.rx.firebase.FirebaseEmailPasswordRxActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="eu.balzo.authdroid.facebook.FacebookActivity"
+            android:name="eu.balzo.authdroid.rx.facebook.FacebookRxActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="eu.balzo.authdroid.google.GoogleActivity"
+            android:name="eu.balzo.authdroid.rx.google.GoogleRxActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="eu.balzo.authdroid.firebase.FirebasePasswordResetActivity"
+            android:name="eu.balzo.authdroid.rx.firebase.FirebasePasswordResetRxActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="eu.balzo.authdroid.firebase.FirebasePasswordUpdateActivity"
+            android:name="eu.balzo.authdroid.rx.firebase.FirebasePasswordUpdateRxActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="eu.balzo.authdroid.firebase.FirebaseProfileUpdateActivity"
+            android:name="eu.balzo.authdroid.rx.firebase.FirebaseProfileUpdateRxActivity"
             android:screenOrientation="portrait" />
     </application>
 

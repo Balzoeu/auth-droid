@@ -1,4 +1,4 @@
-package eu.balzo.authdroid.google
+package eu.balzo.authdroid.rx.google
 
 import android.os.Bundle
 import android.widget.Toast
@@ -12,7 +12,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.google.*
 
-class GoogleActivity : FragmentActivity(R.layout.google) {
+class GoogleRxActivity : FragmentActivity(R.layout.google) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

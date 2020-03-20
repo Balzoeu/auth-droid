@@ -1,3 +1,4 @@
+import kotlin.String
 import org.gradle.plugin.use.PluginDependenciesSpec
 import org.gradle.plugin.use.PluginDependencySpec
 
@@ -13,11 +14,13 @@ import org.gradle.plugin.use.PluginDependencySpec
 object Versions {
     const val com_github_bumptech_glide: String = "4.11.0"
 
-    const val com_facebook_android: String = "6.1.0"
+    const val com_facebook_android: String = "6.1.0" // available: "6.2.0"
 
-    const val org_jetbrains_kotlin: String = "1.3.61"
+    const val org_jetbrains_kotlin: String = "1.3.61" // available: "1.3.70"
 
     const val org_jetbrains_dokka: String = "0.9.18"
+
+    const val io_arrow_kt: String = "0.10.4"
 
     const val com_android_tools_build_gradle: String = "3.6.1"
 
@@ -71,4 +74,4 @@ object Versions {
  */
 val PluginDependenciesSpec.buildSrcVersions: PluginDependencySpec
     inline get() =
-        id("de.fayard.buildSrcVersions").version(Versions.de_fayard_buildsrcversions_gradle_plugin)
+            id("de.fayard.buildSrcVersions").version(Versions.de_fayard_buildsrcversions_gradle_plugin)

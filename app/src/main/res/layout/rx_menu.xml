@@ -9,17 +9,24 @@
     android:paddingEnd="20dp">
 
     <Button
-        android:id="@+id/rx"
+        android:id="@+id/firebase"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="rx"
+        android:text="firebase"
         tools:ignore="HardcodedText" />
 
     <Button
-        android:id="@+id/arrow"
+        android:id="@+id/facebook"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="arrow"
+        android:text="facebook"
+        tools:ignore="HardcodedText" />
+
+    <Button
+        android:id="@+id/google"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="google"
         tools:ignore="HardcodedText" />
 
 </LinearLayout>

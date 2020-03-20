@@ -7,5 +7,6 @@ include(
         ":rx-facebook",
         ":rx-firebase",
         ":rx-firebase-facebook",
-        ":rx-firebase-google"
+        ":rx-firebase-google",
+        ":arrow-google"
 )

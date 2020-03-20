@@ -1,4 +1,4 @@
-package eu.balzo.authdroid.firebase
+package eu.balzo.authdroid.rx.firebase
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,10 +9,6 @@ import eu.balzo.authdroid.logError
 import eu.balzo.authdroid.openProfile
 import eu.balzo.authdroid.rx.facebook.facebookSignOut
 import eu.balzo.authdroid.rx.firebase.facebook.authWithFirebaseFacebook
-import eu.balzo.authdroid.rx.firebase.firebaseSignOut
-import eu.balzo.authdroid.rx.firebase.getCurrentFirebaseUser
-import eu.balzo.authdroid.rx.firebase.getFirebaseId
-import eu.balzo.authdroid.rx.firebase.getFirebaseToken
 import eu.balzo.authdroid.rx.firebase.google.authWithFirebaseGoogle
 import eu.balzo.authdroid.rx.firebase.google.googleSignOut
 import eu.balzo.authdroid.showToast
@@ -20,7 +16,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.firebase.*
 
-class FirebaseActivity : FragmentActivity() {
+class FirebaseRxActivity : FragmentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,7 +39,7 @@ class FirebaseActivity : FragmentActivity() {
 
         this.firebase_custom.setOnClickListener {
             this.startActivity(
-                    Intent(this, FirebaseEmailPasswordActivity::class.java)
+                    Intent(this, FirebaseEmailPasswordRxActivity::class.java)
             )
         }
 
@@ -53,13 +49,13 @@ class FirebaseActivity : FragmentActivity() {
 
         this.firebase_password_reset.setOnClickListener {
             this.startActivity(
-                    Intent(this, FirebasePasswordResetActivity::class.java)
+                    Intent(this, FirebasePasswordResetRxActivity::class.java)
             )
         }
 
         this.firebase_password_update.setOnClickListener {
             this.startActivity(
-                    Intent(this, FirebasePasswordUpdateActivity::class.java)
+                    Intent(this, FirebasePasswordUpdateRxActivity::class.java)
             )
         }
 
@@ -90,7 +86,7 @@ class FirebaseActivity : FragmentActivity() {
 
         this.firebase_update_profile.setOnClickListener {
             this.startActivity(
-                    Intent(this, FirebaseProfileUpdateActivity::class.java)
+                    Intent(this, FirebaseProfileUpdateRxActivity::class.java)
             )
         }
 

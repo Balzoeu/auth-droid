@@ -1,4 +1,4 @@
-package eu.balzo.authdroid.facebook
+package eu.balzo.authdroid.rx.facebook
 
 import android.os.Bundle
 import android.widget.Toast
@@ -12,7 +12,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.facebook.*
 
-class FacebookActivity : FragmentActivity() {
+class FacebookRxActivity : FragmentActivity() {
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
         super.onPostCreate(savedInstanceState)

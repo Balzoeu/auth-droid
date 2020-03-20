@@ -36,6 +36,7 @@ dependencies {
     implementation (project(":rx-firebase"))
     implementation (project(":rx-firebase-facebook"))
     implementation (project(":rx-firebase-google"))
+    implementation (project(":arrow-google"))
 
     /* KOTLIN */
     implementation (Libs.kotlin_stdlib_jdk7)
@@ -55,6 +56,11 @@ dependencies {
     implementation (Libs.rxkotlin)
     implementation (Libs.rxandroid)
     implementation (Libs.rxjava)
+
+    /* ARROW */
+    implementation(Libs.arrow_fx)
+    implementation(Libs.arrow_syntax)
+    kapt(Libs.arrow_meta)
 
     /* GLIDE */
     implementation (Libs.glide)
