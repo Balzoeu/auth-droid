@@ -3,5 +3,5 @@ object AndroidConfig {
     const val target_sdk = 28
     const val compile_sdk = 28
     const val version_code = 6
-    const val version_name = "0.2-beta04"
+    const val version_name = "0.2-beta02"
 }
