@@ -97,6 +97,7 @@ publishing {
             artifactId = artifactName
             version = artifactVersion
 
+            artifact("$buildDir/outputs/aar/${artifactId}-release.aar")
             artifact(tasks.getByName("sourcesJar"))
 
             pom {
@@ -125,13 +126,19 @@ publishing {
                 scm {
                     url.set(Library.pomScmUrl)
                 }
+
+                val deps =
+                        configurations.implementation.get().allDependencies +
+                                configurations.compile.get().allDependencies
+
+                deps.forEach { dependencies.add("implementation", it) }
             }
         }
     }
 }
 
-
 bintray {
+
     user = gradleLocalProperties(rootDir).getProperty("bintray.user").toString()
     key = gradleLocalProperties(rootDir).getProperty("bintray.apikey").toString()
     publish = true
@@ -139,6 +146,7 @@ bintray {
     setPublications("auth-droid")
 
     pkg.apply {
+
         repo = Library.repo
         name = artifactName
         userOrg = Library.organization
@@ -161,4 +169,3 @@ bintray {
         }
     }
 }
-
