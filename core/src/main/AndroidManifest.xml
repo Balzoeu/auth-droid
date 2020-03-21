@@ -1,2 +1,1 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.balzo.authdroid.auth.core" />
+<manifest package="eu.balzo.authdroid.core" />

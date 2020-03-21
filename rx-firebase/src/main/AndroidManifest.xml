@@ -1,2 +1,1 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.balzo.authdroid.rx.firebase.facebook" />
+<manifest package="eu.balzo.authdroid.rx.firebase" />
