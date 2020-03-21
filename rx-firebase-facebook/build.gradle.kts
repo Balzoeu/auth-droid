@@ -110,6 +110,7 @@ publishing {
                     license {
                         name.set(Library.pomLicenseName)
                         url.set(Library.pomLicenseUrl)
+                        distribution.set(Library.repo)
                     }
                 }
 
