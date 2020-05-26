@@ -4,8 +4,8 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.FragmentActivity
-import com.bumptech.glide.Glide
 import com.balzo.authdroid.auth.R
+import com.bumptech.glide.Glide
 import eu.balzo.authdroid.core.SocialAuthUser
 import kotlinx.android.synthetic.main.profile.*
 
@@ -22,6 +22,7 @@ class ProfileActivity : FragmentActivity() {
         this.email_value.text = this.intent.getStringExtra(EMAIL) ?: "/"
         this.id_value.text = this.intent.getStringExtra(ID) ?: "/"
         this.token_value.text = this.intent.getStringExtra(TOKEN) ?: "/"
+        this.google_auth_code_value.text = this.intent.getStringExtra(GOOGLE_AUTH_CODE) ?: "/"
 
         Glide.with(this)
                 .load(this.intent.getStringExtra(PROFILE_IMAGE).orEmpty())
@@ -37,6 +38,7 @@ class ProfileActivity : FragmentActivity() {
         private const val LAST_NAME = "last_name"
         private const val ID = "id"
         private const val TOKEN = "token"
+        private const val GOOGLE_AUTH_CODE = "google_auth_code"
         private const val PROFILE_IMAGE = "profile_image"
 
         fun start(
@@ -51,6 +53,7 @@ class ProfileActivity : FragmentActivity() {
             intent.putExtra(EMAIL, user.email)
             intent.putExtra(ID, user.id)
             intent.putExtra(TOKEN, user.token)
+            intent.putExtra(GOOGLE_AUTH_CODE, user.googleServerAuthCode)
             intent.putExtra(PROFILE_IMAGE, user.profileImage)
 
             context.startActivity(intent)

@@ -3,6 +3,7 @@ package eu.balzo.authdroid.core
 data class SocialAuthUser(
         val id: String,
         val token: String,
+        val googleServerAuthCode: String?,
         val displayName: String?,
         val firstName: String?,
         val lastName: String?,
@@ -15,5 +16,6 @@ data class SocialAuthUser(
                     "last name: ${lastName.orEmpty()}, " +
                     "email: ${email.orEmpty()}, " +
                     "profileImage: ${profileImage.orEmpty()}" +
-                    "token: $token"
+                    "token: $token" +
+                    "google auth code: $googleServerAuthCode"
 }

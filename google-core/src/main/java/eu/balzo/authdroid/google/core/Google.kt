@@ -12,6 +12,7 @@ fun getGoogleSignInIntent(activity: FragmentActivity, clientId: String): Intent 
 fun getGoogleSignInOptions(clientId: String): GoogleSignInOptions =
         GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(clientId)
+                .requestServerAuthCode(clientId)
                 .requestEmail()
                 .build()
 

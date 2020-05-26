@@ -77,6 +77,7 @@ object FacebookRx {
                             SocialAuthUser(
                                     id.orEmpty(),
                                     token,
+                                    null,
                                     name,
                                     firstName,
                                     lastName,

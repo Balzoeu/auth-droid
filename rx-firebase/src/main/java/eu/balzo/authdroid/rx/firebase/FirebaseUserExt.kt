@@ -1,12 +1,13 @@
 package eu.balzo.authdroid.rx.firebase
 
-import eu.balzo.authdroid.core.SocialAuthUser
 import com.google.firebase.auth.FirebaseUser
+import eu.balzo.authdroid.core.SocialAuthUser
 
 fun FirebaseUser.toSocialAuthUser(token: String): SocialAuthUser =
         SocialAuthUser(
                 this.uid,
                 token,
+                null,
                 this.displayName,
                 this.displayName
                         ?.split(" ")

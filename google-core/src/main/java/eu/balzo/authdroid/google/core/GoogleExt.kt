@@ -7,6 +7,7 @@ fun GoogleSignInAccount.toSocialAuthUser(): SocialAuthUser =
         SocialAuthUser(
                 id.orEmpty(),
                 idToken.orEmpty(),
+                serverAuthCode,
                 displayName,
                 displayName?.split(" ")?.getOrNull(0),
                 displayName?.split(" ")?.getOrNull(1),
