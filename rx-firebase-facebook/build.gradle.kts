@@ -127,11 +127,23 @@ publishing {
                     url.set(Library.pomScmUrl)
                 }
 
-                val deps =
-                        configurations.implementation.get().allDependencies +
-                                configurations.compile.get().allDependencies
+                withXml {
 
-                deps.forEach { dependencies.add("implementation", it) }
+                    val dependenciesNode = asNode().appendNode("dependencies")
+
+                    configurations.implementation.get().allDependencies +
+                            configurations.compile.get().allDependencies
+                                    .forEach {
+
+                                        val dependencyNode =
+                                                dependenciesNode.appendNode("dependency")
+
+                                        dependencyNode.appendNode("groupId", it.group)
+                                        dependencyNode.appendNode("artifactId", it.name)
+                                        dependencyNode.appendNode("version", it.version)
+                                    }
+
+                }
             }
         }
     }
