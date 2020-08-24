@@ -13,49 +13,49 @@ import org.gradle.plugin.use.PluginDependencySpec
 object Versions {
     const val com_github_bumptech_glide: String = "4.11.0"
 
-    const val com_facebook_android: String = "6.2.0"
+    const val com_facebook_android: String = "7.1.0"
 
-    const val org_jetbrains_kotlin: String = "1.3.70"
+    const val org_jetbrains_kotlin: String = "1.4.0"
 
     const val org_jetbrains_dokka: String = "0.9.18"
 
-    const val io_arrow_kt: String = "0.10.4"
+    const val io_arrow_kt: String = "0.10.5"
 
-    const val com_android_tools_build_gradle: String = "3.6.1"
+    const val com_android_tools_build_gradle: String = "4.0.1"
 
     const val androidx_test_runner: String = "1.2.0"
 
     const val de_fayard_buildsrcversions_gradle_plugin: String = "0.7.0"
 
-    const val inline_activity_result_kotlin: String = "1.0.3"
+    const val inline_activity_result_kotlin: String = "1.0.4"
 
     const val android_maven_gradle_plugin: String = "2.1"
 
-    const val gradle_bintray_plugin: String = "1.8.4"
+    const val gradle_bintray_plugin: String = "1.8.5"
 
-    const val play_services_auth: String = "17.0.0"
+    const val play_services_auth: String = "18.1.0"
 
-    const val constraintlayout: String = "1.1.3"
+    const val constraintlayout: String = "2.0.0"
 
     const val google_services: String = "4.3.3"
 
     const val espresso_core: String = "3.2.0"
 
-    const val firebase_auth: String = "19.3.0"
+    const val firebase_auth: String = "19.3.2"
 
-    const val lint_gradle: String = "26.6.1"
+    const val lint_gradle: String = "27.0.1"
 
-    const val appcompat: String = "1.1.0"
+    const val appcompat: String = "1.2.0"
 
     const val rxandroid: String = "2.1.1"
 
-    const val core_ktx: String = "1.2.0"
+    const val core_ktx: String = "1.3.1"
 
     const val rxkotlin: String = "2.4.0"
 
     const val rxjava: String = "2.2.19"
 
-    const val aapt2: String = "3.6.1-6040484"
+    const val aapt2: String = "4.0.1-6197926"
 
     const val junit: String = "4.13"
 
@@ -64,7 +64,7 @@ object Versions {
      * See issue 19: How to update Gradle itself?
      * https://github.com/jmfayard/buildSrcVersions/issues/19
      */
-    const val gradleLatestVersion: String = "6.2.2"
+    const val gradleLatestVersion: String = "6.6"
 }
 
 /**
