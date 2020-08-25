@@ -30,7 +30,7 @@ object GoogleArrow {
 
 
                 val googleAuth =
-                        !fx.async.async<Kind<F, Either<Throwable, Auth>>> { emitter ->
+                        !fx.M.async<Kind<F, Either<Throwable, Auth>>> { emitter ->
 
                             activity.startForResult(
                                     getGoogleSignInIntent(activity, clientId)
@@ -81,7 +81,7 @@ object GoogleArrow {
     ): Kind<F, Either<Throwable, Unit>> =
             fx.concurrent {
 
-                !fx.async.async<Unit> { emitter ->
+                !fx.M.async<Unit> { emitter ->
 
                     getGoogleSignInClient(activity, getGoogleSignInOptions(clientId))
                             .signOut()

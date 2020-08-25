@@ -5,6 +5,7 @@ import androidx.fragment.app.FragmentManager
 import arrow.Kind
 import arrow.core.Either
 import arrow.core.left
+import arrow.core.orNull
 import arrow.core.right
 import arrow.fx.typeclasses.ConcurrentFx
 import com.facebook.*
@@ -31,7 +32,7 @@ object FacebookArrow {
                 transaction.add(fragment, FacebookFragment.TAG).addToBackStack(null).commit()
 
                 val auth =
-                        !!fx.async.async<Kind<F, Either<Throwable, Auth>>> {
+                        !!fx.M.async<Kind<F, Either<Throwable, Auth>>> {
 
                             LoginManager.getInstance().registerCallback(
                                     fragment.callbackManager,
@@ -71,46 +72,17 @@ object FacebookArrow {
                 when (this@handleFacebookLogin) {
                     null -> AuthError.FacebookAuthError.left()
                     else -> {
-                        !fx.async.async<Auth> {
+                        !fx.M.async<Auth> { callback ->
                             val graphRequest =
                                     GraphRequest.newMeRequest(
-                                            this@handleFacebookLogin?.accessToken
+                                            this@handleFacebookLogin.accessToken
                                     )
                                     { json, _ ->
-                                        val id =
-                                                Profile.getCurrentProfile()?.id
-                                        val token =
-                                                AccessToken.getCurrentAccessToken().token
-                                        val email =
-                                                json.getStringOrNull("email")
-                                        val name =
-                                                json.getStringOrNull("name")
-                                        val firstName =
-                                                name?.split(" ")?.firstOrNull()
-                                        val lastName =
-                                                name?.split(" ")?.getOrNull(1)
-                                        val profilePicture =
-                                                id?.let {
-                                                    ImageRequest.getProfilePictureUri(
-                                                            it,
-                                                            imageDimension,
-                                                            imageDimension
-                                                    ).toString()
-                                                }
 
-                                        val user =
-                                                SocialAuthUser(
-                                                        id.orEmpty(),
-                                                        token,
-                                                        null,
-                                                        name,
-                                                        firstName,
-                                                        lastName,
-                                                        email,
-                                                        profilePicture
-                                                )
+                                        json.parseUser(fx, imageDimension)
+                                                .map { callback(Auth(null, it).right()) }
 
-                                        it(Auth(null, user).right())
+
                                     }
                             val parameters = Bundle()
                             parameters.putString("fields", "id,name,email,gender,birthday")
@@ -122,10 +94,39 @@ object FacebookArrow {
                 }
             }
 
-    private fun JSONObject.getStringOrNull(name: String) =
-            try {
-                getString(name)
-            } catch (error: Throwable) {
-                null
+    private fun <F> JSONObject.parseUser(
+            fx: ConcurrentFx<F>,
+            imageDimension: Int
+    ): Kind<F, SocialAuthUser> =
+            fx.concurrent {
+
+                val id = Profile.getCurrentProfile()?.id
+                val token = AccessToken.getCurrentAccessToken().token
+                val email = effect { string("email") }.attempt().bind().orNull()
+                val name = effect { string("name") }.attempt().bind().orNull()
+                val firstName = name?.split(" ")?.firstOrNull()
+                val lastName = name?.split(" ")?.getOrNull(1)
+                val profilePicture =
+                        id?.let {
+                            ImageRequest.getProfilePictureUri(
+                                    it,
+                                    imageDimension,
+                                    imageDimension
+                            ).toString()
+                        }
+
+                SocialAuthUser(
+                        id.orEmpty(),
+                        token,
+                        null,
+                        name,
+                        firstName,
+                        lastName,
+                        email,
+                        profilePicture
+                )
+
             }
+
+    private suspend fun JSONObject.string(name: String): String = getString(name)
 }
