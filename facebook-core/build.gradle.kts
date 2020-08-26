@@ -128,7 +128,7 @@ publishing {
 
                                 val version =
                                         if (it.group == "AuthDroid") AndroidConfig.version_name
-                                        else it.group
+                                        else it.version
 
                                 if (groupId != null && version != null) {
 
