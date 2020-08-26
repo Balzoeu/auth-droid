@@ -1,19 +1,29 @@
 package eu.balzo.authdroid.core
 
-sealed class AuthError(message: String) : Throwable(message) {
+import arrow.core.None
+import arrow.core.Option
+import arrow.core.some
 
-    object Cancelled: AuthError("Cancelled")
+sealed class AuthError(val source: Option<Throwable> = None) {
 
-    object UnknownFirebaseError : AuthError("Unknown firebase error")
+    object Cancelled : AuthError()
 
-    object FirebaseUserNotLogged : AuthError("Firebase user not logged")
+    object FirebaseUnknown : AuthError()
 
-    class FirebaseTaskError(message: String) : AuthError(message)
+    object FirebaseUserNotLogged : AuthError()
 
-    object GoogleAuthError: AuthError("Google auth error")
+    object GoogleAuth : AuthError()
 
-    object FacebookAuthError: AuthError("Facebook auth error")
+    object FacebookAuth : AuthError()
+
+    class Unknown(source: Option<Throwable>) : AuthError(source)
+
+    companion object {
+
+        fun Throwable.toAuthError(): AuthError = Unknown(some())
+
+    }
 }
 
-data class Auth(val isFirstAuth: Boolean?, val socialAuthUser: SocialAuthUser)
+data class Auth(val isFirstAuth: Option<Boolean>, val socialAuthUser: SocialAuthUser)
 

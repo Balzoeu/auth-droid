@@ -50,6 +50,11 @@ dependencies {
     implementation(Libs.kotlin_stdlib_jdk7)
     implementation(Libs.core_ktx)
 
+    /* ARROW */
+    implementation(Libs.arrow_fx)
+    implementation(Libs.arrow_syntax)
+    kapt(Libs.arrow_meta)
+
     /* TEST */
     testImplementation(Libs.junit)
     androidTestImplementation(Libs.androidx_test_runner)

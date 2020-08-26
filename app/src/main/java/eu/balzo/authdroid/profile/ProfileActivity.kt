@@ -47,14 +47,14 @@ class ProfileActivity : FragmentActivity() {
         ) {
             val intent = Intent(context, ProfileActivity::class.java)
 
-            intent.putExtra(NAME, user.displayName)
-            intent.putExtra(FIRST_NAME, user.firstName)
-            intent.putExtra(LAST_NAME, user.lastName)
-            intent.putExtra(EMAIL, user.email)
+            intent.putExtra(NAME, user.displayName.orNull())
+            intent.putExtra(FIRST_NAME, user.firstName.orNull())
+            intent.putExtra(LAST_NAME, user.lastName.orNull())
+            intent.putExtra(EMAIL, user.email.orNull())
             intent.putExtra(ID, user.id)
             intent.putExtra(TOKEN, user.token)
-            intent.putExtra(GOOGLE_AUTH_CODE, user.googleServerAuthCode)
-            intent.putExtra(PROFILE_IMAGE, user.profileImage)
+            intent.putExtra(GOOGLE_AUTH_CODE, user.googleServerAuthCode.orNull())
+            intent.putExtra(PROFILE_IMAGE, user.profileImage.orNull())
 
             context.startActivity(intent)
         }

@@ -31,23 +31,21 @@ dependencies {
 
     /* MODULES */
     implementation(project(":core"))
-    implementation(project(":rx-facebook"))
-    implementation(project(":rx-google"))
-    implementation (project(":rx-firebase"))
-    implementation (project(":rx-firebase-facebook"))
-    implementation (project(":rx-firebase-google"))
-    implementation (project(":arrow-google"))
-    implementation(project(":arrow-facebook"))
+    implementation(project(":google"))
+    implementation(project(":facebook"))
+    implementation(project(":firebase-core"))
+    implementation(project(":firebase-google"))
+    implementation(project(":firebase-facebook"))
 
     /* KOTLIN */
-    implementation (Libs.kotlin_stdlib_jdk7)
+    implementation(Libs.kotlin_stdlib_jdk7)
 
     /* ANDROID */
-    implementation (Libs.appcompat)
-    implementation (Libs.constraintlayout)
+    implementation(Libs.appcompat)
+    implementation(Libs.constraintlayout)
 
     /* FACEBOOK */
-    implementation (Libs.facebook_core)
+    implementation(Libs.facebook_core)
     implementation (Libs.facebook_login)
 
     /* FIREBASE */

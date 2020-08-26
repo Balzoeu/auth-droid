@@ -9,7 +9,6 @@ plugins {
     id("com.github.dcendents.android-maven")
     id("com.jfrog.bintray")
     id("org.jetbrains.dokka-android")
-
 }
 
 androidExtensions { isExperimental = true }
@@ -33,6 +32,7 @@ android {
             )
         }
     }
+
 }
 
 dependencies {
@@ -43,6 +43,14 @@ dependencies {
     /* KOTLIN */
     implementation(Libs.kotlin_stdlib_jdk7)
     implementation(Libs.core_ktx)
+
+    /* ARROW */
+    implementation(Libs.arrow_fx)
+    implementation(Libs.arrow_syntax)
+    kapt(Libs.arrow_meta)
+
+    /* ACTIVITY RESULT INLINE */
+    implementation(Libs.inline_activity_result_kotlin)
 
     /* TEST */
     testImplementation(Libs.junit)

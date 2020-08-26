@@ -1,13 +1,11 @@
+include(":firebase-google")
 include(
         ":app",
-        ":core",
+        "core",
+        "firebase-core",
+        ":firebase-facebook",
         ":google-core",
         ":facebook-core",
-        ":rx-google",
-        ":rx-facebook",
-        ":rx-firebase",
-        ":rx-firebase-facebook",
-        ":rx-firebase-google",
-        ":arrow-google",
-        ":arrow-facebook"
+        ":google",
+        ":facebook"
 )

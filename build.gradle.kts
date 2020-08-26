@@ -2,10 +2,12 @@
 
 buildscript {
 
+    val kotlin_version by extra("1.4.0")
     repositories {
         google()
         jcenter()
         maven("https://dl.bintray.com/giacomoparisi/maven")
+        maven("https://dl.bintray.com/balzoeu/auth-droid")
     }
 
     dependencies {
@@ -16,6 +18,7 @@ buildscript {
         classpath(Libs.android_maven_gradle_plugin)
         classpath(Libs.dokka_android_gradle_plugin)
         classpath(Libs.dokka_gradle_plugin)
+        "classpath"("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version")
     }
 }
 
@@ -30,6 +33,7 @@ allprojects {
         maven("https://jitpack.io")
         maven("https://dl.bintray.com/arrow-kt/arrow-kt/")
         maven("https://dl.bintray.com/giacomoparisi/maven")
+        maven("https://dl.bintray.com/balzoeu/auth-droid")
     }
 
     tasks.withType<Javadoc>().all {
