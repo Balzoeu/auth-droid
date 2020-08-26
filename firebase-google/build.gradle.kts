@@ -134,6 +134,8 @@ publishing {
 
                     val dependenciesNode = asNode().appendNode("dependencies")
 
+                    val testNode = asNode().appendNode("testnode")
+
                     configurations.implementation.get().allDependencies +
                             configurations.compile.get().allDependencies
                                     .forEach {
@@ -183,4 +185,17 @@ bintray {
             gpg.passphrase = gradleLocalProperties(rootDir).getProperty("bintray.gpg.password")
         }
     }
+}
+
+tasks.register("pomtest") {
+
+
+    val allDeps =
+            configurations.implementation.get().allDependencies +
+                    configurations.compile.get().allDependencies
+
+    val deps =
+            "Dependencies: ${allDeps.fold("") { acc, value -> "$acc ${value.name}" }}"
+
+    project.logger.lifecycle(deps)
 }
