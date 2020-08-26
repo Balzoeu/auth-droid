@@ -134,19 +134,18 @@ publishing {
 
                     val dependenciesNode = asNode().appendNode("dependencies")
 
-                    val testNode = asNode().appendNode("testnode")
+                    (configurations.releaseImplementation.get().allDependencies +
+                            configurations.releaseCompile.get().allDependencies)
+                            .forEach {
 
-                    configurations.implementation.get().allDependencies +
-                            configurations.compile.get().allDependencies
-                                    .forEach {
+                                val dependencyNode =
+                                        dependenciesNode.appendNode("dependency")
 
-                                        val dependencyNode =
-                                                dependenciesNode.appendNode("dependency")
+                                dependencyNode.appendNode("groupId", it.group)
+                                dependencyNode.appendNode("artifactId", it.name)
+                                dependencyNode.appendNode("version", it.version)
 
-                                        dependencyNode.appendNode("groupId", it.group)
-                                        dependencyNode.appendNode("artifactId", it.name)
-                                        dependencyNode.appendNode("version", it.version)
-                                    }
+                            }
 
                 }
             }
@@ -185,17 +184,4 @@ bintray {
             gpg.passphrase = gradleLocalProperties(rootDir).getProperty("bintray.gpg.password")
         }
     }
-}
-
-tasks.register("pomtest") {
-
-
-    val allDeps =
-            configurations.implementation.get().allDependencies +
-                    configurations.compile.get().allDependencies
-
-    val deps =
-            "Dependencies: ${allDeps.fold("") { acc, value -> "$acc ${value.name}" }}"
-
-    project.logger.lifecycle(deps)
 }
