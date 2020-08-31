@@ -49,7 +49,7 @@ object FirebaseFacebook {
                     val transaction = fragmentManager.beginTransaction()
 
                     transaction.add(fragment, FacebookFragment.TAG)
-                            .addToBackStack(null)
+                            .addToBackStack(FacebookFragment.TAG)
                             .commit()
 
                     LoginManager.getInstance()
