@@ -11,6 +11,8 @@ import org.gradle.plugin.use.PluginDependencySpec
  * YOU are responsible for updating manually the dependency version.
  */
 object Versions {
+    const val org_jetbrains_kotlinx_kotlinx_coroutines: String = "1.3.9"
+
     const val com_github_bumptech_glide: String = "4.11.0"
 
     const val com_facebook_android: String = "7.1.0"
@@ -23,7 +25,7 @@ object Versions {
 
     const val com_android_tools_build_gradle: String = "4.0.1"
 
-    const val androidx_test_runner: String = "1.2.0"
+    const val androidx_test_runner: String = "1.2.0" // available: "1.3.0"
 
     const val de_fayard_buildsrcversions_gradle_plugin: String = "0.7.0"
 
@@ -35,11 +37,11 @@ object Versions {
 
     const val play_services_auth: String = "18.1.0"
 
-    const val constraintlayout: String = "2.0.0"
+    const val constraintlayout: String = "2.0.0" // available: "2.0.1"
 
     const val google_services: String = "4.3.3"
 
-    const val espresso_core: String = "3.2.0"
+    const val espresso_core: String = "3.2.0" // available: "3.3.0"
 
     const val firebase_auth: String = "19.3.2"
 
@@ -64,7 +66,7 @@ object Versions {
      * See issue 19: How to update Gradle itself?
      * https://github.com/jmfayard/buildSrcVersions/issues/19
      */
-    const val gradleLatestVersion: String = "6.6"
+    const val gradleLatestVersion: String = "6.6.1"
 }
 
 /**

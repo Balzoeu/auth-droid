@@ -53,8 +53,8 @@ dependencies {
 
     /* RX */
     implementation (Libs.rxkotlin)
-    implementation (Libs.rxandroid)
-    implementation (Libs.rxjava)
+    implementation(Libs.rxandroid)
+    implementation(Libs.rxjava)
 
     /* ARROW */
     implementation(Libs.arrow_fx)
@@ -62,12 +62,16 @@ dependencies {
     kapt(Libs.arrow_meta)
 
     /* GLIDE */
-    implementation (Libs.glide)
-    annotationProcessor (Libs.com_github_bumptech_glide_compiler)
+    implementation(Libs.glide)
+    annotationProcessor(Libs.com_github_bumptech_glide_compiler)
+
+    /* COROUTINE */
+    implementation(Libs.kotlinx_coroutines_core)
+    implementation(Libs.kotlinx_coroutines_android)
 
     /* TEST */
-    testImplementation (Libs.junit)
-    androidTestImplementation (Libs.androidx_test_runner)
-    androidTestImplementation (Libs.espresso_core)
+    testImplementation(Libs.junit)
+    androidTestImplementation(Libs.androidx_test_runner)
+    androidTestImplementation(Libs.espresso_core)
 }
 
