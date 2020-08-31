@@ -1,5 +1,6 @@
 package eu.balzo.authdroid.firebase.facebook
 
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import arrow.Kind
 import arrow.core.*
@@ -49,7 +50,7 @@ object FirebaseFacebook {
                     val transaction = fragmentManager.beginTransaction()
 
                     transaction.add(fragment, FacebookFragment.TAG)
-                            .addToBackStack(FacebookFragment.TAG)
+                            .addToBackStack(null)
                             .commit()
 
                     LoginManager.getInstance()
@@ -61,13 +62,12 @@ object FirebaseFacebook {
                                             callback(
                                                     result.handleFirebaseFacebookLogin(fx).right()
                                             ).right()
-                                            fragmentManager.popBackStack()
+                                            removeFragment(fragmentManager, fragment)
                                         }
 
                                         override fun onCancel() {
                                             callback(just(AuthError.Cancelled.left()).right())
-                                            fragmentManager.popBackStack()
-                                        }
+                                            removeFragment(fragmentManager, fragment)                                        }
 
                                         override fun onError(error: FacebookException?) {
 
@@ -78,12 +78,20 @@ object FirebaseFacebook {
                                                             .left()
 
                                             callback(just(result).right())
-                                            fragmentManager.popBackStack()
+                                            removeFragment(fragmentManager, fragment)
                                         }
                                     }
                             )
                 }
             }
+
+    private fun removeFragment(fragmentManager: FragmentManager, fragment: Fragment): Unit {
+
+        val transaction = fragmentManager.beginTransaction()
+        transaction.remove(fragment)
+        transaction.commit()
+
+    }
 
     private fun <F> LoginResult?.handleFirebaseFacebookLogin(
             fx: ConcurrentFx<F>
