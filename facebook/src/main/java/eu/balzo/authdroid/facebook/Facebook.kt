@@ -1,6 +1,7 @@
 package eu.balzo.authdroid.facebook
 
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import arrow.Kind
 import arrow.core.*
@@ -60,10 +61,18 @@ object Facebook {
                             )
                         }
 
-                fragmentManager.popBackStack()
+                removeFragment(fragmentManager, fragment)
 
                 auth
             }
+
+    private fun removeFragment(fragmentManager: FragmentManager, fragment: Fragment): Unit {
+
+        val transaction = fragmentManager.beginTransaction()
+        transaction.remove(fragment)
+        transaction.commit()
+
+    }
 
     fun signOut(): Unit = LoginManager.getInstance().logOut()
 
