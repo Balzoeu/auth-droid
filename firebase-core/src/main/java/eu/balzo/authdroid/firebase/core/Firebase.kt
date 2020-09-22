@@ -116,4 +116,6 @@ object Firebase {
             }
 
     fun auth(): FirebaseAuth = FirebaseAuth.getInstance()
+
+    fun test(): Unit = Unit
 }
