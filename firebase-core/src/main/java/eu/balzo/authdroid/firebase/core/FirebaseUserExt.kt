@@ -1,6 +1,5 @@
 package eu.balzo.authdroid.firebase.core
 
-import arrow.core.*
 import com.google.firebase.auth.FirebaseUser
 import eu.balzo.authdroid.core.SocialAuthUser
 
@@ -8,31 +7,23 @@ fun FirebaseUser.toSocialAuthUser(token: String): SocialAuthUser =
         SocialAuthUser(
                 uid,
                 token,
-                None,
-                displayName.emptyOrBlankToNone(),
+                null,
+                displayName?.emptyOrBlankToNull(),
                 displayName
                         ?.split(" ")
                         ?.getOrNull(0)
-                        .emptyOrBlankToNone(),
+                        ?.emptyOrBlankToNull(),
                 displayName
                         ?.split(" ")
-                        ?.getOrNull(1)
-                        .toOption(),
+                        ?.getOrNull(1),
                 getProviderEmail(),
-                photoUrl?.toString().emptyOrBlankToNone()
+                photoUrl?.toString()?.emptyOrBlankToNull()
         )
 
-private fun FirebaseUser.getProviderEmail(): Option<String> =
-        email.emptyOrBlankToNone()
-                .fold(
-                        {
-                            providerData
-                                    .map { it.email }
-                                    .mapNotNull { it.emptyOrBlankToNone().orNull() }
-                                    .firstOrNone()
-                        },
-                        { it.some() }
-                )
+private fun FirebaseUser.getProviderEmail(): String? =
+        email?.emptyOrBlankToNull() ?: providerData.map { it.email }
+                .mapNotNull { it?.emptyOrBlankToNull() }
+                .firstOrNull()
 
-private fun String?.emptyOrBlankToNone(): Option<String> =
-        toOption().flatMap { if (it.isEmpty() || it.isBlank()) None else it.some() }
+private fun String.emptyOrBlankToNull(): String? =
+        if (isEmpty() || isBlank()) null else this

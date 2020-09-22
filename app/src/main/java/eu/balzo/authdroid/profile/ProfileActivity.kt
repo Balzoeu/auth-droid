@@ -14,20 +14,20 @@ class ProfileActivity : FragmentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        this.setContentView(R.layout.profile)
+        setContentView(R.layout.profile)
 
-        this.name_value.text = this.intent.getStringExtra(NAME) ?: "/"
-        this.first_name_value.text = this.intent.getStringExtra(FIRST_NAME) ?: "/"
-        this.last_name_value.text = this.intent.getStringExtra(LAST_NAME) ?: "/"
-        this.email_value.text = this.intent.getStringExtra(EMAIL) ?: "/"
-        this.id_value.text = this.intent.getStringExtra(ID) ?: "/"
-        this.token_value.text = this.intent.getStringExtra(TOKEN) ?: "/"
-        this.google_auth_code_value.text = this.intent.getStringExtra(GOOGLE_AUTH_CODE) ?: "/"
+        name_value.text = intent.getStringExtra(NAME) ?: "/"
+        first_name_value.text = intent.getStringExtra(FIRST_NAME) ?: "/"
+        last_name_value.text = intent.getStringExtra(LAST_NAME) ?: "/"
+        email_value.text = intent.getStringExtra(EMAIL) ?: "/"
+        id_value.text = intent.getStringExtra(ID) ?: "/"
+        token_value.text = intent.getStringExtra(TOKEN) ?: "/"
+        google_auth_code_value.text = intent.getStringExtra(GOOGLE_AUTH_CODE) ?: "/"
 
         Glide.with(this)
-                .load(this.intent.getStringExtra(PROFILE_IMAGE).orEmpty())
+                .load(intent.getStringExtra(PROFILE_IMAGE).orEmpty())
                 .error(R.drawable.profile)
-                .into(this.profile_image)
+                .into(profile_image)
     }
 
     companion object {
@@ -47,14 +47,14 @@ class ProfileActivity : FragmentActivity() {
         ) {
             val intent = Intent(context, ProfileActivity::class.java)
 
-            intent.putExtra(NAME, user.displayName.orNull())
-            intent.putExtra(FIRST_NAME, user.firstName.orNull())
-            intent.putExtra(LAST_NAME, user.lastName.orNull())
-            intent.putExtra(EMAIL, user.email.orNull())
+            intent.putExtra(NAME, user.displayName)
+            intent.putExtra(FIRST_NAME, user.firstName)
+            intent.putExtra(LAST_NAME, user.lastName)
+            intent.putExtra(EMAIL, user.email)
             intent.putExtra(ID, user.id)
             intent.putExtra(TOKEN, user.token)
-            intent.putExtra(GOOGLE_AUTH_CODE, user.googleServerAuthCode.orNull())
-            intent.putExtra(PROFILE_IMAGE, user.profileImage.orNull())
+            intent.putExtra(GOOGLE_AUTH_CODE, user.googleServerAuthCode)
+            intent.putExtra(PROFILE_IMAGE, user.profileImage)
 
             context.startActivity(intent)
         }

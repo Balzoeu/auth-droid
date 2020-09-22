@@ -17,15 +17,15 @@ object Versions {
 
     const val com_facebook_android: String = "7.1.0"
 
-    const val org_jetbrains_kotlin: String = "1.4.0"
+    const val org_jetbrains_kotlin: String = "1.4.10"
 
     const val org_jetbrains_dokka: String = "0.9.18"
 
-    const val io_arrow_kt: String = "0.10.5"
+    const val io_arrow_kt: String = "0.11.0"
 
     const val com_android_tools_build_gradle: String = "4.0.1"
 
-    const val androidx_test_runner: String = "1.2.0" // available: "1.3.0"
+    const val androidx_test_runner: String = "1.3.0"
 
     const val de_fayard_buildsrcversions_gradle_plugin: String = "0.7.0"
 
@@ -37,13 +37,13 @@ object Versions {
 
     const val play_services_auth: String = "18.1.0"
 
-    const val constraintlayout: String = "2.0.0" // available: "2.0.1"
+    const val constraintlayout: String = "2.0.1"
 
     const val google_services: String = "4.3.3"
 
-    const val espresso_core: String = "3.2.0" // available: "3.3.0"
+    const val espresso_core: String = "3.3.0"
 
-    const val firebase_auth: String = "19.3.2"
+    const val firebase_auth: String = "19.4.0"
 
     const val lint_gradle: String = "27.0.1"
 

@@ -1,10 +1,6 @@
 package eu.balzo.authdroid.core
 
-import arrow.core.None
-import arrow.core.Option
-import arrow.core.some
-
-sealed class AuthError(val source: Option<Throwable> = None) {
+sealed class AuthError(val source: Throwable? = null) {
 
     object Cancelled : AuthError()
 
@@ -16,14 +12,14 @@ sealed class AuthError(val source: Option<Throwable> = None) {
 
     object FacebookAuth : AuthError()
 
-    class Unknown(source: Option<Throwable>) : AuthError(source)
+    class Unknown(source: Throwable?) : AuthError(source)
 
     companion object {
 
-        fun Throwable.toAuthError(): AuthError = Unknown(some())
+        fun Throwable.toAuthError(): AuthError = Unknown(this)
 
     }
 }
 
-data class Auth(val isFirstAuth: Option<Boolean>, val socialAuthUser: SocialAuthUser)
+data class Auth(val isFirstAuth: Boolean?, val socialAuthUser: SocialAuthUser)
 

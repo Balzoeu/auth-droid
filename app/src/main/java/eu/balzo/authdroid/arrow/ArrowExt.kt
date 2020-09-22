@@ -1,11 +1,8 @@
 package eu.balzo.authdroid.arrow
 
-import arrow.Kind
-import arrow.fx.ForIO
-import arrow.fx.extensions.io.unsafeRun.runNonBlocking
-import arrow.unsafe
+import kotlinx.coroutines.Dispatchers
+import kotlin.coroutines.Continuation
+import kotlin.coroutines.startCoroutine
 
-fun <A> Kind<ForIO, A>.unsafeRunAsync(): Unit =
-        unsafe {
-            runNonBlocking({ this@unsafeRunAsync }) {}
-        }
+fun startCoroutine(block: suspend () -> Unit): Unit =
+        suspend { block() }.startCoroutine(Continuation(Dispatchers.IO) {})

@@ -4,13 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
-import arrow.core.getOrElse
-import arrow.fx.ForIO
-import arrow.fx.IO
-import arrow.fx.extensions.io.concurrent.concurrent
-import arrow.fx.typeclasses.ConcurrentFx
 import com.balzo.authdroid.auth.R
-import eu.balzo.authdroid.arrow.unsafeRunAsync
+import eu.balzo.authdroid.arrow.startCoroutine
 import eu.balzo.authdroid.firebase.core.Firebase
 import eu.balzo.authdroid.firebase.facebook.FirebaseFacebook
 import eu.balzo.authdroid.firebase.google.FirebaseGoogle
@@ -21,48 +16,41 @@ import kotlinx.android.synthetic.main.firebase.*
 
 class FirebaseActivity : FragmentActivity() {
 
-    private val fx: ConcurrentFx<ForIO> = IO.concurrent().fx
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        this.setContentView(R.layout.firebase)
+        setContentView(R.layout.firebase)
 
-        this.firebase_google.setOnClickListener {
+        firebase_google.setOnClickListener {
 
-            fx.concurrent {
+            startCoroutine {
 
                 FirebaseGoogle.auth(
-                        fx,
-                        this@FirebaseActivity,
-                        getString(R.string.google_client_id_web))
-                        .bind()
-                        .fold(
-                                { it.logError(this@FirebaseActivity) },
-                                { it.openProfile(this@FirebaseActivity) }
-                        )
+                        this,
+                        getString(R.string.google_client_id_web)
+                ).fold(
+                        { it.logError(this) },
+                        { it.openProfile(this) }
+                )
 
-            }.unsafeRunAsync()
+            }
         }
 
-        this.firebase_facebook.setOnClickListener {
+        firebase_facebook.setOnClickListener {
 
-            fx.concurrent {
+            startCoroutine {
 
-                FirebaseFacebook.auth(
-                        fx,
-                        this@FirebaseActivity.supportFragmentManager)
-                        .bind()
+                FirebaseFacebook.auth(supportFragmentManager)
                         .fold(
-                                { it.logError(this@FirebaseActivity) },
-                                { it.openProfile(this@FirebaseActivity) }
+                                { it.logError(this) },
+                                { it.openProfile(this) }
                         )
 
-            }.unsafeRunAsync()
+            }
         }
 
-        this.firebase_custom.setOnClickListener {
-            this.startActivity(
+        firebase_custom.setOnClickListener {
+            startActivity(
                     Intent(this, FirebaseEmailPasswordActivity::class.java)
             )
         }
@@ -71,59 +59,56 @@ class FirebaseActivity : FragmentActivity() {
 
 
 
-        this.firebase_password_reset.setOnClickListener {
-            this.startActivity(
+        firebase_password_reset.setOnClickListener {
+            startActivity(
                     Intent(this, FirebasePasswordResetActivity::class.java)
             )
         }
 
-        this.firebase_password_update.setOnClickListener {
-            this.startActivity(
+        firebase_password_update.setOnClickListener {
+            startActivity(
                     Intent(this, FirebasePasswordUpdateActivity::class.java)
             )
         }
 
 
 
-
-        this.firebase_get_id.setOnClickListener {
-            this.showToast(Firebase.id().getOrElse { "Firebase user not logged" })
+        firebase_get_id.setOnClickListener {
+            startCoroutine { showToast(Firebase.id() ?: "Firebase user not logged") }
         }
 
-        this.firebase_get_token.setOnClickListener {
+        firebase_get_token.setOnClickListener {
 
-            fx.concurrent {
+            startCoroutine {
 
-                Firebase.token(fx)
-                        .bind()
+                Firebase.token()
                         .fold(
-                                { it.logError(this@FirebaseActivity) },
-                                { this@FirebaseActivity.showToast(it) }
+                                { it.logError(this) },
+                                { showToast(it) }
                         )
 
-            }.unsafeRunAsync()
+            }
         }
 
-        this.firebase_get_user.setOnClickListener {
+        firebase_get_user.setOnClickListener {
 
-            fx.concurrent {
+            startCoroutine {
 
-                Firebase.currentUser(fx)
-                        .bind()
+                Firebase.currentUser()
                         .fold(
-                                { it.logError(this@FirebaseActivity) },
-                                { it.openProfile(this@FirebaseActivity) }
+                                { it.logError(this) },
+                                { it.openProfile(this) }
                         )
 
-            }.unsafeRunAsync()
+            }
         }
 
 
 
 
 
-        this.firebase_update_profile.setOnClickListener {
-            this.startActivity(
+        firebase_update_profile.setOnClickListener {
+            startActivity(
                     Intent(this, FirebaseProfileUpdateActivity::class.java)
             )
         }
@@ -131,29 +116,27 @@ class FirebaseActivity : FragmentActivity() {
 
 
 
-        this.firebase_google_logout.setOnClickListener {
+        firebase_google_logout.setOnClickListener {
 
-            fx.concurrent {
+            startCoroutine {
 
                 FirebaseGoogle.signOut(
-                        fx,
-                        this@FirebaseActivity,
+                        this,
                         getString(R.string.google_client_id_web))
-                        .bind()
                         .fold(
-                                { this@FirebaseActivity.showToast("Error") },
-                                { this@FirebaseActivity.showToast("Done") }
+                                { showToast("Error") },
+                                { showToast("Done") }
                         )
 
-            }.unsafeRunAsync()
+            }
         }
 
-        this.firebase_facebook_logout.setOnClickListener {
+        firebase_facebook_logout.setOnClickListener {
             FirebaseFacebook.signOut()
             Toast.makeText(this, "Done", Toast.LENGTH_LONG).show()
         }
 
-        this.firebase_logout.setOnClickListener {
+        firebase_logout.setOnClickListener {
             Firebase.signOut()
             Toast.makeText(this, "Done", Toast.LENGTH_LONG).show()
         }

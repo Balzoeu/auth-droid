@@ -33,6 +33,15 @@ android {
         }
     }
 
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+
 }
 
 dependencies {
@@ -57,6 +66,7 @@ dependencies {
 
     /* ARROW */
     implementation(Libs.arrow_fx)
+    implementation(Libs.arrow_fx_coroutines)
     implementation(Libs.arrow_syntax)
     kapt(Libs.arrow_meta)
 

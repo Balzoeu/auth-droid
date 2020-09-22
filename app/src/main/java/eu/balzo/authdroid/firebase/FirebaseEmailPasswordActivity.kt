@@ -4,12 +4,8 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import androidx.fragment.app.FragmentActivity
-import arrow.fx.ForIO
-import arrow.fx.IO
-import arrow.fx.extensions.io.concurrent.concurrent
-import arrow.fx.typeclasses.ConcurrentFx
 import com.balzo.authdroid.auth.R
-import eu.balzo.authdroid.arrow.unsafeRunAsync
+import eu.balzo.authdroid.arrow.startCoroutine
 import eu.balzo.authdroid.firebase.core.Firebase
 import eu.balzo.authdroid.logError
 import eu.balzo.authdroid.openProfile
@@ -20,16 +16,14 @@ class FirebaseEmailPasswordActivity : FragmentActivity() {
     private var email: String = ""
     private var password: String = ""
 
-    private val fx: ConcurrentFx<ForIO> = IO.concurrent().fx
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        this.setContentView(R.layout.firebase_email_password_auth)
+        setContentView(R.layout.firebase_email_password_auth)
 
-        this.email_field.addTextChangedListener(object : TextWatcher {
+        email_field.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
-                this@FirebaseEmailPasswordActivity.email = s.toString()
+                email = s.toString()
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -37,9 +31,9 @@ class FirebaseEmailPasswordActivity : FragmentActivity() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
         })
 
-        this.password_field.addTextChangedListener(object : TextWatcher {
+        password_field.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
-                this@FirebaseEmailPasswordActivity.password = s.toString()
+                password = s.toString()
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -47,38 +41,34 @@ class FirebaseEmailPasswordActivity : FragmentActivity() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
         })
 
-        this.sign_up.setOnClickListener {
+        sign_up.setOnClickListener {
 
-            fx.concurrent {
+            startCoroutine {
 
                 Firebase.signUpWithFirebaseEmailPassword(
-                        fx,
                         email,
                         password)
-                        .bind()
                         .fold(
-                                { it.logError(this@FirebaseEmailPasswordActivity) },
-                                { it.openProfile(this@FirebaseEmailPasswordActivity) }
+                                { it.logError(this) },
+                                { it.openProfile(this) }
                         )
 
-            }.unsafeRunAsync()
+            }
         }
 
-        this.sign_in.setOnClickListener {
+        sign_in.setOnClickListener {
 
-            fx.concurrent {
+            startCoroutine {
 
                 Firebase.signInWithFirebaseEmailPassword(
-                        fx,
                         email,
                         password)
-                        .bind()
                         .fold(
-                                { it.logError(this@FirebaseEmailPasswordActivity) },
-                                { it.openProfile(this@FirebaseEmailPasswordActivity) }
+                                { it.logError(this) },
+                                { it.openProfile(this) }
                         )
 
-            }.unsafeRunAsync()
+            }
         }
     }
 }

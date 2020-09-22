@@ -2,10 +2,8 @@ package eu.balzo.authdroid.firebase.facebook
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import arrow.Kind
 import arrow.core.*
-import arrow.core.extensions.fx
-import arrow.fx.typeclasses.ConcurrentFx
+import arrow.core.computations.either
 import com.facebook.FacebookCallback
 import com.facebook.FacebookException
 import com.facebook.login.LoginManager
@@ -17,57 +15,52 @@ import eu.balzo.authdroid.core.AuthError
 import eu.balzo.authdroid.core.AuthError.Companion.toAuthError
 import eu.balzo.authdroid.facebook.core.FacebookFragment
 import eu.balzo.authdroid.firebase.core.Firebase
+import kotlin.coroutines.resume
+import kotlin.coroutines.suspendCoroutine
 
 object FirebaseFacebook {
 
-    fun <F> auth(
-            fx: ConcurrentFx<F>,
+    suspend fun auth(
             fragmentManager: FragmentManager
-    ): Kind<F, Either<AuthError, Auth>> =
-            fx.concurrent {
+    ): Either<AuthError, Auth> {
 
-                val auth = !authWithFacebook(fx, fragmentManager)
+        val auth = authWithFacebook(fragmentManager)
 
-                val user = !Firebase.currentUser(fx)
+        val user = Firebase.currentUser()
 
-                Either.fx {
+        return either {
 
-                    Auth(auth.bind().additionalUserInfo?.isNewUser.toOption(), user.bind())
+            Auth(auth.bind().additionalUserInfo?.isNewUser, user.bind())
 
-                }
+        }
 
-            }
+    }
 
-    private fun <F> authWithFacebook(
-            fx: ConcurrentFx<F>,
+    private suspend fun authWithFacebook(
             fragmentManager: FragmentManager
-    ): Kind<F, Either<AuthError, AuthResult>> =
-            fx.concurrent {
+    ): Either<AuthError, AuthResult> {
 
-                !!fx.M.async<Kind<F, Either<AuthError, AuthResult>>> { callback ->
+        val fragment = FacebookFragment()
+        val transaction = fragmentManager.beginTransaction()
 
-                    val fragment = FacebookFragment()
-                    val transaction = fragmentManager.beginTransaction()
+        transaction.add(fragment, FacebookFragment.TAG)
+                .addToBackStack(null)
+                .commit()
 
-                    transaction.add(fragment, FacebookFragment.TAG)
-                            .addToBackStack(null)
-                            .commit()
-
+        val facebookAuth =
+                suspendCoroutine<Either<AuthError, LoginResult?>> { continuation ->
                     LoginManager.getInstance()
                             .registerCallback(
                                     fragment.callbackManager,
                                     object : FacebookCallback<LoginResult> {
 
                                         override fun onSuccess(result: LoginResult?) {
-                                            callback(
-                                                    result.handleFirebaseFacebookLogin(fx).right()
-                                            ).right()
-                                            removeFragment(fragmentManager, fragment)
+                                            continuation.resume(result.right())
                                         }
 
                                         override fun onCancel() {
-                                            callback(just(AuthError.Cancelled.left()).right())
-                                            removeFragment(fragmentManager, fragment)                                        }
+                                            continuation.resume(AuthError.Cancelled.left())
+                                        }
 
                                         override fun onError(error: FacebookException?) {
 
@@ -77,13 +70,19 @@ object FirebaseFacebook {
                                                             .getOrElse { AuthError.FacebookAuth }
                                                             .left()
 
-                                            callback(just(result).right())
-                                            removeFragment(fragmentManager, fragment)
+                                            continuation.resume(result)
                                         }
                                     }
                             )
                 }
-            }
+
+        val auth =
+                facebookAuth.flatMap { it.handleFirebaseFacebookLogin() }
+
+        removeFragment(fragmentManager, fragment)
+
+        return auth
+    }
 
     private fun removeFragment(fragmentManager: FragmentManager, fragment: Fragment): Unit {
 
@@ -93,22 +92,14 @@ object FirebaseFacebook {
 
     }
 
-    private fun <F> LoginResult?.handleFirebaseFacebookLogin(
-            fx: ConcurrentFx<F>
-    ): Kind<F, Either<AuthError, AuthResult>> =
-            fx.concurrent {
+    private suspend fun LoginResult?.handleFirebaseFacebookLogin(): Either<AuthError, AuthResult> =
+            this?.let {
 
-                !this@handleFirebaseFacebookLogin.toOption()
-                        .fold(
-                                { just(AuthError.FirebaseUnknown.left()) },
-                                {
-                                    val credential =
-                                            FacebookAuthProvider.getCredential(it.accessToken.token)
-                                    Firebase.signInWithCredential(fx, credential)
-                                }
-                        )
+                val credential =
+                        FacebookAuthProvider.getCredential(it.accessToken.token)
+                Firebase.signInWithCredential(credential)
 
-            }
+            } ?: AuthError.FirebaseUnknown.left()
 
     fun signOut(): Unit = LoginManager.getInstance().logOut()
 }

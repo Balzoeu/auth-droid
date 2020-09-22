@@ -10,7 +10,7 @@ object Libs {
      */
     const val kotlinx_coroutines_android: String =
             "org.jetbrains.kotlinx:kotlinx-coroutines-android:" +
-                    Versions.org_jetbrains_kotlinx_kotlinx_coroutines
+            Versions.org_jetbrains_kotlinx_kotlinx_coroutines
 
     /**
      * https://github.com/Kotlin/kotlinx.coroutines
@@ -84,6 +84,12 @@ object Libs {
      * https://github.com/arrow-kt/arrow/
      */
     const val arrow_fx: String = "io.arrow-kt:arrow-fx:" + Versions.io_arrow_kt
+
+    /**
+     * https://github.com/arrow-kt/arrow/
+     */
+    const val arrow_fx_coroutines: String = "io.arrow-kt:arrow-fx-coroutines:" +
+            Versions.io_arrow_kt
 
     /**
      * https://github.com/arrow-kt/arrow/

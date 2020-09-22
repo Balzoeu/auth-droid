@@ -1,149 +1,118 @@
 package eu.balzo.authdroid.firebase.core
 
 import android.net.Uri
-import arrow.Kind
 import arrow.core.*
-import arrow.core.extensions.fx
-import arrow.fx.typeclasses.ConcurrentFx
+import arrow.core.computations.either
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.*
 import eu.balzo.authdroid.core.Auth
 import eu.balzo.authdroid.core.AuthError
 import eu.balzo.authdroid.core.AuthError.Companion.toAuthError
 import eu.balzo.authdroid.core.SocialAuthUser
+import kotlin.coroutines.resume
+import kotlin.coroutines.suspendCoroutine
 
 object Firebase {
 
-    fun <F> token(fx: ConcurrentFx<F>): Kind<F, Either<AuthError, String>> =
-            fx.concurrent {
-                when (val user = FirebaseAuth.getInstance().currentUser) {
-                    null -> AuthError.FirebaseUserNotLogged.left()
-                    else ->
-                        user.getIdToken(true)
-                                .bindTask(fx)
-                                .bind()
-                                .flatMap {
-                                    it.token.toOption().toEither { AuthError.FirebaseUnknown }
-                                }
-                }
+    suspend fun token(): Either<AuthError, String> =
+            when (val user = FirebaseAuth.getInstance().currentUser) {
+                null -> AuthError.FirebaseUserNotLogged.left()
+                else ->
+                    user.getIdToken(true)
+                            .bindTask()
+                            .flatMap {
+                                it.token.toOption().toEither { AuthError.FirebaseUnknown }
+                            }
             }
 
-    fun id(): Option<String> = auth().currentUser?.uid.toOption()
+    fun id(): String? = auth().currentUser?.uid
 
-    fun <F> currentUser(fx: ConcurrentFx<F>): Kind<F, Either<AuthError, SocialAuthUser>> =
-            fx.concurrent {
+    suspend fun currentUser(): Either<AuthError, SocialAuthUser> =
 
-                token(fx)
-                        .bind()
-                        .flatMap {
+            token().flatMap {
 
-                            auth().currentUser
-                                    ?.toSocialAuthUser(it)
-                                    .toOption()
-                                    .toEither { AuthError.FirebaseUserNotLogged }
+                auth().currentUser
+                        ?.toSocialAuthUser(it)
+                        ?.right() ?: AuthError.FirebaseUserNotLogged.left()
 
-                        }
             }
+
 
     private fun currentFirebaseUser(): Either<AuthError.FirebaseUserNotLogged, FirebaseUser> =
-            auth().currentUser.toOption().toEither { AuthError.FirebaseUserNotLogged }
+            auth().currentUser?.right() ?: AuthError.FirebaseUserNotLogged.left()
 
-    fun <F> updateProfile(
-            fx: ConcurrentFx<F>,
+    suspend fun updateProfile(
             displayName: String? = null,
             photoUrl: String? = null
-    ): Kind<F, Either<AuthError, Unit>> =
-            fx.concurrent {
-                !currentFirebaseUser()
-                        .fold(
-                                { just(it.left()) },
-                                { user ->
-                                    val request = UserProfileChangeRequest.Builder()
+    ): Either<AuthError, Unit> =
+            currentFirebaseUser()
+                    .map { firebaseUser ->
 
-                                    displayName.toOption().map { request.setDisplayName(it) }
-                                    photoUrl.toOption().map { request.setPhotoUri(Uri.parse(it)) }
+                        val request = UserProfileChangeRequest.Builder()
 
-                                    user.updateProfile(request.build()).bindTask(fx)
+                        displayName?.let { request.setDisplayName(it) }
+                        photoUrl?.let { request.setPhotoUri(Uri.parse(it)) }
 
-                                }
-                        )
-                        .map { it.map { Unit } }
+                        firebaseUser.updateProfile(request.build()).bindTask()
+                    }
 
-            }
-
-    fun <F> updatePassword(
-            fx: ConcurrentFx<F>,
+    suspend fun updatePassword(
             password: String
-    ): Kind<F, Either<AuthError, Unit>> =
-            fx.concurrent {
-                !currentFirebaseUser()
-                        .fold(
-                                { just(it.left()) },
-                                { it.updatePassword(password).bindTask(fx) }
-                        )
-                        .map { it.map { Unit } }
+    ): Either<AuthError, Unit> =
+            currentFirebaseUser()
+                    .map { it.updatePassword(password).bindTask() }
 
-            }
-
-    fun <F> resetPassword(fx: ConcurrentFx<F>, email: String): Kind<F, Either<AuthError, Unit>> =
-            fx.concurrent {
-
-                !auth().also { firebaseAuth -> firebaseAuth.useAppLanguage() }
-                        .sendPasswordResetEmail(email)
-                        .bindTask(fx)
-                        .map { it.map { Unit } }
-            }
+    suspend fun resetPassword(email: String): Either<AuthError, Unit> =
+            auth().also { it.useAppLanguage() }
+                    .sendPasswordResetEmail(email)
+                    .bindTask()
+                    .map { Unit }
 
     fun signOut(): Unit = auth().signOut()
 
-    fun <F> signInWithFirebaseEmailPassword(
-            fx: ConcurrentFx<F>,
+    suspend fun signInWithFirebaseEmailPassword(
             email: String,
             password: String
-    ): Kind<F, Either<AuthError, Auth>> =
-            fx.concurrent {
+    ): Either<AuthError, Auth> {
 
-                val auth =
-                        !auth().signInWithEmailAndPassword(email, password).bindTask(fx)
+        val auth =
+                auth().signInWithEmailAndPassword(email, password).bindTask()
 
-                val user = !currentUser(fx)
+        val user = currentUser()
 
-                Either.fx {
-                    Auth(auth.bind().additionalUserInfo?.isNewUser.toOption(), user.bind())
-                }
+        return either.invoke {
+            Auth(auth.bind().additionalUserInfo?.isNewUser, user.bind())
+        }
 
-            }
+    }
 
-    fun <F> signUpWithFirebaseEmailPassword(
-            fx: ConcurrentFx<F>,
+    suspend fun signUpWithFirebaseEmailPassword(
             email: String,
             password: String
-    ): Kind<F, Either<AuthError, Auth>> =
-            fx.concurrent {
+    ): Either<AuthError, Auth> {
 
-                val auth =
-                        !auth().createUserWithEmailAndPassword(email, password).bindTask(fx)
+        val auth =
+                auth().createUserWithEmailAndPassword(email, password).bindTask()
 
-                val user = !currentUser(fx)
+        val user = currentUser()
 
-                Either.fx {
-                    Auth(auth.bind().additionalUserInfo?.isNewUser.toOption(), user.bind())
-                }
+        return either.invoke {
+            Auth(auth.bind().additionalUserInfo?.isNewUser, user.bind())
+        }
 
-            }
+    }
 
-    fun <F> signInWithCredential(
-            fx: ConcurrentFx<F>,
+    suspend fun signInWithCredential(
             credential: AuthCredential
-    ): Kind<F, Either<AuthError, AuthResult>> =
-            auth().signInWithCredential(credential).bindTask(fx)
+    ): Either<AuthError, AuthResult> =
+            auth().signInWithCredential(credential).bindTask()
 
 
-    fun <F, T> Task<T>.bindTask(fx: ConcurrentFx<F>): Kind<F, Either<AuthError, T>> =
-            fx.M.async { callback ->
-                addOnSuccessListener { callback(it.right().right()) }
-                        .addOnCanceledListener { callback(AuthError.Cancelled.left().right()) }
-                        .addOnFailureListener { callback(it.toAuthError().left().right()) }
+    suspend fun <T> Task<T>.bindTask(): Either<AuthError, T> =
+            suspendCoroutine { continuation ->
+                addOnSuccessListener { continuation.resume(it.right()) }
+                        .addOnCanceledListener { continuation.resume(AuthError.Cancelled.left()) }
+                        .addOnFailureListener { continuation.resume(it.toAuthError().left()) }
             }
 
     fun auth(): FirebaseAuth = FirebaseAuth.getInstance()
