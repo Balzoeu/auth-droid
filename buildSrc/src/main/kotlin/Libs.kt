@@ -163,24 +163,9 @@ object Libs {
     const val appcompat: String = "androidx.appcompat:appcompat:" + Versions.appcompat
 
     /**
-     * https://github.com/ReactiveX/RxAndroid
-     */
-    const val rxandroid: String = "io.reactivex.rxjava2:rxandroid:" + Versions.rxandroid
-
-    /**
      * https://developer.android.com/jetpack/androidx
      */
     const val core_ktx: String = "androidx.core:core-ktx:" + Versions.core_ktx
-
-    /**
-     * https://github.com/ReactiveX/RxKotlin
-     */
-    const val rxkotlin: String = "io.reactivex.rxjava2:rxkotlin:" + Versions.rxkotlin
-
-    /**
-     * https://github.com/ReactiveX/RxJava
-     */
-    const val rxjava: String = "io.reactivex.rxjava2:rxjava:" + Versions.rxjava
 
     /**
      * https://developer.android.com/studio
