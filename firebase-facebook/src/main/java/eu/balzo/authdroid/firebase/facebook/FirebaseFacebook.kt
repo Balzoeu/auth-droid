@@ -54,12 +54,20 @@ object FirebaseFacebook {
                                     fragment.callbackManager,
                                     object : FacebookCallback<LoginResult> {
 
+                                        var isResumed = false
+
                                         override fun onSuccess(result: LoginResult?) {
-                                            continuation.resume(result.right())
+                                            if (isResumed.not()) {
+                                                continuation.resume(result.right())
+                                                isResumed = true
+                                            }
                                         }
 
                                         override fun onCancel() {
-                                            continuation.resume(AuthError.Cancelled.left())
+                                            if (isResumed.not()) {
+                                                continuation.resume(AuthError.Cancelled.left())
+                                                isResumed = true
+                                            }
                                         }
 
                                         override fun onError(error: FacebookException?) {
@@ -70,7 +78,10 @@ object FirebaseFacebook {
                                                             .getOrElse { AuthError.FacebookAuth }
                                                             .left()
 
-                                            continuation.resume(result)
+                                            if (isResumed.not()) {
+                                                continuation.resume(result)
+                                                isResumed = true
+                                            }
                                         }
                                     }
                             )

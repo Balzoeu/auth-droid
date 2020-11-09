@@ -37,16 +37,27 @@ object Facebook {
                             fragment.callbackManager,
                             object : FacebookCallback<LoginResult> {
 
+                                var isResumed = false
+
                                 override fun onSuccess(result: LoginResult?) {
-                                    continuation.resume(result.right())
+                                    if (isResumed.not()) {
+                                        continuation.resume(result.right())
+                                        isResumed = true
+                                    }
                                 }
 
                                 override fun onCancel() {
-                                    continuation.resume(AuthError.Cancelled.left())
+                                    if (isResumed.not()) {
+                                        continuation.resume(AuthError.Cancelled.left())
+                                        isResumed = true
+                                    }
                                 }
 
                                 override fun onError(error: FacebookException?) {
-                                    continuation.resume(AuthError.Unknown(error).left())
+                                    if (isResumed.not()) {
+                                        continuation.resume(AuthError.Unknown(error).left())
+                                        isResumed = true
+                                    }
                                 }
 
                             }
