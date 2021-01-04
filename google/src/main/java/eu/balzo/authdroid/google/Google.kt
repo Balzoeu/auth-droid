@@ -3,10 +3,6 @@ package eu.balzo.authdroid.google
 import android.app.Activity
 import android.content.Intent
 import androidx.fragment.app.FragmentActivity
-import arrow.core.Either
-import arrow.core.flatMap
-import arrow.core.left
-import arrow.core.right
 import com.github.florent37.inlineactivityresult.Result
 import com.github.florent37.inlineactivityresult.kotlin.startForResult
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -14,12 +10,12 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.common.api.ApiException
 import eu.balzo.authdroid.core.Auth
 import eu.balzo.authdroid.core.AuthError
-import eu.balzo.authdroid.core.AuthError.Companion.toAuthError
 import eu.balzo.authdroid.google.core.getGoogleSignInClient
 import eu.balzo.authdroid.google.core.getGoogleSignInIntent
 import eu.balzo.authdroid.google.core.getGoogleSignInOptions
 import eu.balzo.authdroid.google.core.toSocialAuthUser
 import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
 object Google {
@@ -27,59 +23,62 @@ object Google {
     suspend fun auth(
             activity: FragmentActivity,
             clientId: String
-    ): Either<AuthError, Auth> {
+    ): Auth {
 
         val auth =
-                suspendCoroutine<Either<AuthError, Result>> { continuation ->
+                suspendCoroutine<Result> { continuation ->
 
                     activity.startForResult(getGoogleSignInIntent(activity, clientId)) {
-                        continuation.resume(it.right())
+                        continuation.resume(it)
                     }.onFailed { result ->
-                        continuation.resume(
+                        continuation.resumeWithException(
                                 when (result.resultCode) {
                                     Activity.RESULT_CANCELED ->
-                                        AuthError.Cancelled.left()
+                                        AuthError.Cancelled()
                                     else ->
-                                        AuthError.FirebaseUnknown.left()
+                                        result.cause ?: AuthError.FirebaseUnknown()
                                 }
                         )
                     }
                 }
 
-        return auth.flatMap { googleAuth(it) }
+        return googleAuth(auth)
 
     }
 
     private suspend fun googleAuth(
             result: Result
-    ): Either<AuthError, Auth> =
+    ): Auth =
             authWithGoogle(result.data)
-                    .map { it?.toSocialAuthUser() }
-                    .flatMap { it?.right() ?: AuthError.FirebaseUnknown.left() }
-                    .map { Auth(null, it) }
+                    ?.toSocialAuthUser()
+                    ?.let { Auth(null, it) } ?: throw AuthError.FirebaseUnknown()
 
     suspend fun signOut(
             activity: FragmentActivity,
             clientId: String
-    ): Either<AuthError, Unit> =
-            suspendCoroutine { continuation ->
+    ) {
 
-                getGoogleSignInClient(activity, getGoogleSignInOptions(clientId))
-                        .signOut()
-                        .addOnSuccessListener { continuation.resume(Unit.right()) }
-                        .addOnCanceledListener { continuation.resume(AuthError.Cancelled.left()) }
-                        .addOnFailureListener { continuation.resume(it.toAuthError().left()) }
+        suspendCoroutine<Unit> { continuation ->
 
-            }
+            getGoogleSignInClient(activity, getGoogleSignInOptions(clientId))
+                    .signOut()
+                    .addOnSuccessListener { continuation.resume(Unit) }
+                    .addOnCanceledListener {
+                        continuation.resumeWithException(AuthError.Cancelled())
+                    }
+                    .addOnFailureListener {
+                        continuation.resumeWithException(it)
+                    }
+
+        }
+    }
 
     private suspend fun authWithGoogle(
             data: Intent?
-    ): Either<AuthError, GoogleSignInAccount?> =
-            Either.catch {
+    ): GoogleSignInAccount? =
+            GoogleSignIn.getSignedInAccountFromIntent(data)
+                    .getResult(ApiException::class.java)
 
-                GoogleSignIn.getSignedInAccountFromIntent(data)
-                        .getResult(ApiException::class.java)
 
-            }.mapLeft { it.toAuthError() }
 }
 

@@ -12,19 +12,19 @@ import org.gradle.plugin.use.PluginDependencySpec
  * YOU are responsible for updating manually the dependency version.
  */
 object Versions {
-    const val org_jetbrains_kotlinx_kotlinx_coroutines: String = "1.4.2" // available: "1.4.2"
+    const val org_jetbrains_kotlinx_kotlinx_coroutines: String = "1.4.2"
 
     const val com_github_bumptech_glide: String = "4.11.0"
 
     const val com_facebook_android: String = "8.1.0"
 
-    const val org_jetbrains_kotlin: String = "1.4.20" // available: "1.4.20"
+    const val org_jetbrains_kotlin: String = "1.4.21-2"
 
     const val org_jetbrains_dokka: String = "0.9.18"
 
     const val io_arrow_kt: String = "0.11.0"
 
-    const val com_android_tools_build_gradle: String = "4.1.1" // available: "4.1.1"
+    const val com_android_tools_build_gradle: String = "4.1.1"
 
     const val androidx_test_runner: String = "1.3.0"
 
@@ -36,7 +36,7 @@ object Versions {
 
     const val gradle_bintray_plugin: String = "1.8.5"
 
-    const val play_services_auth: String = "19.0.0" // available: "19.0.0"
+    const val play_services_auth: String = "19.0.0"
 
     const val constraintlayout: String = "2.0.4"
 
@@ -44,15 +44,15 @@ object Versions {
 
     const val espresso_core: String = "3.3.0"
 
-    const val firebase_auth: String = "20.0.1" // available: "20.0.1"
+    const val firebase_auth: String = "20.0.1"
 
-    const val lint_gradle: String = "27.1.1" // available: "27.1.1"
+    const val lint_gradle: String = "27.1.1"
 
     const val appcompat: String = "1.2.0"
 
     const val core_ktx: String = "1.3.2"
 
-    const val aapt2: String = "4.1.1-6503028" // available: "4.1.1-6503028"
+    const val aapt2: String = "4.1.1-6503028"
 
     const val junit: String = "4.13.1"
 

@@ -3,50 +3,41 @@ package eu.balzo.authdroid.firebase
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
-import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.lifecycleScope
 import com.balzo.authdroid.auth.R
-import eu.balzo.authdroid.arrow.startCoroutine
+import eu.balzo.authdroid.BaseActivity
 import eu.balzo.authdroid.firebase.core.Firebase
 import eu.balzo.authdroid.firebase.facebook.FirebaseFacebook
 import eu.balzo.authdroid.firebase.google.FirebaseGoogle
-import eu.balzo.authdroid.logError
 import eu.balzo.authdroid.openProfile
 import eu.balzo.authdroid.showToast
 import kotlinx.android.synthetic.main.firebase.*
 
-class FirebaseActivity : FragmentActivity() {
+class FirebaseActivity : BaseActivity(R.layout.firebase) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContentView(R.layout.firebase)
-
         firebase_google.setOnClickListener {
 
-            startCoroutine {
+            lifecycleScope.launchSafe {
 
                 FirebaseGoogle.auth(
                         this,
                         getString(R.string.google_client_id_web)
-                ).fold(
-                        { it.logError(this) },
-                        { it.openProfile(this) }
-                )
+                ).openProfile(this)
 
             }
         }
 
         firebase_facebook.setOnClickListener {
 
-            startCoroutine {
+            lifecycleScope.launchSafe {
 
                 FirebaseFacebook.auth(supportFragmentManager)
-                        .fold(
-                                { it.logError(this) },
-                                { it.openProfile(this) }
-                        )
-
+                        .openProfile(this)
             }
+
         }
 
         firebase_custom.setOnClickListener {
@@ -74,31 +65,24 @@ class FirebaseActivity : FragmentActivity() {
 
 
         firebase_get_id.setOnClickListener {
-            startCoroutine { showToast(Firebase.id() ?: "Firebase user not logged") }
+            lifecycleScope.launchSafe { showToast(Firebase.id() ?: "Firebase user not logged") }
         }
 
         firebase_get_token.setOnClickListener {
 
-            startCoroutine {
+            lifecycleScope.launchSafe {
 
-                Firebase.token()
-                        .fold(
-                                { it.logError(this) },
-                                { showToast(it) }
-                        )
+                val token = Firebase.token()
+                showToast(token)
 
             }
         }
 
         firebase_get_user.setOnClickListener {
 
-            startCoroutine {
+            lifecycleScope.launchSafe {
 
-                Firebase.currentUser()
-                        .fold(
-                                { it.logError(this) },
-                                { it.openProfile(this) }
-                        )
+                Firebase.currentUser().openProfile(this)
 
             }
         }
@@ -118,15 +102,13 @@ class FirebaseActivity : FragmentActivity() {
 
         firebase_google_logout.setOnClickListener {
 
-            startCoroutine {
+            lifecycleScope.launchSafe {
 
                 FirebaseGoogle.signOut(
                         this,
                         getString(R.string.google_client_id_web))
-                        .fold(
-                                { showToast("Error") },
-                                { showToast("Done") }
-                        )
+
+                showToast("Done")
 
             }
         }

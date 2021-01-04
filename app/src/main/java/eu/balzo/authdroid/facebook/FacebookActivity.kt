@@ -2,28 +2,23 @@ package eu.balzo.authdroid.facebook
 
 import android.os.Bundle
 import android.widget.Toast
-import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.lifecycleScope
 import com.balzo.authdroid.auth.R
-import eu.balzo.authdroid.arrow.startCoroutine
-import eu.balzo.authdroid.logError
+import eu.balzo.authdroid.BaseActivity
 import eu.balzo.authdroid.openProfile
 import kotlinx.android.synthetic.main.facebook.*
 
-class FacebookActivity : FragmentActivity(R.layout.facebook) {
+class FacebookActivity : BaseActivity(R.layout.facebook) {
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
         super.onPostCreate(savedInstanceState)
 
         facebook.setOnClickListener {
 
-            startCoroutine {
+            lifecycleScope.launchSafe {
 
                 val auth = Facebook.auth(supportFragmentManager)
-
-                auth.fold(
-                        { it.logError(this) },
-                        { it.openProfile(this) }
-                )
+                auth.openProfile(this)
 
             }
         }
@@ -32,6 +27,7 @@ class FacebookActivity : FragmentActivity(R.layout.facebook) {
 
             Facebook.signOut()
             Toast.makeText(this, "Done", Toast.LENGTH_LONG).show()
+
         }
     }
 }

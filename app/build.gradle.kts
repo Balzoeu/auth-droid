@@ -52,6 +52,7 @@ dependencies {
     /* ANDROID */
     implementation(Libs.appcompat)
     implementation(Libs.constraintlayout)
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.2.0")
 
     /* FACEBOOK */
     implementation(Libs.facebook_core)
@@ -59,12 +60,6 @@ dependencies {
 
     /* FIREBASE */
     implementation (Libs.firebase_auth)
-
-    /* ARROW */
-    implementation(Libs.arrow_fx)
-    implementation(Libs.arrow_fx_coroutines)
-    implementation(Libs.arrow_syntax)
-    kapt(Libs.arrow_meta)
 
     /* GLIDE */
     implementation(Libs.glide)

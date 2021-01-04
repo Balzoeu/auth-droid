@@ -3,23 +3,20 @@ package eu.balzo.authdroid.firebase
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.lifecycleScope
 import com.balzo.authdroid.auth.R
-import eu.balzo.authdroid.arrow.startCoroutine
+import eu.balzo.authdroid.BaseActivity
 import eu.balzo.authdroid.firebase.core.Firebase
-import eu.balzo.authdroid.logError
 import eu.balzo.authdroid.openProfile
 import kotlinx.android.synthetic.main.firebase_email_password_auth.*
 
-class FirebaseEmailPasswordActivity : FragmentActivity() {
+class FirebaseEmailPasswordActivity : BaseActivity(R.layout.firebase_email_password_auth) {
 
     private var email: String = ""
     private var password: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        setContentView(R.layout.firebase_email_password_auth)
 
         email_field.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
@@ -43,30 +40,20 @@ class FirebaseEmailPasswordActivity : FragmentActivity() {
 
         sign_up.setOnClickListener {
 
-            startCoroutine {
+            lifecycleScope.launchSafe {
 
-                Firebase.signUpWithFirebaseEmailPassword(
-                        email,
-                        password)
-                        .fold(
-                                { it.logError(this) },
-                                { it.openProfile(this) }
-                        )
+                Firebase.signUpWithFirebaseEmailPassword(email, password)
+                        .openProfile(this)
 
             }
         }
 
         sign_in.setOnClickListener {
 
-            startCoroutine {
+            lifecycleScope.launchSafe {
 
-                Firebase.signInWithFirebaseEmailPassword(
-                        email,
-                        password)
-                        .fold(
-                                { it.logError(this) },
-                                { it.openProfile(this) }
-                        )
+                Firebase.signInWithFirebaseEmailPassword(email, password)
+                        .openProfile(this)
 
             }
         }

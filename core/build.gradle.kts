@@ -53,12 +53,6 @@ dependencies {
     implementation(Libs.kotlin_stdlib_jdk7)
     implementation(Libs.core_ktx)
 
-    /* ARROW */
-    implementation(Libs.arrow_fx)
-    implementation(Libs.arrow_fx_coroutines)
-    implementation(Libs.arrow_syntax)
-    kapt(Libs.arrow_meta)
-
     /* ACTIVITY RESULT INLINE */
     implementation(Libs.inline_activity_result_kotlin)
 
