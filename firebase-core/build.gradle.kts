@@ -4,14 +4,11 @@ plugins {
     id("com.android.library")
     kotlin("android")
     kotlin("kapt")
-    kotlin("android.extensions")
     id("maven-publish")
     id("com.github.dcendents.android-maven")
     id("com.jfrog.bintray")
     id("org.jetbrains.dokka-android")
 }
-
-androidExtensions { isExperimental = true }
 
 android {
     compileSdkVersion(AndroidConfig.compile_sdk)
