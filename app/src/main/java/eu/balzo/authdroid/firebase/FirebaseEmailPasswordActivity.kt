@@ -4,21 +4,25 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import androidx.lifecycle.lifecycleScope
-import com.balzo.authdroid.auth.R
+import com.balzo.authdroid.auth.databinding.FirebaseEmailPasswordAuthBinding
 import eu.balzo.authdroid.BaseActivity
 import eu.balzo.authdroid.firebase.core.Firebase
 import eu.balzo.authdroid.openProfile
-import kotlinx.android.synthetic.main.firebase_email_password_auth.*
 
-class FirebaseEmailPasswordActivity : BaseActivity(R.layout.firebase_email_password_auth) {
+class FirebaseEmailPasswordActivity : BaseActivity() {
 
     private var email: String = ""
     private var password: String = ""
 
+    private lateinit var binding: FirebaseEmailPasswordAuthBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        email_field.addTextChangedListener(object : TextWatcher {
+        binding = FirebaseEmailPasswordAuthBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        binding.emailField.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 email = s.toString()
             }
@@ -28,7 +32,7 @@ class FirebaseEmailPasswordActivity : BaseActivity(R.layout.firebase_email_passw
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
         })
 
-        password_field.addTextChangedListener(object : TextWatcher {
+        binding.passwordField.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 password = s.toString()
             }
@@ -38,7 +42,7 @@ class FirebaseEmailPasswordActivity : BaseActivity(R.layout.firebase_email_passw
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
         })
 
-        sign_up.setOnClickListener {
+        binding.signUp.setOnClickListener {
 
             lifecycleScope.launchSafe {
 
@@ -48,7 +52,7 @@ class FirebaseEmailPasswordActivity : BaseActivity(R.layout.firebase_email_passw
             }
         }
 
-        sign_in.setOnClickListener {
+        binding.signIn.setOnClickListener {
 
             lifecycleScope.launchSafe {
 

@@ -47,19 +47,6 @@ object Libs {
     /**
      * https://kotlinlang.org/
      */
-    const val kotlin_android_extensions: String =
-            "org.jetbrains.kotlin:kotlin-android-extensions:" + Versions.org_jetbrains_kotlin
-
-    /**
-     * https://kotlinlang.org/
-     */
-    const val kotlin_android_extensions_runtime: String =
-            "org.jetbrains.kotlin:kotlin-android-extensions-runtime:" +
-            Versions.org_jetbrains_kotlin
-
-    /**
-     * https://kotlinlang.org/
-     */
     const val kotlin_annotation_processing_gradle: String =
             "org.jetbrains.kotlin:kotlin-annotation-processing-gradle:" +
             Versions.org_jetbrains_kotlin
@@ -81,27 +68,6 @@ object Libs {
 
     const val dokka_gradle_plugin: String = "org.jetbrains.dokka:dokka-gradle-plugin:" +
             Versions.org_jetbrains_dokka
-
-    /**
-     * https://github.com/arrow-kt/arrow/
-     */
-    const val arrow_fx: String = "io.arrow-kt:arrow-fx:" + Versions.io_arrow_kt
-
-    /**
-     * https://github.com/arrow-kt/arrow/
-     */
-    const val arrow_fx_coroutines: String = "io.arrow-kt:arrow-fx-coroutines:" +
-            Versions.io_arrow_kt
-
-    /**
-     * https://github.com/arrow-kt/arrow/
-     */
-    const val arrow_meta: String = "io.arrow-kt:arrow-meta:" + Versions.io_arrow_kt
-
-    /**
-     * https://github.com/arrow-kt/arrow/
-     */
-    const val arrow_syntax: String = "io.arrow-kt:arrow-syntax:" + Versions.io_arrow_kt
 
     /**
      * https://developer.android.com/studio
@@ -134,6 +100,12 @@ object Libs {
 
     const val gradle_bintray_plugin: String = "com.jfrog.bintray.gradle:gradle-bintray-plugin:" +
             Versions.gradle_bintray_plugin
+
+    /**
+     * https://developer.android.com/jetpack/androidx/releases/lifecycle#2.3.0
+     */
+    const val lifecycle_runtime_ktx: String = "androidx.lifecycle:lifecycle-runtime-ktx:" +
+            Versions.lifecycle_runtime_ktx
 
     const val play_services_auth: String = "com.google.android.gms:play-services-auth:" +
             Versions.play_services_auth

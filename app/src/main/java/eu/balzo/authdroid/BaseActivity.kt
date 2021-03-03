@@ -5,7 +5,10 @@ import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-abstract class BaseActivity(contentLayoutId: Int) : FragmentActivity(contentLayoutId) {
+abstract class BaseActivity : FragmentActivity {
+
+    constructor() : super()
+    constructor(contentLayoutId: Int) : super(contentLayoutId)
 
     fun <T> CoroutineScope.launchSafe(block: suspend () -> T) {
 

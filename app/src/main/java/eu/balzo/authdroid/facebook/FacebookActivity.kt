@@ -3,17 +3,20 @@ package eu.balzo.authdroid.facebook
 import android.os.Bundle
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
-import com.balzo.authdroid.auth.R
+import com.balzo.authdroid.auth.databinding.FacebookBinding
 import eu.balzo.authdroid.BaseActivity
 import eu.balzo.authdroid.openProfile
-import kotlinx.android.synthetic.main.facebook.*
 
-class FacebookActivity : BaseActivity(R.layout.facebook) {
+class FacebookActivity : BaseActivity() {
 
-    override fun onPostCreate(savedInstanceState: Bundle?) {
-        super.onPostCreate(savedInstanceState)
+    private lateinit var binding: FacebookBinding
 
-        facebook.setOnClickListener {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        binding = FacebookBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        binding.facebook.setOnClickListener {
 
             lifecycleScope.launchSafe {
 
@@ -23,7 +26,7 @@ class FacebookActivity : BaseActivity(R.layout.facebook) {
             }
         }
 
-        facebook_logout.setOnClickListener {
+        binding.facebookLogout.setOnClickListener {
 
             Facebook.signOut()
             Toast.makeText(this, "Done", Toast.LENGTH_LONG).show()

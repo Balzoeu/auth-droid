@@ -25,6 +25,10 @@ android {
         }
     }
 
+    buildFeatures {
+        viewBinding = true
+    }
+
     kotlinOptions {
         jvmTarget = "1.8"
     }
@@ -51,7 +55,7 @@ dependencies {
     /* ANDROID */
     implementation(Libs.appcompat)
     implementation(Libs.constraintlayout)
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.2.0")
+    implementation(Libs.lifecycle_runtime_ktx)
 
     /* FACEBOOK */
     implementation(Libs.facebook_core)

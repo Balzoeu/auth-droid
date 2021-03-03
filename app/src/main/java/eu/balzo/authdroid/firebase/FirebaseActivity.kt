@@ -5,20 +5,25 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import com.balzo.authdroid.auth.R
+import com.balzo.authdroid.auth.databinding.FirebaseBinding
 import eu.balzo.authdroid.BaseActivity
 import eu.balzo.authdroid.firebase.core.Firebase
 import eu.balzo.authdroid.firebase.facebook.FirebaseFacebook
 import eu.balzo.authdroid.firebase.google.FirebaseGoogle
 import eu.balzo.authdroid.openProfile
 import eu.balzo.authdroid.showToast
-import kotlinx.android.synthetic.main.firebase.*
 
-class FirebaseActivity : BaseActivity(R.layout.firebase) {
+class FirebaseActivity : BaseActivity() {
+
+    private lateinit var binding: FirebaseBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        firebase_google.setOnClickListener {
+        binding = FirebaseBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        binding.firebaseGoogle.setOnClickListener {
 
             lifecycleScope.launchSafe {
 
@@ -30,7 +35,7 @@ class FirebaseActivity : BaseActivity(R.layout.firebase) {
             }
         }
 
-        firebase_facebook.setOnClickListener {
+        binding.firebaseFacebook.setOnClickListener {
 
             lifecycleScope.launchSafe {
 
@@ -40,7 +45,7 @@ class FirebaseActivity : BaseActivity(R.layout.firebase) {
 
         }
 
-        firebase_custom.setOnClickListener {
+        binding.firebaseCustom.setOnClickListener {
             startActivity(
                     Intent(this, FirebaseEmailPasswordActivity::class.java)
             )
@@ -50,13 +55,13 @@ class FirebaseActivity : BaseActivity(R.layout.firebase) {
 
 
 
-        firebase_password_reset.setOnClickListener {
+        binding.firebasePasswordReset.setOnClickListener {
             startActivity(
                     Intent(this, FirebasePasswordResetActivity::class.java)
             )
         }
 
-        firebase_password_update.setOnClickListener {
+        binding.firebasePasswordUpdate.setOnClickListener {
             startActivity(
                     Intent(this, FirebasePasswordUpdateActivity::class.java)
             )
@@ -64,11 +69,11 @@ class FirebaseActivity : BaseActivity(R.layout.firebase) {
 
 
 
-        firebase_get_id.setOnClickListener {
+        binding.firebaseGetId.setOnClickListener {
             lifecycleScope.launchSafe { showToast(Firebase.id() ?: "Firebase user not logged") }
         }
 
-        firebase_get_token.setOnClickListener {
+        binding.firebaseGetToken.setOnClickListener {
 
             lifecycleScope.launchSafe {
 
@@ -78,7 +83,7 @@ class FirebaseActivity : BaseActivity(R.layout.firebase) {
             }
         }
 
-        firebase_get_user.setOnClickListener {
+        binding.firebaseGetUser.setOnClickListener {
 
             lifecycleScope.launchSafe {
 
@@ -91,7 +96,7 @@ class FirebaseActivity : BaseActivity(R.layout.firebase) {
 
 
 
-        firebase_update_profile.setOnClickListener {
+        binding.firebaseUpdateProfile.setOnClickListener {
             startActivity(
                     Intent(this, FirebaseProfileUpdateActivity::class.java)
             )
@@ -100,7 +105,7 @@ class FirebaseActivity : BaseActivity(R.layout.firebase) {
 
 
 
-        firebase_google_logout.setOnClickListener {
+        binding.firebaseGoogleLogout.setOnClickListener {
 
             lifecycleScope.launchSafe {
 
@@ -113,12 +118,12 @@ class FirebaseActivity : BaseActivity(R.layout.firebase) {
             }
         }
 
-        firebase_facebook_logout.setOnClickListener {
+        binding.firebaseFacebookLogout.setOnClickListener {
             FirebaseFacebook.signOut()
             Toast.makeText(this, "Done", Toast.LENGTH_LONG).show()
         }
 
-        firebase_logout.setOnClickListener {
+        binding.firebaseLogout.setOnClickListener {
             Firebase.signOut()
             Toast.makeText(this, "Done", Toast.LENGTH_LONG).show()
         }

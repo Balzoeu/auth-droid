@@ -5,29 +5,32 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.FragmentActivity
 import com.balzo.authdroid.auth.R
+import com.balzo.authdroid.auth.databinding.ProfileBinding
 import com.bumptech.glide.Glide
 import eu.balzo.authdroid.core.SocialAuthUser
-import kotlinx.android.synthetic.main.profile.*
 
 class ProfileActivity : FragmentActivity() {
+
+    private lateinit var binding: ProfileBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContentView(R.layout.profile)
+        binding = ProfileBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        name_value.text = intent.getStringExtra(NAME) ?: "/"
-        first_name_value.text = intent.getStringExtra(FIRST_NAME) ?: "/"
-        last_name_value.text = intent.getStringExtra(LAST_NAME) ?: "/"
-        email_value.text = intent.getStringExtra(EMAIL) ?: "/"
-        id_value.text = intent.getStringExtra(ID) ?: "/"
-        token_value.text = intent.getStringExtra(TOKEN) ?: "/"
-        google_auth_code_value.text = intent.getStringExtra(GOOGLE_AUTH_CODE) ?: "/"
+        binding.nameValue.text = intent.getStringExtra(NAME) ?: "/"
+        binding.firstNameValue.text = intent.getStringExtra(FIRST_NAME) ?: "/"
+        binding.lastNameValue.text = intent.getStringExtra(LAST_NAME) ?: "/"
+        binding.emailValue.text = intent.getStringExtra(EMAIL) ?: "/"
+        binding.idValue.text = intent.getStringExtra(ID) ?: "/"
+        binding.tokenValue.text = intent.getStringExtra(TOKEN) ?: "/"
+        binding.googleAuthCodeValue.text = intent.getStringExtra(GOOGLE_AUTH_CODE) ?: "/"
 
         Glide.with(this)
                 .load(intent.getStringExtra(PROFILE_IMAGE).orEmpty())
                 .error(R.drawable.profile)
-                .into(profile_image)
+                .into(binding.profileImage)
     }
 
     companion object {

@@ -14,17 +14,15 @@ import org.gradle.plugin.use.PluginDependencySpec
 object Versions {
     const val org_jetbrains_kotlinx_kotlinx_coroutines: String = "1.4.2"
 
-    const val com_github_bumptech_glide: String = "4.11.0"
+    const val com_github_bumptech_glide: String = "4.12.0"
 
     const val com_facebook_android: String = "8.1.0"
 
-    const val org_jetbrains_kotlin: String = "1.4.21-2"
+    const val org_jetbrains_kotlin: String = "1.4.31"
 
     const val org_jetbrains_dokka: String = "0.9.18"
 
-    const val io_arrow_kt: String = "0.11.0"
-
-    const val com_android_tools_build_gradle: String = "4.1.1"
+    const val com_android_tools_build_gradle: String = "4.1.2"
 
     const val androidx_test_runner: String = "1.3.0"
 
@@ -36,32 +34,34 @@ object Versions {
 
     const val gradle_bintray_plugin: String = "1.8.5"
 
+    const val lifecycle_runtime_ktx: String = "2.3.0"
+
     const val play_services_auth: String = "19.0.0"
 
     const val constraintlayout: String = "2.0.4"
 
-    const val google_services: String = "4.3.4"
+    const val google_services: String = "4.3.5"
 
     const val espresso_core: String = "3.3.0"
 
-    const val firebase_auth: String = "20.0.1"
+    const val firebase_auth: String = "20.0.3"
 
-    const val lint_gradle: String = "27.1.1"
+    const val lint_gradle: String = "27.1.2"
 
     const val appcompat: String = "1.2.0"
 
     const val core_ktx: String = "1.3.2"
 
-    const val aapt2: String = "4.1.1-6503028"
+    const val aapt2: String = "4.1.2-6503028"
 
-    const val junit: String = "4.13.1"
+    const val junit: String = "4.13.2"
 
     /**
-     * Current version: "6.7"
+     * Current version: "6.8.3"
      * See issue 19: How to update Gradle itself?
      * https://github.com/jmfayard/buildSrcVersions/issues/19
      */
-    const val gradleLatestVersion: String = "6.7.1"
+    const val gradleLatestVersion: String = "6.8.3"
 }
 
 /**

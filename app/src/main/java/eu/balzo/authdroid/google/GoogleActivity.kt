@@ -4,16 +4,21 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import com.balzo.authdroid.auth.R
+import com.balzo.authdroid.auth.databinding.GoogleBinding
 import eu.balzo.authdroid.BaseActivity
 import eu.balzo.authdroid.openProfile
-import kotlinx.android.synthetic.main.google.*
 
-class GoogleActivity : BaseActivity(R.layout.google) {
+class GoogleActivity : BaseActivity() {
+
+    private lateinit var binding: GoogleBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        google.setOnClickListener {
+        binding = GoogleBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        binding.google.setOnClickListener {
             lifecycleScope.launchSafe {
 
                 val auth =
@@ -27,7 +32,7 @@ class GoogleActivity : BaseActivity(R.layout.google) {
             }
         }
 
-        google_logout.setOnClickListener {
+        binding.googleLogout.setOnClickListener {
             lifecycleScope.launchSafe {
 
                 Google.signOut(
