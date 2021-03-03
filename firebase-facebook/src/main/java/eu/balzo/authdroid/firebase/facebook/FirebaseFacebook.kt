@@ -41,50 +41,58 @@ object FirebaseFacebook {
                 .addToBackStack(null)
                 .commit()
 
-        val facebookAuth =
-                suspendCoroutine<LoginResult?> { continuation ->
-                    LoginManager.getInstance()
-                            .registerCallback(
-                                    fragment.callbackManager,
-                                    object : FacebookCallback<LoginResult> {
+        try {
 
-                                        var isResumed = false
+            val facebookAuth =
+                    suspendCoroutine<LoginResult?> { continuation ->
+                        LoginManager.getInstance()
+                                .registerCallback(
+                                        fragment.callbackManager,
+                                        object : FacebookCallback<LoginResult> {
 
-                                        override fun onSuccess(result: LoginResult?) {
-                                            if (isResumed.not()) {
-                                                continuation.resume(result)
-                                                isResumed = true
-                                            }
-                                        }
+                                            var isResumed = false
 
-                                        override fun onCancel() {
-                                            if (isResumed.not()) {
-                                                continuation.resumeWithException(
-                                                        AuthError.Cancelled()
-                                                )
-                                                isResumed = true
-                                            }
-                                        }
-
-                                        override fun onError(error: FacebookException?) {
-
-                                            if (isResumed.not()) {
-                                                continuation.resumeWithException(
-                                                        error ?: AuthError.FacebookAuth()
-                                                )
-                                                isResumed = true
+                                            override fun onSuccess(result: LoginResult?) {
+                                                if (isResumed.not()) {
+                                                    continuation.resume(result)
+                                                    isResumed = true
+                                                }
                                             }
 
+                                            override fun onCancel() {
+                                                if (isResumed.not()) {
+                                                    continuation.resumeWithException(
+                                                            AuthError.Cancelled()
+                                                    )
+                                                    isResumed = true
+                                                }
+                                            }
+
+                                            override fun onError(error: FacebookException?) {
+
+                                                if (isResumed.not()) {
+                                                    continuation.resumeWithException(
+                                                            error ?: AuthError.FacebookAuth()
+                                                    )
+                                                    isResumed = true
+                                                }
+
+                                            }
                                         }
-                                    }
-                            )
-                }
+                                )
+                    }
 
-        val auth = facebookAuth.handleFirebaseFacebookLogin()
+            val auth = facebookAuth.handleFirebaseFacebookLogin()
+            removeFragment(fragmentManager, fragment)
+            return auth
 
-        removeFragment(fragmentManager, fragment)
+        } catch (throwable: Throwable) {
 
-        return auth
+            removeFragment(fragmentManager, fragment)
+            throw throwable
+
+        }
+
     }
 
     private fun removeFragment(fragmentManager: FragmentManager, fragment: Fragment) {

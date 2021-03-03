@@ -27,47 +27,56 @@ object Facebook {
         val transaction = fragmentManager.beginTransaction()
         transaction.add(fragment, FacebookFragment.TAG).addToBackStack(null).commit()
 
-        val facebookAuth =
-                suspendCoroutine<LoginResult?> { continuation ->
+        try {
 
-                    LoginManager.getInstance().registerCallback(
-                            fragment.callbackManager,
-                            object : FacebookCallback<LoginResult> {
+            val facebookAuth =
+                    suspendCoroutine<LoginResult?> { continuation ->
 
-                                var isResumed = false
+                        LoginManager.getInstance().registerCallback(
+                                fragment.callbackManager,
+                                object : FacebookCallback<LoginResult> {
 
-                                override fun onSuccess(result: LoginResult?) {
-                                    if (isResumed.not()) {
-                                        continuation.resume(result)
-                                        isResumed = true
+                                    var isResumed = false
+
+                                    override fun onSuccess(result: LoginResult?) {
+                                        if (isResumed.not()) {
+                                            continuation.resume(result)
+                                            isResumed = true
+                                        }
                                     }
-                                }
 
-                                override fun onCancel() {
-                                    if (isResumed.not()) {
-                                        continuation.resumeWithException(AuthError.Cancelled())
-                                        isResumed = true
+                                    override fun onCancel() {
+                                        if (isResumed.not()) {
+                                            continuation.resumeWithException(AuthError.Cancelled())
+                                            isResumed = true
+                                        }
                                     }
-                                }
 
-                                override fun onError(error: FacebookException?) {
-                                    if (isResumed.not()) {
-                                        continuation.resumeWithException(
-                                                error ?: AuthError.Unknown()
-                                        )
-                                        isResumed = true
+                                    override fun onError(error: FacebookException?) {
+                                        if (isResumed.not()) {
+                                            continuation.resumeWithException(
+                                                    error ?: AuthError.Unknown()
+                                            )
+                                            isResumed = true
+                                        }
                                     }
+
                                 }
+                        )
+                    }
 
-                            }
-                    )
-                }
+            val auth = facebookAuth.handleFacebookLogin(profileImageDimension)
 
-        val auth = facebookAuth.handleFacebookLogin(profileImageDimension)
+            removeFragment(fragmentManager, fragment)
 
-        removeFragment(fragmentManager, fragment)
+            return auth
 
-        return auth
+        } catch (throwable: Throwable) {
+
+            removeFragment(fragmentManager, fragment)
+            throw throwable
+
+        }
 
     }
 
@@ -106,7 +115,7 @@ object Facebook {
 
     }
 
-    private suspend fun JSONObject.parseUser(imageDimension: Int): SocialAuthUser {
+    private fun JSONObject.parseUser(imageDimension: Int): SocialAuthUser {
 
         val id = Profile.getCurrentProfile()?.id?.emptyOrBlankToNull()
         val token = AccessToken.getCurrentAccessToken().token

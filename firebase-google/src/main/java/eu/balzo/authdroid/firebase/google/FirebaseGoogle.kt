@@ -76,7 +76,7 @@ object FirebaseGoogle {
     }
 
 
-    private suspend fun authWithGoogle(
+    private fun authWithGoogle(
             data: Intent?
     ): GoogleSignInAccount? =
             GoogleSignIn.getSignedInAccountFromIntent(data).getResult(ApiException::class.java)

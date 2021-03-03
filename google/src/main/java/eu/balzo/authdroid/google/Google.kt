@@ -46,7 +46,7 @@ object Google {
 
     }
 
-    private suspend fun googleAuth(
+    private fun googleAuth(
             result: Result
     ): Auth =
             authWithGoogle(result.data)
@@ -73,7 +73,7 @@ object Google {
         }
     }
 
-    private suspend fun authWithGoogle(
+    private fun authWithGoogle(
             data: Intent?
     ): GoogleSignInAccount? =
             GoogleSignIn.getSignedInAccountFromIntent(data)
