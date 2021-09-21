@@ -1,10 +1,9 @@
 package eu.balzo.authdroid.firebase.google
 
-import android.app.Activity
 import android.content.Intent
 import androidx.fragment.app.FragmentActivity
-import com.github.florent37.inlineactivityresult.Result
-import com.github.florent37.inlineactivityresult.kotlin.startForResult
+import com.afollestad.inlineactivityresult.ActivityResult
+import com.afollestad.inlineactivityresult.coroutines.startActivityAwaitResult
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.common.api.ApiException
@@ -17,36 +16,16 @@ import eu.balzo.authdroid.firebase.core.Firebase.bindTask
 import eu.balzo.authdroid.google.core.getGoogleSignInClient
 import eu.balzo.authdroid.google.core.getGoogleSignInIntent
 import eu.balzo.authdroid.google.core.getGoogleSignInOptions
-import kotlin.coroutines.resume
-import kotlin.coroutines.resumeWithException
-import kotlin.coroutines.suspendCoroutine
 
 object FirebaseGoogle {
 
     suspend fun auth(
-            activity: FragmentActivity,
-            clientId: String
+        activity: FragmentActivity,
+        clientId: String
     ): Auth {
 
         val googleAuth =
-                suspendCoroutine<Result> { continuation ->
-                    activity.startForResult(
-                            getGoogleSignInIntent(activity, clientId)
-                    ) { continuation.resume(it) }
-                            .onFailed {
-                                when (it.resultCode) {
-                                    Activity.RESULT_CANCELED ->
-                                        continuation.resumeWithException(
-                                                AuthError.Cancelled()
-                                        )
-                                    else ->
-                                        continuation.resumeWithException(
-                                                it.cause ?: AuthError.GoogleAuth()
-                                        )
-                                }
-                            }
-
-                }
+            activity.startActivityAwaitResult(getGoogleSignInIntent(activity, clientId))
 
         val auth = auth(googleAuth)
 
@@ -55,29 +34,29 @@ object FirebaseGoogle {
         return Auth(auth.additionalUserInfo?.isNewUser, user)
     }
 
-    private suspend fun auth(result: Result): AuthResult {
+    private suspend fun auth(result: ActivityResult): AuthResult {
 
         val credentials = authWithGoogle(result.data) ?: throw AuthError.Unknown()
 
         return Firebase.signInWithCredential(
-                GoogleAuthProvider.getCredential(credentials.idToken, null)
+            GoogleAuthProvider.getCredential(credentials.idToken, null)
         )
 
     }
 
     suspend fun signOut(
-            activity: FragmentActivity,
-            clientId: String
+        activity: FragmentActivity,
+        clientId: String
     ) {
 
         getGoogleSignInClient(activity, getGoogleSignInOptions(clientId))
-                .signOut()
-                .bindTask()
+            .signOut()
+            .bindTask()
     }
 
 
     private fun authWithGoogle(
-            data: Intent?
+        data: Intent?
     ): GoogleSignInAccount? =
-            GoogleSignIn.getSignedInAccountFromIntent(data).getResult(ApiException::class.java)
+        GoogleSignIn.getSignedInAccountFromIntent(data).getResult(ApiException::class.java)
 }

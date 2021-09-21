@@ -1,26 +1,30 @@
+import eu.balzo.authdroid.dependencies.*
+import eu.balzo.authdroid.projectsettings.ProjectSettings
+
 plugins {
     id("com.android.application")
     kotlin("android")
     kotlin("kapt")
     id("com.google.gms.google-services")
+    id("dependencies")
+    id("project-settings")
 }
 
 android {
-    compileSdkVersion(AndroidConfig.compile_sdk)
+    compileSdk = ProjectSettings.compile_sdk
     defaultConfig {
         applicationId = "eu.balzo.authdroid"
-        minSdkVersion(AndroidConfig.min_sdk)
-        targetSdkVersion(AndroidConfig.target_sdk)
-        versionCode = AndroidConfig.version_code
-        versionName = AndroidConfig.version_name
+        minSdk = ProjectSettings.min_sdk
+        targetSdk = ProjectSettings.target_sdk
+
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         getByName("release") {
             isMinifyEnabled = false
             proguardFiles(
-                    getDefaultProguardFile("proguard-android-optimize.txt"),
-                    "proguard-rules.pro"
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
             )
         }
     }
@@ -50,31 +54,27 @@ dependencies {
     implementation(project(":firebase-facebook"))
 
     /* KOTLIN */
-    implementation(Libs.kotlin_stdlib_jdk7)
+    implementation(Kotlin.stdLib)
 
     /* ANDROID */
-    implementation(Libs.appcompat)
-    implementation(Libs.constraintlayout)
-    implementation(Libs.lifecycle_runtime_ktx)
+    implementation(AndroidX.appCompat)
+    implementation(AndroidX.constraintLayout)
+    implementation(AndroidX.Lifecycle.runtimeKtx)
 
     /* FACEBOOK */
-    implementation(Libs.facebook_core)
-    implementation (Libs.facebook_login)
+    implementation(Facebook.core)
+    implementation(Facebook.login)
 
     /* FIREBASE */
-    implementation (Libs.firebase_auth)
+    implementation(Google.Firebase.authKtx)
 
     /* GLIDE */
-    implementation(Libs.glide)
-    annotationProcessor(Libs.com_github_bumptech_glide_compiler)
+    implementation(Bumptech.glide)
+    annotationProcessor(Bumptech.glideCompiler)
 
     /* COROUTINE */
-    implementation(Libs.kotlinx_coroutines_core)
-    implementation(Libs.kotlinx_coroutines_android)
+    implementation(KotlinX.Coroutines.core)
+    implementation(KotlinX.Coroutines.android)
 
-    /* TEST */
-    testImplementation(Libs.junit)
-    androidTestImplementation(Libs.androidx_test_runner)
-    androidTestImplementation(Libs.espresso_core)
 }
 

@@ -1,22 +1,21 @@
-import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+import eu.balzo.authdroid.dependencies.*
+import eu.balzo.authdroid.projectsettings.ProjectSettings
 
 plugins {
     id("com.android.library")
     kotlin("android")
     kotlin("kapt")
+    id("dependencies")
+    id("project-settings")
     id("maven-publish")
-    id("com.github.dcendents.android-maven")
-    id("com.jfrog.bintray")
-    id("org.jetbrains.dokka-android")
+    id("signing")
 }
 
 android {
-    compileSdkVersion(AndroidConfig.compile_sdk)
+    compileSdk = ProjectSettings.compile_sdk
     defaultConfig {
-        minSdkVersion(AndroidConfig.min_sdk)
-        targetSdkVersion(AndroidConfig.target_sdk)
-        versionCode = AndroidConfig.version_code
-        versionName = AndroidConfig.version_name
+        minSdk = ProjectSettings.min_sdk
+        targetSdk = ProjectSettings.target_sdk
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -24,8 +23,8 @@ android {
         getByName("release") {
             isMinifyEnabled = false
             proguardFiles(
-                    getDefaultProguardFile("proguard-android-optimize.txt"),
-                    "proguard-rules.pro"
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
             )
         }
     }
@@ -48,154 +47,119 @@ dependencies {
     implementation(project(":facebook-core"))
     implementation(project(":firebase-core"))
 
-    /* ANDROID */
-    implementation(Libs.appcompat)
-
     /* FIREBASE */
-    implementation(Libs.firebase_auth)
+    implementation(Google.Firebase.authKtx)
 
     /* FACEBOOK AUTH */
-    implementation(Libs.facebook_login)
+    implementation(Facebook.login)
 
     /* KOTLIN */
-    implementation(Libs.kotlin_stdlib_jdk7)
-    implementation(Libs.core_ktx)
+    implementation(Kotlin.stdLib)
+    implementation(AndroidX.Core.coreKtx)
 
-    /* ACTIVITY RESULT INLINE */
-    implementation(Libs.inline_activity_result_kotlin)
-
-    /* TEST */
-    testImplementation(Libs.junit)
-    androidTestImplementation(Libs.androidx_test_runner)
-    androidTestImplementation(Libs.espresso_core)
 }
 
-/* ======== BINTRAY ======== */
+/* --- maven central --- */
 
 tasks {
 
-    val dokka by getting(org.jetbrains.dokka.gradle.DokkaTask::class) {
-        outputFormat = "html"
-        outputDirectory = "$buildDir/dokka"
+    register("androidJavadocJar", Jar::class) {
+        archiveClassifier.set("javadoc")
+        from("$buildDir/javadoc")
+        //dependsOn(dokkaJavadoc)
     }
 
-    val sourcesJar by creating(Jar::class) {
+    register("androidSourcesJar", Jar::class) {
         archiveClassifier.set("sources")
-        from(android.sourceSets.getByName("main").java.srcDirs)
+        from(project.android.sourceSets.getByName("main").java.name)
     }
 
-    artifacts {
-        archives(sourcesJar)
-    }
 }
 
 val artifactName: String = project.name
-val artifactGroup: String = Library.group
-val artifactVersion: String = AndroidConfig.version_name
+val artifactGroup: String = "eu.balzo.auth-droid"
+val artifactVersion: String = ProjectSettings.version_name
 
-publishing {
-    publications {
-        create<MavenPublication>("auth-droid") {
+afterEvaluate {
 
-            groupId = artifactGroup
-            artifactId = artifactName
-            version = artifactVersion
+    publishing {
 
-            artifact("$buildDir/outputs/aar/${artifactId}-release.aar")
-            artifact(tasks.getByName("sourcesJar"))
+        publications {
 
-            pom {
+            create<MavenPublication>("release") {
 
-                packaging = "aar"
-                name.set(Library.name)
-                description.set(Library.pomDescription)
-                url.set(Library.pomUrl)
+                groupId = artifactGroup
+                artifactId = artifactName
+                version = artifactVersion
 
-                licenses {
-                    license {
-                        name.set(Library.pomLicenseName)
-                        url.set(Library.pomLicenseUrl)
-                        distribution.set(Library.repo)
+                // Two artifacts, the `aar` (or `jar`) and the sources
+                if (project.plugins.findPlugin("com.android.library") != null) {
+                    artifact("$buildDir/outputs/aar/${project.name}-release.aar")
+                } else {
+                    artifact("$buildDir/libs/${project.name}-${version}.jar")
+                }
+                artifact(tasks.getByName("androidSourcesJar"))
+
+                pom {
+                    packaging = "aar"
+                    name.set(artifactName)
+                    description.set("ForYouAndMe Android SDK")
+                    url.set("https://github.com/balzo-tech/auth-droid")
+                    licenses {
+                        license {
+                            name.set("ForYouAndMe Android SDK")
+                            url.set("https://github.com/balzo-tech/auth-droid")
+                        }
                     }
-                }
-
-                developers {
-                    developer {
-                        id.set(Library.pomDeveloperId)
-                        name.set(Library.pomDeveloperName)
-                        email.set(Library.pomDeveloperEmail)
+                    developers {
+                        developer {
+                            id.set("giacomo.balzo")
+                            name.set("Giacomo Parisi")
+                            email.set("giacomo@balzo.eu")
+                        }
                     }
-                }
+                    scm {
+                        connection.set("scm:git:github.com/balzo-tech/auth-droid.git")
+                        developerConnection.set("scm:git:ssh://github.com/balzo-tech/auth-droid.git")
+                        url.set("https://github.com/balzo-tech/auth-droid/tree/main")
+                    }
+                    withXml {
 
-                scm {
-                    url.set(Library.pomScmUrl)
-                }
-
-                withXml {
-
-                    val dependenciesNode = asNode().appendNode("dependencies")
-
-                    (configurations.releaseImplementation.get().allDependencies +
-                            configurations.releaseCompile.get().allDependencies)
+                        // Add dependencies to pom file
+                        val dependenciesNode = asNode().appendNode("dependencies")
+                        configurations.getByName("implementation")
+                            .allDependencies
                             .forEach {
-
                                 val groupId =
-                                        if (it.group == "AuthDroid") Library.group else it.group
-
+                                    if (it.group == rootProject.name) artifactGroup else it.group
                                 val artifactId = it.name
-
                                 val version =
-                                        if (it.group == "AuthDroid") AndroidConfig.version_name
-                                        else it.version
-
+                                    if (it.group == rootProject.name) ProjectSettings.version_name
+                                    else it.version
                                 if (groupId != null && version != null) {
-
                                     val dependencyNode =
-                                            dependenciesNode.appendNode("dependency")
-
+                                        dependenciesNode.appendNode("dependency")
                                     dependencyNode.appendNode("groupId", groupId)
                                     dependencyNode.appendNode("artifactId", artifactId)
                                     dependencyNode.appendNode("version", version)
-
                                 }
                             }
 
+                    }
                 }
-
             }
         }
+
     }
 }
 
-bintray {
+signing {
 
-    user = gradleLocalProperties(rootDir).getProperty("bintray.user").toString()
-    key = gradleLocalProperties(rootDir).getProperty("bintray.apikey").toString()
-    publish = true
+    useInMemoryPgpKeys(
+        rootProject.extra["signing.keyId"].toString(),
+        rootProject.extra["signing.key"].toString(),
+        rootProject.extra["signing.password"].toString(),
+    )
+    sign(publishing.publications)
 
-    setPublications("auth-droid")
-
-    pkg.apply {
-
-        repo = Library.repo
-        name = artifactName
-        userOrg = Library.organization
-        githubRepo = Library.githubRepo
-        vcsUrl = Library.pomScmUrl
-        description = Library.pomDescription
-        setLabels("auth", "android", "social", "login", "signin")
-        setLicenses(Library.pomLicenseName)
-        desc = Library.pomDescription
-        websiteUrl = Library.pomUrl
-        issueTrackerUrl = Library.pomIssueUrl
-        githubReleaseNotesFile = Library.githubReadme
-
-        version.apply {
-            name = artifactVersion
-            desc = Library.pomDescription
-            vcsTag = artifactVersion
-            gpg.sign = true
-            gpg.passphrase = gradleLocalProperties(rootDir).getProperty("bintray.gpg.password")
-        }
-    }
 }

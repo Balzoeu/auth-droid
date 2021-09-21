@@ -1,4 +1,8 @@
+package eu.balzo.authdroid.publish
+
 object Library {
+
+    const val version = "1.0.0-beta01"
 
     const val name = "auth-droid"
     

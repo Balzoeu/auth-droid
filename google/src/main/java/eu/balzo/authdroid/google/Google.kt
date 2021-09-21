@@ -1,10 +1,9 @@
 package eu.balzo.authdroid.google
 
-import android.app.Activity
 import android.content.Intent
 import androidx.fragment.app.FragmentActivity
-import com.github.florent37.inlineactivityresult.Result
-import com.github.florent37.inlineactivityresult.kotlin.startForResult
+import com.afollestad.inlineactivityresult.ActivityResult
+import com.afollestad.inlineactivityresult.coroutines.startActivityAwaitResult
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.common.api.ApiException
@@ -21,63 +20,51 @@ import kotlin.coroutines.suspendCoroutine
 object Google {
 
     suspend fun auth(
-            activity: FragmentActivity,
-            clientId: String
+        activity: FragmentActivity,
+        clientId: String
     ): Auth {
 
         val auth =
-                suspendCoroutine<Result> { continuation ->
-
-                    activity.startForResult(getGoogleSignInIntent(activity, clientId)) {
-                        continuation.resume(it)
-                    }.onFailed { result ->
-                        continuation.resumeWithException(
-                                when (result.resultCode) {
-                                    Activity.RESULT_CANCELED ->
-                                        AuthError.Cancelled()
-                                    else ->
-                                        result.cause ?: AuthError.FirebaseUnknown()
-                                }
-                        )
-                    }
-                }
+            activity.startActivityAwaitResult(
+                getGoogleSignInIntent(activity, clientId)
+            )
 
         return googleAuth(auth)
 
     }
 
     private fun googleAuth(
-            result: Result
+        result: ActivityResult
     ): Auth =
-            authWithGoogle(result.data)
-                    ?.toSocialAuthUser()
-                    ?.let { Auth(null, it) } ?: throw AuthError.FirebaseUnknown()
+        authWithGoogle(result.data)
+            ?.toSocialAuthUser()
+            ?.let { Auth(null, it) } ?: throw AuthError.FirebaseUnknown()
 
     suspend fun signOut(
-            activity: FragmentActivity,
-            clientId: String
+        activity: FragmentActivity,
+        clientId: String
     ) {
 
         suspendCoroutine<Unit> { continuation ->
 
             getGoogleSignInClient(activity, getGoogleSignInOptions(clientId))
-                    .signOut()
-                    .addOnSuccessListener { continuation.resume(Unit) }
-                    .addOnCanceledListener {
-                        continuation.resumeWithException(AuthError.Cancelled())
-                    }
-                    .addOnFailureListener {
-                        continuation.resumeWithException(it)
-                    }
+                .signOut()
+                .addOnSuccessListener { continuation.resume(Unit) }
+                .addOnCanceledListener {
+                    continuation.resumeWithException(AuthError.Cancelled())
+                }
+                .addOnFailureListener {
+                    continuation.resumeWithException(it)
+                }
 
         }
     }
 
     private fun authWithGoogle(
-            data: Intent?
+        data: Intent?
     ): GoogleSignInAccount? =
-            GoogleSignIn.getSignedInAccountFromIntent(data)
-                    .getResult(ApiException::class.java)
+        GoogleSignIn.getSignedInAccountFromIntent(data)
+            .getResult(ApiException::class.java)
 
 
 }
