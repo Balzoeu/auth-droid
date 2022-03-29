@@ -52,7 +52,7 @@ object FirebaseFacebook {
 
                                             var isResumed = false
 
-                                            override fun onSuccess(result: LoginResult?) {
+                                            override fun onSuccess(result: LoginResult) {
                                                 if (isResumed.not()) {
                                                     continuation.resume(result)
                                                     isResumed = true
@@ -68,12 +68,10 @@ object FirebaseFacebook {
                                                 }
                                             }
 
-                                            override fun onError(error: FacebookException?) {
+                                            override fun onError(error: FacebookException) {
 
                                                 if (isResumed.not()) {
-                                                    continuation.resumeWithException(
-                                                            error ?: AuthError.FacebookAuth()
-                                                    )
+                                                    continuation.resumeWithException(error)
                                                     isResumed = true
                                                 }
 

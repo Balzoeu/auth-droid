@@ -5,7 +5,7 @@ object KotlinX {
     object Coroutines {
 
         private const val group = "org.jetbrains.kotlinx"
-        private const val version = "1.5.2"
+        private const val version = "1.6.0"
 
         const val core = "$group:kotlinx-coroutines-core:$version"
 

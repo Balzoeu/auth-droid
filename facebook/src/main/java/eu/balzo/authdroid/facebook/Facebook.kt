@@ -38,7 +38,7 @@ object Facebook {
 
                             var isResumed = false
 
-                            override fun onSuccess(result: LoginResult?) {
+                            override fun onSuccess(result: LoginResult) {
                                 if (isResumed.not()) {
                                     continuation.resume(result)
                                     isResumed = true
@@ -52,11 +52,9 @@ object Facebook {
                                 }
                             }
 
-                            override fun onError(error: FacebookException?) {
+                            override fun onError(error: FacebookException) {
                                 if (isResumed.not()) {
-                                    continuation.resumeWithException(
-                                        error ?: AuthError.Unknown()
-                                    )
+                                    continuation.resumeWithException(error)
                                     isResumed = true
                                 }
                             }
